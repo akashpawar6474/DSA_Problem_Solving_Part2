@@ -1,0 +1,32 @@
+class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        """
+        can we apply binary search here
+        because at each level we get no of coins by formula
+        
+        n * (n + 1) // 2
+        start = 1 end = 10 ** 9
+        tc = O(log(10 ** 9))
+        sc = constant
+        """
+        def getCoinsUntillCurrRow(mid):
+            return (mid * (mid + 1)) // 2
+        
+        start = 1
+        end = (10 ** 9 + 7)
+        ansRow = -1
+        iterations = 0
+        while start <= end:
+            iterations += 1
+            mid = (start + end) // 2
+            coinsUntillMidRow = getCoinsUntillCurrRow(mid)
+            if coinsUntillMidRow == n:
+                return mid
+            if coinsUntillMidRow < n:
+                ansRow = mid
+                start = mid + 1
+            else:
+                end = mid - 1
+        print(iterations) # for this input this will print 30
+        return ansRow
+            
