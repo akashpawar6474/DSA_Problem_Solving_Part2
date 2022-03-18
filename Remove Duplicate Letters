@@ -1,0 +1,58 @@
+class Solution:
+    def removeDuplicateLetters(self, s: str) -> str:
+        """
+        is it like mark the duplicates 
+        then dont pick their first occurances
+        
+        No it is not like that
+        "afsfcasfcf" => acsf where a and c has it first occurance
+        
+        is it like find unique char then sort them
+        Nope that will also not work
+        "cbacdcbc" => acdb
+        
+        at each char how to make decision wheather to pick this char or not?
+        
+        can we use dp here as we have to find out subsequence 
+        At each char we have two choices
+            if included previously then exclude it and recur
+            
+        Idea is to store the last idx of each char in an arrray
+        for each char 
+            if stack is not empty and top of stack is gt curr ch and ele at top of stack we will get in future
+                then pop from the stack
+                and mark it unvisited
+            add curr ele to stack a
+            and mark it visited
+            
+        "cbacdcbc"
+        output = "acdbc"
+        answer = "acdb"
+        
+        Here 7th idx c is getting inserted which we want to avoid
+        so when ever our char is visited there are two meaning
+        either it is unique
+        or it found its correct position into stack so further occurances are useless
+        so skip that using visited array
+        
+        tc = O(2n) => O(n)
+        sc O(2n) =>O(n)
+        """
+        n = len(s)
+        lastIdxTracker = [-1] * 26
+        for currIdx in range(n):
+            currCh = s[currIdx]
+            lastIdxTracker[ord(currCh) - ord('a')] = currIdx
+        
+        visited = [False] * 26
+        st = []
+        for currIdx in range(n):
+            currCh = s[currIdx]
+            if visited[ord(currCh) - ord('a')]:
+                continue
+            while len(st) > 0 and ord(st[-1]) > ord(currCh) and currIdx < lastIdxTracker[ord(st[-1]) - ord('a')]:
+                top = st.pop()
+                visited[ord(top) - ord('a')] = False
+            st.append(currCh)
+            visited[ord(currCh) - ord('a')] = True
+        return "".join(st)
