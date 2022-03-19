@@ -11,4 +11,5 @@ This is second directory because github reached limit of no of files for first r
 395. Array Partition I => this is also observation based easy problem
 396. Binary Tree Tilt => simple postorder problem
 397. Longest Harmonious Subsequence => simple hashmap and sorting problem
-398. 
+398. Construct String from Binary Tree => little ambiguous problem but simple preorder traversal will solve the issue
+399. 
