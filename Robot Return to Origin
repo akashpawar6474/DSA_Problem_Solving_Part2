@@ -1,0 +1,20 @@
+class Solution:
+    def judgeCircle(self, moves: str) -> bool:
+        """
+        Idea is to have by default coordinates as 0,0
+        for Up and 0,1 and for down 0,-1
+        for left add 1,0 and for right -1,0
+        
+        at last if our curr co-ordinates is 0,0 then return True else false
+        """
+        x,y = 0,0
+        for move in moves:
+            if move == 'U':
+                y += 1
+            elif move == 'D':
+                y -= 1
+            elif move == 'L':
+                x += 1
+            elif move == 'R':
+                x -= 1
+        return True if x == y == 0 else False
