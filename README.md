@@ -6,4 +6,5 @@ This is second directory because github reached limit of no of files for first r
 390. Teemo Attacking => simple linear time observation based problem
 391. Maximum Frequency Stack => this is one of the best problem with stack of stack approach I solved
 392. Relative Ranks => clubbing elements and indices then sort them by elemets and prepare answer
-393. 
+393. Longest Uncommon Subsequence I => kinda brainteaser problem with only observations.
+394. 
