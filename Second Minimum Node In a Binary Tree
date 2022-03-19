@@ -1,0 +1,39 @@
+import math
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def __init__(self):
+        self.firstMin = math.inf
+        self.secondMin = math.inf
+        
+    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
+        """
+        Another linear approach is to do linear traversal using two variables
+        tc = O(n)
+        sc = O(1)
+        """
+        def preorder(root):
+            if root is None:
+                return
+            if root.val < self.firstMin:
+                self.secondMin = self.firstMin
+                self.firstMin = root.val
+            elif root.val < self.secondMin and root.val != self.firstMin:
+                self.secondMin = root.val
+            preorder(root.left)
+            preorder(root.right)
+        preorder(root)
+        return self.secondMin if self.secondMin != math.inf else -1
+    
+    def firstTry(self,root):
+        candidate1 = root.left.val if root.left else -1
+        candidate2 = root.right.val if root.right else -1
+        if candidate1 != candidate2:
+            return max(candidate1,candidate2)
+        else:
+            return -1
+            
