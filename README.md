@@ -14,4 +14,5 @@ This is second directory because github reached limit of no of files for first r
 398. Construct String from Binary Tree => little ambiguous problem but simple preorder traversal will solve the issue
 399. Robot Return to Origin => very simple problem 
 400. Second Minimum Node In a Binary Tree => little tricky but did in brute force way
-401. 
+401. Longest Continuous Increasing Subsequence => this is very simple sliding winow problem
+402. 
