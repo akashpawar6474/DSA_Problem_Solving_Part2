@@ -1,0 +1,26 @@
+import math
+class Solution:
+    def findLHS(self, nums: List[int]) -> int:
+        """
+        Idea is to calculate the freq table
+        then graze over the sorted keys
+        if diff bw curr and next key is 1
+        then calculate total freq and keep track of maximum
+        """
+        def prepareMap(nums):
+            ht = {}
+            for no in nums:
+                if no not in ht:
+                    ht[no] = 0
+                ht[no] += 1
+            return ht
+        ht = prepareMap(nums)
+        sortedKeys = sorted(ht.keys())
+        maxLen = -math.inf
+        for currIdx in range(1,len(sortedKeys)):
+            prevKey = sortedKeys[currIdx - 1]
+            currKey = sortedKeys[currIdx]
+            if abs(currKey - prevKey) == 1:
+                currTotalFreq = ht[currKey] + ht[prevKey]
+                maxLen = max(maxLen,currTotalFreq)           
+        return maxLen if maxLen != -math.inf else 0
