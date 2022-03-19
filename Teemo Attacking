@@ -1,0 +1,23 @@
+class Solution:
+    def findPoisonedDuration(self, timeSeries: List[int], duration: int) -> int:
+        """
+        Here Idea is at each step
+        we have to perform two operations
+            1.first is to add duration to answer
+            2.and if overlapping then reduce that interval
+            
+        Now question is how to check overlapping?
+        if currNo + duration gt next no curr no
+            then overlapping duration is 
+            (currNo + duration) - next no
+        """
+        ans = 0
+        n = len(timeSeries)
+        for currIdx in range(n):
+            ans += duration
+            if currIdx + 1 < n:
+                currTimeStamp = timeSeries[currIdx]
+                nextTimeStamp = timeSeries[currIdx + 1]
+                if (currTimeStamp + duration) > nextTimeStamp:
+                    ans -= ((currTimeStamp + duration) - nextTimeStamp)
+        return ans
