@@ -1,0 +1,54 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def tree2str(self, root: Optional[TreeNode]) -> str:
+        """
+        Idea is very simple
+        if root is none return without doing nothing
+        else
+        add root to string
+        add opening parenthesis
+        recur for left
+        add closing parenthesis
+        add opening parenthesis
+        recur for right
+        add closing parenthesis
+        
+        put adding parenthesis condition under the check 
+        that it should not be a leaf node
+        there is no point addin parenthesis before recuring 
+        
+        OR 
+        for leaf node just add that node val to string and return
+        and need to put those parenthesis condition under the check of 
+        if subtreee exists or not
+        if not exists there is no point of adding empty parenthesis
+        
+        In example this one to one mapping is unclear
+        why to skip empty parenthesis for the right subtree and not for the left subtree?
+        """
+        def isLeaf(root):
+            return root is not None and root.left is None and root.right is None
+            
+        def preorder(root,ans):
+            if root is None:
+                return
+            if isLeaf(root):
+                ans.append(str(root.val))
+                return 
+            ans.append(str(root.val))
+            ans.append("(")
+            preorder(root.left,ans)
+            ans.append(")")
+            if root.right:
+                ans.append("(")
+                preorder(root.right,ans)
+                ans.append(")")
+        
+        ans = []
+        preorder(root,ans)
+        return "".join(ans)
