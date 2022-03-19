@@ -1,0 +1,27 @@
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        """
+        It looks like we will get max sum only when
+        min of pair is between closest elements
+        
+        [1,6,2,6]
+        In this case min(1,6) + min(2,6) will give 3
+        but if we sort them then our colsest ele come adjcent to each other
+        which can give us best answer
+        
+        so sort the array then calculate the sum and return
+        NOTE WHILE ADDING 3RD PARAMETER IN FOR LOOP WE SHOULD ALSO HAVE FIRST PARAMETER
+        
+        TC = o(nlogn + n)
+        sc = O(n)
+        """
+        #STEP 1
+        nums.sort()
+
+        #STEP 2
+        ans = 0
+        n = len(nums)
+        for currIdx in range(0,n,2):
+            currMin = min(nums[currIdx],nums[currIdx + 1])
+            ans += currMin
+        return ans
