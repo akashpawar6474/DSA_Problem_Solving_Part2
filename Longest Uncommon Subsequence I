@@ -1,0 +1,39 @@
+class Solution:
+    def findLUSlength(self, a: str, b: str) -> int:
+        """
+        Idea is to first cache then length of both no
+        and take min and max among them
+        
+        if both lengths are differnet then return maxlen
+        else
+            check if all char are same if yes then return -1
+            else return minLen
+            
+        THis is clear cut observation based problem
+        
+        observation 1:
+        whole string can be subsequence of itself
+        
+        observation 2:
+        if two strings of different length
+        then obivously sting with max len can have subsequence which 
+        cant be same of min len string which can be max uncomman subsequnce
+        
+        observation 3:
+        If both stiring has same len then there are two possibilites
+        1. if both are same then -1
+        2. if atleast on char is differnt then whole string can be uncomman subsequence.
+        
+        tc = O(min(n,m))
+        sc = constant
+        """
+        n = len(a)
+        m = len(b)
+        if n != m:
+            return max(n,m)
+        for currIdx in range(n):
+            if a[currIdx] != b[currIdx]:
+                break
+            if currIdx == n - 1:
+                return -1
+        return n
