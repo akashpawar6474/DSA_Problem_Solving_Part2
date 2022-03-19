@@ -1,0 +1,74 @@
+import math
+class Solution:
+    def findRelativeRanks(self, score: List[int]) -> List[str]:
+        """
+        second Idea is to create another array
+        and into that store tuple of score and its index
+        then sort them by score
+        then into answer array 
+        first 3 scores add gold,silver bronze 
+        else add further ranking.
+        """
+        def geneateScoreAndIdxArr(score,n):
+            scoreAndIdxArr = []
+            for currIdx in range(n):    
+                currPair = (score[currIdx],currIdx)
+                scoreAndIdxArr.append(currPair)
+            return scoreAndIdxArr
+            
+        n = len(score)
+        #STEP 1
+        scoreAndIdxArr = geneateScoreAndIdxArr(score,n)
+        
+        #STEP 2
+        scoreAndIdxArr.sort(key = lambda x : x[0],reverse = True)
+        
+        #STEP3
+        ans = [""] * n
+        for currIdx in range(n):
+            currScore,originalIdx = scoreAndIdxArr[currIdx]
+            if currIdx == 0:
+                ans[originalIdx] = "Gold Medal"
+            elif currIdx == 1:
+                ans[originalIdx] = "Silver Medal"
+            elif currIdx == 2:
+                ans[originalIdx] = "Bronze Medal"
+            else:
+                ans[originalIdx] = str(currIdx + 1)# for 3nd Idx it should be 4th rank
+        return ans
+            
+    def firstTry(self,score):
+        """
+        This is problem to inject sorting into the mind
+        but hack is that we only need 1st 2nd and 3rd maximum
+        
+        so we can find them out in linear time
+        once they are cached then graze over it again and
+        add the ranks
+        
+        as all scores are unique so no need to handle duplicates
+        
+        tc = O(2n) =>O(n)
+        sc = O(1) if output array is excluded
+        """
+        firstMax = -math.inf
+        secondMax = -math.inf
+        ThirdMax = -math.inf
+        
+        for currScore in score:
+            if currScore > firstMax:
+                thirdMax = secondMax
+                secondMax = firstMax
+                firstMax = currScore
+            elif currScore > secondMax:
+                thirdMax = secondMax
+                secondMax = currScore
+            elif currScore > thirdMax:
+                thirdMax = currScore
+        
+        ans = []
+        """
+        this solution would have worked if they just asked to 
+        add rankings for first 3 but as per question it looks like 
+        they are expection rankings for other athletes too
+        """            
