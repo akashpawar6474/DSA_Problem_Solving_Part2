@@ -1,0 +1,22 @@
+class Solution:
+    def findLengthOfLCIS(self, nums: List[int]) -> int:
+        """
+        continious subsequence => subarray I think so am I right?
+        then have two variables currlen and maxLen untill now
+        
+        or is it like sliding window
+        when ever ele at windowEnd gteq ele at windowend + 1
+        then move the windowStart ahead
+        
+        tc = O(n)
+        sc = O(1)
+        """
+        windowStart = 0
+        maxLen = 0
+        n = len(nums)
+        for windowEnd in range(n):
+            currWindow = windowEnd - windowStart + 1
+            maxLen = max(maxLen,currWindow)
+            if windowEnd < n - 1 and nums[windowEnd] >= nums[windowEnd + 1]:
+                windowStart = windowEnd + 1
+        return maxLen
