@@ -1,0 +1,28 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def __init__(self):
+        self.totalTilt = 0
+    def findTilt(self, root: Optional[TreeNode]) -> int:
+        def getTreeSum(root):
+            """
+            Idea is to use the postorder traversal
+            for each parent we will get leftsubtree sum and right subtree sum
+            then calcuate tilt at parent and add to the answer
+            
+            tc = O(n)
+            sc = O(1) if we exclude implicit stack
+            """
+            if root is None:
+                return 0
+            leftSubtreeSum = getTreeSum(root.left)
+            rightSubtreeSum = getTreeSum(root.right)
+            self.totalTilt += abs(leftSubtreeSum - rightSubtreeSum)
+            return root.val + leftSubtreeSum + rightSubtreeSum
+        
+        getTreeSum(root)
+        return self.totalTilt
