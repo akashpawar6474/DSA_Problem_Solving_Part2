@@ -10,4 +10,5 @@ This is second directory because github reached limit of no of files for first r
 394. Reverse String II => just reverse then windows and go ahead
 395. Array Partition I => this is also observation based easy problem
 396. Binary Tree Tilt => simple postorder problem
-397. 
+397. Longest Harmonious Subsequence => simple hashmap and sorting problem
+398. 
