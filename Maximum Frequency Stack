@@ -202,3 +202,37 @@ class FreqStackFirstTry:
             heapq.heappush(self.maxHeap,currRecord)
         return key
 
+--------------------------------------------------------------------------------20 march 2022
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of integers
+    def solve(self, A):
+        def push(stackOfStacks,ht,x):
+            if x not in ht:
+                ht[x] = 0
+            ht[x] += 1
+            if ht[x] > len(stackOfStacks):
+                stackOfStacks.append([])
+            stackOfStacks[ht[x] - 1].append(x)
+            return -1
+
+        def pop(stackOfStacks,ht):
+            top = stackOfStacks[-1].pop()
+            if len(stackOfStacks[-1]) == 0:
+                stackOfStacks.pop()
+            ht[top] -= 1
+            if ht[top] == 0:
+                del ht[top]
+            return top
+
+        stackOfStacks = []
+        ht = {}
+        ans = []
+        for op,ele in A:
+            if op == 1:
+                ans.append(push(stackOfStacks,ht,ele))
+            else:
+                ans.append(pop(stackOfStacks,ht))
+        return ans
+        
+
