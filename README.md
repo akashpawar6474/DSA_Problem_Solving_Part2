@@ -16,4 +16,5 @@ This is second directory because github reached limit of no of files for first r
 400. Second Minimum Node In a Binary Tree => little tricky but did in brute force way
 401. Longest Continuous Increasing Subsequence => this is very simple sliding winow problem
 402. Minimum Domino Rotations For Equal Row => this is very good observation based problem
-403. 
+403. Remove All Adjacent Duplicates In String => classic stack problem same as balanced parenthesis
+404. 
