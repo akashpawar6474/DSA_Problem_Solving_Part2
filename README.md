@@ -17,4 +17,5 @@ This is second directory because github reached limit of no of files for first r
 401. Longest Continuous Increasing Subsequence => this is very simple sliding winow problem
 402. Minimum Domino Rotations For Equal Row => this is very good observation based problem
 403. Remove All Adjacent Duplicates In String => classic stack problem same as balanced parenthesis
-404. 
+404. Remove All Adjacent Duplicates in String II => this is another advanced problem on the top of this.
+405. 
