@@ -1,0 +1,126 @@
+class Solution:
+    def minDominoRotations(self, tops: List[int], bottoms: List[int]) -> int:
+        """
+        Another idea is to calculate the frequencies
+        tops 1 = 1, 2 = 4, 4 = 1
+        bottoms 5 = 1, 2 = 3,6 = 1,3 = 1
+        
+        THis is gem algorithm
+        we will graze over the array and will inc respective freq
+        along with that if both top and bottom has same domino then inc the same also
+        
+        then move from 1 to 6
+        first task is to check if we can get this domino no in either tops or bottoms completely
+        Q.how to do that?
+        take the count of domino in top + count of domino in bottom - count of same domino in both
+        as per above example
+            4 + 3 - 1 => 6
+        which must be totallen if it needs to get satisfied
+        
+        Q.now second question is how to get min rotations
+        => take min count among both array then reduce count of same dominon from it
+        and keep track of minimum
+        
+        tc = O(n + 6)
+        sc = O(6) => O(1)
+        """
+        def prepareMaps(tops,bottoms,totalLen):
+            dominoFreqInTop = [0] * 7
+            dominoFreqInBottom = [0] * 7
+            sameDominoCount = [0] * 7
+            for currIdx in range(totalLen):
+                dominoFreqInTop[tops[currIdx]] += 1
+                dominoFreqInBottom[bottoms[currIdx]] += 1
+                if tops[currIdx] == bottoms[currIdx]:
+                    sameDominoCount[tops[currIdx]] += 1
+            return dominoFreqInTop,dominoFreqInBottom,sameDominoCount
+        
+        def canGetInSameRow(domino,dominoFreqInTop,dominoFreqInBottom,sameDominoCount,totalLen):
+            return dominoFreqInTop[domino] + dominoFreqInBottom[domino] - sameDominoCount[domino] == totalLen
+            
+        
+        totalLen = len(tops)
+        dominoFreqInTop,dominoFreqInBottom,sameDominoCount = prepareMaps(tops,bottoms,totalLen)
+        minRotations = totalLen + 1
+        for domino in range(7):
+            if canGetInSameRow(domino,dominoFreqInTop,dominoFreqInBottom,sameDominoCount,totalLen):
+                rotationsForCurrDomino = min(dominoFreqInTop[domino],dominoFreqInBottom[domino]) - sameDominoCount[domino]
+                minRotations = min(minRotations,rotationsForCurrDomino)
+        return minRotations if minRotations != totalLen + 1 else -1
+            
+            
+    def usingMap(self,tops,bottoms):
+        """
+        There must be some characteristics
+        what if we sort them by tops first then by bottoms
+        
+        sort using tops = [(1,2),(2,5),(2,6),(2,3),(2,2),(4,2)]
+        sort using bottoms = [(1,2),(4,2),(2,2),(2,3),(2,5),(2,6)]
+        
+        another Idea is to calculate the freq along with that store the indicies too
+        key     val
+        2       [4,[0,2,4,5]]
+        1       [1,[1]]
+        4       [1,[3]]
+        
+        top len = 6
+        
+        bottomMap
+        key     val
+        2       [3,[1,3,5]]
+        3       [1,[4]]
+        5       [1,[0]]
+        6       [1,[2]]
+        
+        then move over the keys of topMap
+        if same key is present in bottom map means we have remaing dominos there
+            now check if freq of dominos should be great than total len - freq of tops
+            if yes
+                then graze over the indices
+                and atleast totalLen - freq of tops indicies of dominos 
+                should not present in tops
+                
+        in worst case we will be traversing both arrays once to create map
+        In second iteration also we will be visiting each idx while iterating through map exactly once
+        which will make this solution linear at a cost of linear space complexity
+        
+        tc = O(2n) => O(n)
+        sc = O(n)  
+        """
+        def prepareMap(dominos):
+            ht = {}
+            n = len(dominos)
+            for currIdx in range(n):
+                currDomino = dominos[currIdx]
+                if currDomino not in ht:
+                    ht[currDomino] = {}
+                    ht[currDomino]["freq"] = 1
+                    ht[currDomino]["indices"] = set([currIdx])
+                else:
+                    ht[currDomino]["freq"] += 1
+                    ht[currDomino]["indices"].add(currIdx)
+            return ht
+    
+        def checkIfCompatible(firstMap,secondMap,totalLen):
+            minRotations = totalLen + 1
+            for key,val in firstMap.items():
+                firstMapDominoFreq = val["freq"]
+                firstMapDominoIndices = val["indices"]
+                expectedFreqInSecondMap = totalLen - firstMapDominoFreq
+                if key in secondMap and secondMap[key]["freq"] >= expectedFreqInSecondMap:
+                    matchedIndices = 0
+                    for secondMapDominoIdx in secondMap[key]["indices"]:
+                        if secondMapDominoIdx not in firstMapDominoIndices:
+                            matchedIndices += 1
+                    if matchedIndices >= expectedFreqInSecondMap:
+                        minRotations = min(minRotations,expectedFreqInSecondMap)
+            return minRotations
+                
+            
+        topMap = prepareMap(tops)
+        bottomMap = prepareMap(bottoms)
+        totalLen = len(tops)
+        minRotationToMakeTopIdenticle = checkIfCompatible(topMap,bottomMap,totalLen)
+        minRotationToMakeBottomIdenticle =  checkIfCompatible(bottomMap,topMap,totalLen)
+        ans = min(minRotationToMakeTopIdenticle,minRotationToMakeBottomIdenticle)
+        return ans if ans != totalLen + 1 else -1
