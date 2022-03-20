@@ -1,0 +1,11 @@
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def solve(self, A):
+        ans = []
+        while len(A) > 0:
+            top = A.pop()
+            while len(ans) > 0 and ans[-1] > top:
+                A.append(ans.pop())
+            ans.append(top)
+        return ans
