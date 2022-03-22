@@ -1,0 +1,74 @@
+class Solution:
+    def getSmallestString(self, n: int, k: int) -> str:
+        """
+        second approach is first of all take char array
+        of length n and have a in it
+        
+        now have one pointer on last idx of char list
+        take a loop untill k > 0
+            and update the char on ptr
+            
+        for eg n = 3    k = 27
+        
+        chr arr         a   a   a
+                                |   k = 24
+                                y <= a(1) + 24
+                            
+        for eg. n = 5   k = 73
+        chr arr         a   a   a   a   a   k = 73 - 5 68
+                                        |   min(68,25)
+                                        z   k = 68 - 25 = 43
+                                    |       min(43,25)
+                                    z       k = 43 - 25 = 18
+                                |           min(18,25)
+                                s           k = 18 - min(18,25) = 0
+        Now break out of the loop                                  
+        """
+        chArr = ['a'] * n
+        ptrInChArr = n - 1
+        #reduce existing k values
+        k -= n
+        while k > 0:
+            freqToAdd = min(k,25)
+            chArr[ptrInChArr] = chr(96 + freqToAdd + 1) #1 of existing a
+            ptrInChArr -= 1
+            k -= freqToAdd
+        return "".join(chArr)
+    
+    def twopointers(self,n,k):
+        """
+        idea is to take two pointers on a and b
+        or just take two variables
+        
+        take a loop untill n != 0
+            move a untill (n - 1) * 26 > (k - a)
+                move a by 1
+            add a
+            reduce n by 1
+            reduce k by a
+            move b untill (n - 1) * 26 < (k - a)
+                move b by 1
+            add b
+            reduce n by 1
+            reduce k by b
+         """
+        from collections import deque
+        frontList = []
+        backList = []
+        a = 1
+        b = 26
+        while n > 0 and k > 0:
+            while n == 1 and ((n - 1) * 26) > (k - a):
+                a += 1
+            frontList.append(chr(96 + a))
+            n -= 1
+            k -= a
+            while n == 1 and ((n - 1) * 26) < (k - b):
+                b -= 1
+            backList.append(chr(96 + b))
+            n -= 1
+            k -= b
+        print(frontList,backList)
+            
+        return ""
+        
