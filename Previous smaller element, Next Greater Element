@@ -1,0 +1,25 @@
+class Solution:
+	# @param A : list of integers
+	# @return a list of integers
+	def prevSmaller(self, A):
+		stack = []
+		ans = [-1] * len(A)
+		for currIdx in range(len(A) - 1,-1,-1):
+		    while len(stack) > 0 and A[stack[-1]] > A[currIdx]:
+			ans[stack[-1]] = A[currIdx]
+			stack.pop()
+		    stack.append(currIdx)
+		return ans
+------------------------------------------
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def nextGreater(self, A):
+        st = []
+        ans = [-1] * len(A)
+        for currIdx in range(len(A)):
+            while len(st) > 0 and A[st[-1]] < A[currIdx]:
+                ans[st[-1]] = A[currIdx]
+                st.pop()
+            st.append(currIdx)
+        return ans
