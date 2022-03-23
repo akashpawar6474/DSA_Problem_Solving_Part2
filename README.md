@@ -20,4 +20,5 @@ This is second directory because github reached limit of no of files for first r
 404. Remove All Adjacent Duplicates in String II => this is another advanced problem on the top of this.
 405. Sort stack using another stack(sp - gfg) => very simple problem
 406. Smallest String With A Given Numeric Value => this is classic Observation based problem VVIMP
-407. 
+407. Previous smaller element => very simple problem using stack
+408. 
