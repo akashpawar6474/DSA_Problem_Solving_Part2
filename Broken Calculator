@@ -1,0 +1,104 @@
+class Solution:
+    def brokenCalc(self, startValue: int, target: int) -> int:
+        """
+        Another approach is think backwards
+        if target is even 
+            divide by 2
+        else
+            inc by 1
+        if source val == target returns steps
+        
+        start = 68
+        target = 71
+        
+        
+        71  72  36  
+        
+        so when ever our target 
+        goes beyond startvalue then we have to increase it one by one
+        
+        tc = O(log(target))
+        sc = constant
+        """
+        steps = 0
+        if startValue > target:
+            return startValue - target
+        while target > startValue:
+            if target & 1 == 0:
+                target = target // 2
+            else:
+                target += 1
+            steps += 1
+        return steps + (startValue - target)
+        
+    def firstTry(self,startValue,target):
+        """
+        2   3
+        2   4   3
+        
+        2   5
+        2   4   8   7   6   5
+        2   4   3   6   5
+        
+        2   6
+        2   4   8   7   6
+        2   4   3   6
+        
+        2   7
+        2   4   8   7
+        
+        idea is to double the number
+            if currno == target no
+                return steps
+            if double is lesseq than target OR double - 1 equal to target
+            else reduce by 1
+        
+        2   9
+        2   4   8   7   6   5   10  9
+        2   4   3   6   5   10  9
+        
+        if double == target or double <= target - starting no or double - 1 == target
+            then double
+        else reduce by 1
+        
+        5   8
+        5   4   8
+        
+        3   10
+        3   6   5   10
+        
+        4   17
+        4   8   7   6   12
+        4   8   7   6   5   10  20  19  18  17
+        4   3   6   5   10  20  19  18  17
+        
+        
+        17 18 9 10 5 6 3 4
+        
+        4   18
+        18  9   10  5   6   3   4
+        
+        4   19
+        19  20  10  5   6   3   4
+        
+        3   19
+        19  20  10  5   6   3
+        
+        3   8
+        8   4   2   3
+        
+        6   77
+        77  78  39  40  20  10  5  6
+        """
+        sourceVal = startValue
+        steps = 0
+        while sourceVal != target:
+            currDouble = sourceVal * 2
+            if currDouble == target or currDouble <= (target - startValue) or currDouble == target + 1:
+                sourceVal = currDouble
+                steps += 1
+            else:
+                sourceVal -= 1
+                steps += 1
+        return steps
+                  
