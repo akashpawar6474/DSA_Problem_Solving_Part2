@@ -1,0 +1,165 @@
+Problem Description
+Given an array of integers A.
+
+value of a array = max(array) - min(array).
+
+Calculate and return the sum of values of all possible subarrays of A modulo 109+7.
+
+
+
+Problem Constraints
+1 <= |A| <= 100000
+
+1 <= A[i] <= 1000000
+
+
+
+Input Format
+The first and only argument given is the integer array A.
+
+
+
+Output Format
+Return the sum of values of all possible subarrays of A modulo 109+7.
+
+
+
+Example Input
+Input 1:
+
+ A = [1]
+Input 2:
+
+ A = [4, 7, 3, 8]
+
+
+Example Output
+Output 1:
+
+ 0
+Output 2:
+
+ 26
+
+
+Example Explanation
+Explanation 1:
+
+Only 1 subarray exists. Its value is 0.
+Explanation 2:
+
+value ( [4] ) = 4 - 4 = 0
+value ( [7] ) = 7 - 7 = 0
+value ( [3] ) = 3 - 3 = 0
+value ( [8] ) = 8 - 8 = 0
+value ( [4, 7] ) = 7 - 4 = 3
+value ( [7, 3] ) = 7 - 3 = 4
+value ( [3, 8] ) = 8 - 3 = 5
+value ( [4, 7, 3] ) = 7 - 3 = 4
+value ( [7, 3, 8] ) = 8 - 3 = 5
+value ( [4, 7, 3, 8] ) = 8 - 3 = 5
+sum of values % 10^9+7 = 26
+-----------------------------------
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        """
+        value ( [4] ) = 4 - 4 = 0
+        value ( [7] ) = 7 - 7 = 0
+        value ( [3] ) = 3 - 3 = 0
+        value ( [8] ) = 8 - 8 = 0
+        value ( [4, 7] ) = 7 - 4 = 3
+        value ( [7, 3] ) = 7 - 3 = 4
+        value ( [3, 8] ) = 8 - 3 = 5
+        value ( [4, 7, 3] ) = 7 - 3 = 4
+        value ( [7, 3, 8] ) = 8 - 3 = 5
+        value ( [4, 7, 3, 8] ) = 8 - 3 = 5
+
+        maximum = (4 * 1) + (7 * 4) + (3 * 1) + (8 * 4) = 4 + 28 + 3 + 32 => 67
+        minimum = (4 * 2) + (7 * 1) + (3 * 6) + (8 * 1) => 8 + 7 + 18 + 8 => 41
+
+        Idea is to calculate contributions for each ele
+        for eg. for 7 In how many subarray 7 is maximum element
+        4,7,3,8
+
+        for subarray containing 7 
+        how many start candidates 4,7
+        how many end candidates 7,3
+
+        no of subarrays equal to start * end candidates
+        Now million dollar question is 
+        how to get start and end candidates for each element
+        start candidates for subarrays containing max ele
+        curr ele idx - prev gt ele idx
+        end candidates 
+        next gt ele idx - curr ele idx
+        """
+        def nextGreaterEleIdx(A):
+            n = len(A)
+            ans = [n] * n 
+            st = []
+            for currIdx in range(n):
+                while len(st) > 0 and A[st[-1]] < A[currIdx]:
+                    ans[st[-1]] = currIdx
+                    st.pop()
+                st.append(currIdx)
+            return ans
+        
+        def nextSmallerEleIdx(A):
+            n = len(A)
+            ans = [n] * n 
+            st = []
+            for currIdx in range(n):
+                while len(st) > 0 and A[st[-1]] > A[currIdx]:
+                    ans[st[-1]] = currIdx
+                    st.pop()
+                st.append(currIdx)
+            return ans
+
+        def prevGreaterEleIdx(A):
+            n = len(A)
+            ans = [-1] * n 
+            st = []
+            for currIdx in range(n - 1,-1,-1):
+                while len(st) > 0 and A[st[-1]] < A[currIdx]:
+                    ans[st[-1]] = currIdx
+                    st.pop()
+                st.append(currIdx)
+            return ans
+        
+        def prevSmallerEleIdx(A):
+            n = len(A)
+            ans = [-1] * n 
+            st = []
+            for currIdx in range(n - 1,-1,-1):
+                while len(st) > 0 and A[st[-1]] > A[currIdx]:
+                    ans[st[-1]] = currIdx
+                    st.pop()
+                st.append(currIdx)
+            return ans 
+        
+        NGE = nextGreaterEleIdx(A)
+        NSE = nextSmallerEleIdx(A)
+        PGE = prevGreaterEleIdx(A)
+        PSE = prevSmallerEleIdx(A)
+
+        n = len(A)
+        maxTotal = 0
+        minTotal = 0
+        mod = 10 ** 9 + 7
+        for currIdx in range(n):
+            currEle = A[currIdx]
+            #calculate In how may subarrays curr ele as maximum
+            startingCandidates = currIdx - PGE[currIdx]
+            endingCandidates = NGE[currIdx] - currIdx
+            subarrayCurrEleAsMax = startingCandidates * endingCandidates
+            maxTotal += (subarrayCurrEleAsMax * currEle) % mod 
+
+            #calculate In how many subarrays curr ele as minimum
+            startingCandidates = currIdx - PSE[currIdx]
+            endingCandidates = NSE[currIdx] - currIdx
+            subarrayCurrEleAsMin = startingCandidates * endingCandidates
+            minTotal += (subarrayCurrEleAsMin * currEle) % mod
+        print(minTotal)
+        return (maxTotal - minTotal) % mod
