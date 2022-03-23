@@ -22,3 +22,4 @@ This is second directory because github reached limit of no of files for first r
 406. Smallest String With A Given Numeric Value => this is classic Observation based problem VVIMP
 407. Previous smaller element, Next Greater Element => very simple problem using stack
 408. Broken Calculator => this is reverse thinking problem 
+409. Maximal Rectangle => using largest historgram problem we can solve this
