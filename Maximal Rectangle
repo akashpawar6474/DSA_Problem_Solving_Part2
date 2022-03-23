@@ -1,0 +1,70 @@
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        """
+        [0,0,1]     0   1   1
+        0,1,1       0   1   2
+        1,1,1       1   2   3
+
+        Idea is to consider each row as base for ones as size of histograms
+        then find largest rectangle for each histograms
+
+        creat column prefix matrix for it and whenever we have 0 dont update anything
+        
+        0 1
+        1 0
+        """
+        def columnPrefixMatrix(A):
+            n = len(A)
+            m = len(A[0])
+            for rowIdx in range(n):
+                for colIdx in range(m):
+                    if rowIdx == 0 or int(A[rowIdx][colIdx]) == 0:
+                        A[rowIdx][colIdx] = int(A[rowIdx][colIdx])
+                    elif int(A[rowIdx][colIdx]) != 0:
+                        A[rowIdx][colIdx] = int(A[rowIdx][colIdx]) + A[rowIdx - 1][colIdx]
+            return A 
+        
+        def largesRectangleInHistogram(heights):
+            def getNextSmallestBarIdx(heights):
+                n = len(heights)
+                nextSmallestBarIdx = [n] * n
+                stack = []
+                for currIdx in range(n):
+                    while len(stack) > 0 and heights[stack[-1]] > heights[currIdx]:
+                        top = stack.pop()
+                        nextSmallestBarIdx[top] = currIdx
+                    stack.append(currIdx)
+                return nextSmallestBarIdx
+        
+            def getPrevSmallestBarIdx(heights):
+                n = len(heights)
+                prevSmallestBarIdx = [-1] * n
+                stack = []
+                for currIdx in range(n - 1,-1,-1):
+                    while len(stack) > 0 and heights[stack[-1]] > heights[currIdx]:
+                        top = stack.pop()
+                        prevSmallestBarIdx[top] = currIdx
+                    stack.append(currIdx)
+                return prevSmallestBarIdx
+        
+            def getMaxRectangleArea(heights,nextSmallestBarIdx,prevSmallestBarIdx):
+                maxArea = 0
+                n = len(heights)
+                for currIdx in range(n):
+                    currHeight = heights[currIdx]
+                    currWidth = nextSmallestBarIdx[currIdx] - prevSmallestBarIdx[currIdx] - 1
+                    currArea = currHeight * currWidth
+                    maxArea = max(maxArea,currArea)
+                return maxArea
+        
+            nextSmallestBarIdx = getNextSmallestBarIdx(heights)
+            prevSmallestBarIdx = getPrevSmallestBarIdx(heights)
+            return getMaxRectangleArea(heights,nextSmallestBarIdx,prevSmallestBarIdx)
+            
+        n = len(matrix)
+        maxRectanlgeOfOnes = 0
+        matrix = columnPrefixMatrix(matrix)
+        for currIdx in range(n):
+            currMaxRectangleInCurrRowAsBase = largesRectangleInHistogram(matrix[currIdx])
+            maxRectanlgeOfOnes = max(maxRectanlgeOfOnes,currMaxRectangleInCurrRowAsBase)
+        return maxRectanlgeOfOnes
