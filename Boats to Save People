@@ -1,0 +1,50 @@
+class Solution:
+    def numRescueBoats(self, people: List[int], limit: int) -> int:
+        """
+        Another approach is to sort the array
+        and take two pointer at smallest no and largest no of people
+        
+        then if by adding both ptrs we are withing limit then 
+            inc both ptrs
+        else 
+            dec right ptr
+        inc boat anyway
+        
+        tc = O(nlogn)
+        sc = O(n)
+        """
+        people.sort()
+        first = 0
+        end = len(people) - 1
+        boats = 0
+        while first < end:
+            print(people[first],people[end])
+            if people[first] + people[end] <= limit:
+                first += 1
+                end -= 1
+            else:
+                end -= 1
+            boats += 1
+        return boats + 1 if first == end else boats
+    
+    def firstTry(self,people,limit):
+        """
+        Idea is to sort the people first of all 
+        then take one ptr at start
+        move untill curr capcity < limit
+        
+        [1,2,2,3,3,5]
+        
+        """
+        people.sort()
+        boats = 0
+        currPtr = 0
+        currPeople = people[0]
+        while currPtr < len(people):
+            if currPtr + 1 < n and people[currPtr + 1] + currPeople <= limit:
+                currPtr += 1
+                currPeople += people[currPtr + 1]
+            else:
+                boats += 1
+        return boats
+        
