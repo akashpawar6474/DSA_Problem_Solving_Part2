@@ -1,0 +1,32 @@
+class Solution:
+    def hasAlternatingBits(self, n: int) -> bool:
+        """
+        first thing is to find most significant bit
+        then just check bits untill most significant bits
+        
+        I think no need of significant bit
+        """
+        def getMostSignificantBitPosition(n):
+            position = -1
+            while n > 0:
+                position += 1
+                n = n >> 1
+            return position
+        
+        def getLastBit(currNo):
+            return 0 if currNo & 1 == 0 else 1
+        
+        def isAlternateBits(currNo):
+            prevLastBit = getLastBit(currNo)
+            currNo = currNo >> 1
+            while currNo > 0:
+                currLastBit = getLastBit(currNo)
+                if currLastBit == prevLastBit:
+                    return False
+                prevLastBit = currLastBit
+                currNo = currNo >> 1
+            return True
+                
+        
+        #position = getMostSignificantBitPosition(n)
+        return isAlternateBits(n)
