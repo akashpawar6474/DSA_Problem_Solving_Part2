@@ -25,4 +25,5 @@ This is second directory because github reached limit of no of files for first r
 409. Maximal Rectangle => using largest historgram problem we can solve this
 410. MAX and MIN(sp) => sum of (max - min) of all subarrays of array VERy good problem can be solved using contributions and NGE,NSE,PGE,PSE
 411. Boats to Save People => very simple sorting and two pointer problem
-412. 
+412. Binary Number with Alternating Bits => get prev and current bit and compare
+413. 
