@@ -27,4 +27,6 @@ This is second directory because github reached limit of no of files for first r
 411. Boats to Save People => very simple sorting and two pointer problem
 412. Binary Number with Alternating Bits => get prev and current bit and compare
 413. Two City Scheduling => totally observation based problem..
-414. 
+414. N integers containing only 1, 2 & 3(sp - leetcode[Numbers At Most N Given Digit Set]) => this is classic queue problem
+415. 
+
