@@ -1,0 +1,102 @@
+class Solution:
+    def twoCitySchedCost(self, costs: List[List[int]]) -> int:
+        """
+        Idea is to send all people to city A first?
+        then question remain with moving n people back to city B?
+        
+        Now question is which people should move back to city B?
+        take example
+        [[10,20],[30,200],[400,50],[30,20]]
+        
+        total cost to reach city A for all people
+        10 + 30 + 400 + 30 => 470
+        
+        Now take diff array which will define two things
+        if diff is +ve means person has to spend 
+        extraa diff amount on the top of amount to reaching A
+        to reach B
+        
+        if diff is -ve person will get refund of diff amount
+        from amount to reach A when he reached city B
+        
+        for eg first pair [10,20] diff is 10
+        means person has to spend 10 rs more than cost of city A to reach B
+        
+        another example [400,50] diff is -350
+        means person will get refund of 350 from amount of city A while reaching city B
+        
+        so to get max refunds sort the diff array
+        then add first n elements
+        """
+        def getDiffArr(costs):
+            diff = []
+            for cost in costs:
+                diff.append(cost[1] - cost[0])
+            return diff
+        
+        minCost = 0
+        for cost in costs:
+            minCost += cost[0]
+        
+        diff = getDiffArr(costs)
+        diff.sort()
+        n = len(costs) // 2
+        for currIdx in range(n):
+            minCost += (diff[currIdx])
+        return minCost
+        
+        
+    def firstTry(self,costs):
+        """
+        idea is to use two min heaps
+        and visited set
+        184+259+448 + 118+667+469 
+        this heap idea wont work
+        
+        idea is to sort by start and end time in two array
+        [184,139],[259,770],[448,54],[577,469],[840,118],[926,667]
+        [448,54],[840,118],[184,139],[577,469],[926,667],[259,770]
+        
+        139+259+54+469+118+667
+        184+54+259+118+577+667
+        
+        if we add [1,2][4,3]
+        [1,2][4,3][184,139],[259,770],[448,54],[577,469],[840,118],[926,667]
+        [1,2][4,3][448,54],[840,118],[184,139],[577,469],[926,667],[259,770]    
+        
+        54+118+139+259+577+926
+        
+        [[1,2],[2,5],[10,20],[30,200],[400,50],[30,20]]
+        city A = [10,20],[30,200],[30,20]
+        this logic will fail when we our turn is to pick for b city but for that people
+        city a time is small
+        """
+        costsSortByCityATime = costs.copy()
+        costsSortByCityBTime = costs.copy()
+        costsSortByCityATime.sort(key = lambda x : x[0])
+        costsSortByCityBTime.sort(key = lambda x : x[1])
+        print(costsSortByCityATime,costsSortByCityBTime)
+        visitedPeople = set()
+        minimumCost = 0
+        n = len(costs) 
+        count = 0
+        isATurn = True
+        ptrForCityA = 0
+        ptrForCityB = 0
+        while count < n:
+            if isATurn:
+                while (costsSortByCityATime[ptrForCityA][0],costsSortByCityATime[ptrForCityA][1]) in visitedPeople:
+                    ptrForCityA += 1
+                print(costsSortByCityATime[ptrForCityA])
+                minimumCost += costsSortByCityATime[ptrForCityA][0]
+                visitedPeople.add((costsSortByCityATime[ptrForCityA][0],costsSortByCityATime[ptrForCityA][1]))
+            else:
+                while (costsSortByCityBTime[ptrForCityB][0],costsSortByCityBTime[ptrForCityB][1]) in visitedPeople:
+                    ptrForCityB += 1
+                print(costsSortByCityBTime[ptrForCityB])
+                minimumCost += costsSortByCityBTime[ptrForCityB][1]
+                visitedPeople.add((costsSortByCityBTime[ptrForCityB][0],costsSortByCityBTime[ptrForCityB][1]))
+            count += 1
+            isATurn = not isATurn
+        print(count)
+        return minimumCost
