@@ -1,0 +1,30 @@
+class Solution:
+    # @param A : integer
+    # @return a list of integers
+    def solve(self, A):
+        ans = []
+        if A == 1:
+            return [1]
+        if A == 2:
+            return [1,2]
+        if A == 3:
+            return [1,2,3]
+        ans = [1,2,3]
+        A -= 3
+        currPtr = 0
+        while A > 0:
+            top = ans[currPtr]
+            ans.append(int(str(top) + "1"))
+            A -= 1
+            if A == 0:
+                return ans
+            ans.append(int(str(top) + "2"))
+            A -= 1
+            if A == 0:
+                return ans
+            ans.append(int(str(top) +"3"))
+            A -= 1
+            if A == 0:
+                return ans
+            currPtr += 1
+        return ans
