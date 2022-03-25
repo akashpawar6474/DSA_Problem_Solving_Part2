@@ -1,0 +1,17 @@
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return a list of integers
+    def solve(self, A, B):
+        from collections import deque
+        st = []
+        q = deque(A)
+        for i in range(B):
+            st.append(q.popleft())
+        
+        while st:
+            q.append(st.pop())
+            
+        for i in range(len(A) - B):
+            q.append(q.popleft())
+        return list(q)
