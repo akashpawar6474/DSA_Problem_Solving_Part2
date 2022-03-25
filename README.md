@@ -28,5 +28,6 @@ This is second directory because github reached limit of no of files for first r
 412. Binary Number with Alternating Bits => get prev and current bit and compare
 413. Two City Scheduling => totally observation based problem..
 414. N integers containing only 1, 2 & 3(sp - leetcode[Numbers At Most N Given Digit Set]) => this is classic queue problem
-415. 
+415. Perfect Numbers - Find Nth even length palindromic number formed using digits X and Y(sp - gfg) => this also is classic queue problem
+416. 
 
