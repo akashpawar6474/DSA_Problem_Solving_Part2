@@ -1,0 +1,139 @@
+Problem Description
+Given an integer A, you have to find the Ath Perfect Number.
+
+A Perfect Number has the following properties:
+
+It comprises only 1 and 2.
+
+The number of digits in a Perfect number is even.
+
+It is a palindrome number.
+
+For example, 11, 22, 112211 are Perfect numbers, where 123, 121, 782, 1 are not.
+
+
+
+Problem Constraints
+1 <= A <= 100000
+
+
+
+Input Format
+The only argument given is an integer A.
+
+
+
+Output Format
+Return a string that denotes the Ath Perfect Number.
+
+
+
+Example Input
+Input 1:
+
+ A = 2
+Input 2:
+
+ A = 3
+
+
+Example Output
+Output 1:
+
+ 22
+Output 2:
+
+ 1111
+
+
+Example Explanation
+Explanation 1:
+
+First four perfect numbers are:
+1. 11
+2. 22
+3. 1111
+4. 1221
+Explanation 2:
+
+First four perfect numbers are:
+1. 11
+2. 22
+3. 1111
+4. 1221
+----------------------------------------------------------------
+class Solution:
+    # @param A : integer
+    # @return a strings
+    def solve(self, A):
+        """
+        Now try at mid by popping only one ele 
+        add 11 and 22 inside it to generate next ele 
+
+        11 22 1111 1221 2112 2222 111111 112211 
+        now 9th number comess like 12 + 11 + 11 all strings
+        """
+        from collections import deque
+        if A == 1 or A == 2:
+            return 11 if A == 1 else 22
+        q = deque()
+        q.append("11")
+        q.append("22")
+        A -= 2
+        while A > 0:
+            top = q.popleft()
+            q.append(top[:len(top) // 2] + "11" + top[len(top) // 2 :])
+            A -= 1
+            if A == 0:
+                return q.pop()
+            q.append(top[:len(top) // 2] + "22" + top[len(top) // 2 :])
+            A -= 1
+            if A == 0:
+                return q.pop()
+        return q.pop()
+        
+    def usingAddAtLast(self,A):
+        """
+        assume we have 11,22 in queue
+        then to get next even len aplindrome no
+        we should pop 11 , 22
+        then add 1 as prefix and suffix for above no to get next no
+        1111,1221
+        then add 2 as prefix and suffix for above no get next next no
+        2112,2222
+
+        again pop first two char
+        when ever our count reaches A return last no in queue
+
+        11 22 1111 1221 2112 2222 111111 112211 211112
+        this logic goes wrong at 9th palce 
+        """
+        from collections import deque
+        if A == 1 or A == 2:
+            return 11 if A == 1 else 22
+        q = deque()
+        q.append("11")
+        q.append("22")
+        A -= 2
+        while A > 0:
+            top1 = q.popleft()
+            top2 = q.popleft()
+            q.append("1" + top1 + "1")
+            A -= 1
+            if A == 0:
+                return q.pop()
+            q.append("1" + top2 + "1")
+            A -= 1
+            if A == 0:
+                return q.pop()
+            q.append("2" + top1 + "2")
+            A -= 1
+            if A == 0:
+                return q.pop()
+            q.append("2"+ top2 + "2")
+            A -= 1
+            if A == 0:
+                return q.pop()
+        print(q)
+        return q.pop()
+            
