@@ -30,5 +30,6 @@ This is second directory because github reached limit of no of files for first r
 414. N integers containing only 1, 2 & 3(sp - leetcode[Numbers At Most N Given Digit Set]) => this is classic queue problem
 415. Perfect Numbers - Find Nth even length palindromic number formed using digits X and Y(sp - gfg) => this also is classic queue problem
 416. Reversing Elements Of Queue(sp -gfg) +> this can be done using 3 steps
-417. 
+417. Valid Palindrome II => this is greedy problem with two edge cases
+418. 
 
