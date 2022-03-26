@@ -1,0 +1,87 @@
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        """
+        "eedede"
+         s    e
+          s  e
+        now s and e mismatches so for first time update start and inc mismatch1 count by 1
+        if further also it increases then break 
+        
+        In second case dec start
+        aaada
+        In this case we will get our answer if we dec the end rather than inc the start 
+        so ry bot possibilities
+        """
+        misMatch1 = 0
+        misMatch2 = 0
+        start = 0
+        end = len(s) - 1
+        
+        while start <= end:
+            if s[start] == s[end]:
+                start += 1
+                end -= 1
+            else:
+                start += 1
+                misMatch1 += 1
+        
+        start = 0
+        end = len(s) - 1
+        while start <= end:
+            if s[start] == s[end]:
+                start += 1
+                end -= 1
+            else:
+                end -= 1
+                misMatch2 += 1
+        
+        if misMatch1 <= 1 or misMatch2 <= 1:
+            return True
+        return False
+                
+                
+    def firstTry(self,s):
+        """
+        First thing comes into mind is that
+        each char appears even time except one char
+        
+        so question is if any only two char has odd freq
+        then b reducing any one of them we can 
+        
+        No here it is not asked if we arrange char is palindrome
+        we have to check if it is palindrome
+        
+        So we can have two pointers
+        if there is more than one mismatch then return false
+        
+        "aabbcc" for this counting logic and palindrome propery will return true
+        If we start from mid also it is all about counting mismatches
+        
+        Brute force consider each char as deleted and then check if remaining string
+        is palindorme or not
+        In any case if it is true then return true
+        
+        but that will be n ^ 2 solution.
+        
+        "eedede" ans = true our logic return false
+        """
+        def edgeCases(s,n):
+            if n == 1:
+                return True
+            return s[0] == s[-1]
+        
+        n = len(s)
+        if n < 4:
+            return edgeCases(s,n)
+        
+        start = 0
+        end = len(s) - 1
+        misMatches = 0
+        while start <= end:
+            if s[start] != s[end]:
+                misMatches += 1
+                if misMatches == 2:
+                    return False
+            start += 1 
+            end -= 1
+        return True
