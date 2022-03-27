@@ -1,0 +1,29 @@
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        from collections import deque
+        minQueue = deque()
+        maxQueue = deque()
+        n = len(A)
+        minSum = 0
+        maxSum = 0
+        mod = 10 ** 9 + 7
+        for currIdx in range(n):
+            if len(minQueue) > 0 and minQueue[0] == currIdx - B:
+                minQueue.popleft()
+            if len(maxQueue) > 0 and maxQueue[0] == currIdx - B:
+                maxQueue.popleft()
+            while len(minQueue) > 0 and A[minQueue[-1]] > A[currIdx]:
+                minQueue.pop()
+            while len(maxQueue) > 0 and A[maxQueue[-1]] < A[currIdx]:
+                maxQueue.pop()
+            minQueue.append(currIdx)
+            maxQueue.append(currIdx)
+            if currIdx >= B - 1:
+                if len(maxQueue) > 0:
+                    maxSum = (maxSum + A[maxQueue[0]])
+                if len(minQueue) > 0:
+                    minSum = (minSum + A[minQueue[0]])
+        return (maxSum + minSum) % mod
