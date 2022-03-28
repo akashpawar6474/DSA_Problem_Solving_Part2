@@ -1,5 +1,16 @@
 class Solution:   
-    def maxDepth(self, root: 'Node') -> int:        
+    def maxDepth(self, root: 'Node') -> int: 
+        """
+        we can do this using recursion also 
+        """
+        if root is None:
+            return 0
+        depth = 0
+        for child in root.children:
+            depth = max(depth,self.maxDepth(child))
+        return depth + 1
+    
+    def iterative(self,root):
         def levelOrder(root):
             from collections import deque
             q = deque()
