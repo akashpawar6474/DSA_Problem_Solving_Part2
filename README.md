@@ -36,6 +36,7 @@ This is second directory because github reached limit of no of files for first r
 420. N-ary Tree Preorder Traversal => very simple problem
 421. N-ary Tree Postorder Traversal => this is also very simple problem
 422. N-ary Tree Level Order Traversal => very simple problem using deque
-423. 
+423. Maximum Depth of N-ary Tree => did using level order traversal
+424. 
 
 
