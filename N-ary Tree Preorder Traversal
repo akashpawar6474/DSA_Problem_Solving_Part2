@@ -1,0 +1,33 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        """
+        Here childern is list of nodes
+        of chidern of current node
+        
+        so In preorder visit current node
+        then for each childern
+            visit childern
+            then reucr for it
+    
+        base case if root is NoNe
+            return
+        """
+        def preorder(root,ans):
+            if root is None:
+                return
+            ans.append(root.val)
+            for child in root.children:
+                preorder(child,ans)
+            
+        ans = []
+        preorder(root,ans)
+        return ans
+        
