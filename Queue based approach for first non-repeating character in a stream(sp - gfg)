@@ -1,0 +1,23 @@
+class Solution:
+    # @param A : string
+    # @return a strings
+    def solve(self, A):
+        """
+        abcabc
+        """
+        from collections import deque
+        ans = []
+        q = deque()
+        ht = {}
+        for ch in A:
+            if ch not in ht:
+                ht[ch] = 0
+            ht[ch] += 1
+            q.append(ch)
+            while len(q) > 0 and ht[q[0]] > 1:
+                q.popleft()
+            if len(q) > 0:
+                ans.append(q[0])
+            else:
+                ans.append('#')
+        return "".join(ans)
