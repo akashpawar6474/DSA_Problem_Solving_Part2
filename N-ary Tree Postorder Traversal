@@ -1,0 +1,15 @@
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+        """
+        In this function first recur for child 
+        then visit the root node
+        """
+        def postorder(root,ans):
+            if root is None:
+                return 
+            for child in root.children:
+                postorder(child,ans)
+            ans.append(root.val)
+        ans = []
+        postorder(root,ans)
+        return ans
