@@ -34,6 +34,7 @@ This is second directory because github reached limit of no of files for first r
 418. Sum of min and max(sp - gfg) => this problem is extension of sliding window maximum and minimum and their addition
 419. Search in Rotated Sorted Array II=> same problem with duplicate edge case move both ptrs if values are same
 420. N-ary Tree Preorder Traversal => very simple problem
-421. 
+421. N-ary Tree Postorder Traversal => this is also very simple problem
+422. 
 
 
