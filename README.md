@@ -37,6 +37,7 @@ This is second directory because github reached limit of no of files for first r
 421. N-ary Tree Postorder Traversal => this is also very simple problem
 422. N-ary Tree Level Order Traversal => very simple problem using deque
 423. Maximum Depth of N-ary Tree => did using level order traversal
-424. 
+424. Queue based approach for first non-repeating character in a stream(sp - gfg) => good question combination of queue and hashmap
+425. 
 
 
