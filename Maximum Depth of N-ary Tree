@@ -1,0 +1,20 @@
+class Solution:   
+    def maxDepth(self, root: 'Node') -> int:        
+        def levelOrder(root):
+            from collections import deque
+            q = deque()
+            q.append(root)
+            currLevel = 0
+            while q:
+                size = len(q)
+                for i in range(size):
+                    front = q.popleft()
+                    for child in front.children:
+                        q.append(child)
+                currLevel += 1
+            return currLevel
+        
+        if root is None:
+            return 0
+        return levelOrder(root)
+            
