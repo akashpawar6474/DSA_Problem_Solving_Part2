@@ -32,6 +32,7 @@ This is second directory because github reached limit of no of files for first r
 416. Reversing Elements Of Queue(sp -gfg) +> this can be done using 3 steps
 417. Valid Palindrome II => this is greedy problem with two edge cases
 418. Sum of min and max(sp - gfg) => this problem is extension of sliding window maximum and minimum and their addition
-419. 
+419. Search in Rotated Sorted Array II=> same problem with duplicate edge case move both ptrs if values are same
+420. 
 
 
