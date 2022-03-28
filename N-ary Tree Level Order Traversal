@@ -1,0 +1,21 @@
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        def levelOrder(root):
+            from collections import deque
+            q = deque()
+            q.append(root)
+            ans = []
+            while q:
+                size = len(q)
+                currLevel = []
+                for i in range(size):
+                    front = q.popleft()
+                    currLevel.append(front.val)
+                    for child in front.children:
+                        q.append(child)
+                ans.append(currLevel)
+            return ans
+        
+        if root is None:
+            return []
+        return levelOrder(root)
