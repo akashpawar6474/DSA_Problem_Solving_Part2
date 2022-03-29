@@ -1,0 +1,67 @@
+class Solution:
+    def shortestToChar(self, s: str, c: str) -> List[int]:
+        """
+        we can reduce the space by the trick
+        Idea is first scroll from left and fill the output array
+        and then move from right to check currvalue and compare with existing value 
+        then add minimum
+        """
+        def fromLeftToRight(s,target,n):
+            ans = [math.inf] * n
+            for currIdx in range(n):
+                if s[currIdx] == target:
+                    ans[currIdx] = 0
+                elif currIdx > 0 and s[currIdx] != math.inf:
+                    ans[currIdx] = ans[currIdx - 1] + 1
+            return ans
+    
+        def fromRightToLeft(s,target,n,ans):
+            distanceFromRightForNextIdx = ans[n - 1]
+            for currIdx in range(n - 2,-1,-1):
+                distanceFromRightForCurrIdx = -1
+                if s[currIdx] == target:
+                    distanceFromRightForCurrIdx = 0
+                else:
+                    distanceFromRightForCurrIdx = distanceFromRightForNextIdx + 1
+                ans[currIdx] = min(ans[currIdx],distanceFromRightForCurrIdx)
+                distanceFromRightForNextIdx = distanceFromRightForCurrIdx
+            return ans
+        
+        n = len(s)
+        distanceFromLeft = fromLeftToRight(s,c,n)
+        return fromRightToLeft(s,c,n,distanceFromLeft)     
+                
+    def betterOne(self,s,c):
+        """
+        Idea is to create two arrays
+        charInLeft and charInRight
+        charInLeft[i] represents distance of closest target char in left
+        and vice versa for charInright
+        
+        Now take the min among them
+        """
+        def setDistanceForTargetInLeft(s,target,n):
+            charInLeft = [math.inf] * n
+            for currIdx in range(n):
+                if s[currIdx] == target:
+                    charInLeft[currIdx] = 0
+                elif currIdx > 0 and s[currIdx] != math.inf:
+                    charInLeft[currIdx] = charInLeft[currIdx - 1] + 1
+            return charInLeft
+        
+        def setDistanceForTargetInRight(s,target,n):
+            charInRight = [math.inf] * n
+            for currIdx in range(n - 1,-1,-1):
+                if s[currIdx] == target:
+                    charInRight[currIdx] = 0
+                elif currIdx < n - 1 and s[currIdx] != math.inf:
+                    charInRight[currIdx] = charInRight[currIdx + 1] + 1
+            return charInRight
+        
+        n = len(s)
+        charInLeft = setDistanceForTargetInLeft(s,c,n)
+        charInRight = setDistanceForTargetInRight(s,c,n)
+        ans = [-1] * n
+        for currIdx in range(n):
+            ans[currIdx] = min(charInLeft[currIdx],charInRight[currIdx])
+        return ans
