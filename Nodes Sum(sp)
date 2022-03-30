@@ -1,0 +1,26 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, A):
+        def iterative(A):
+            st = []
+            count = 0
+            if A is None:
+                return 0
+            st.append(A)
+            while st:
+                top = st.pop()
+                count += top.val
+                if top.right:
+                    st.append(top.right)
+                if top.left:
+                    st.append(top.left)
+            return count
+        return iterative(A)
