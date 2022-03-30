@@ -42,6 +42,7 @@ This is second directory because github reached limit of no of files for first r
 426. Shortest Distance to a Character => linear time and linear space by using two extraa arrays for precomputation
 427. Nodes Count(sp) => simple problem
 428. Nodes Sum(sp) => total nodes sum
+429. Tree Height(sp) => height of tree (leaf node height is 0)
 
 
 
