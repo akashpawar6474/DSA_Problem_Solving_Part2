@@ -1,0 +1,41 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, A):
+        def iterative(A):
+            st = []
+            count = 0
+            if A is None:
+                return 0
+            st.append(A)
+            while st:
+                top = st.pop()
+                count += 1
+                if top.right:
+                    st.append(top.right)
+                if top.left:
+                    st.append(top.left)
+            return count
+        """
+        idea is to use simple postorder traversal
+        it will get recursion depth exceed for 10 ^5 nodes only
+        """
+        def postorder(root):
+            if root is None:
+                return 0
+            leftSubtreeNodes = postorder(root.left)
+            rightSubtreeNodes = postorder(root.right)
+            return leftSubtreeNodes + rightSubtreeNodes + 1
+        
+        return iterative(A)
+
+
+
+
