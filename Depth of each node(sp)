@@ -1,0 +1,13 @@
+    static void solve(TreeNode A){
+        preorder(A,1);
+    }
+    public static void preorder(TreeNode A,int currDepth){
+        if (A == null){
+            return;
+        }
+        A.depth = currDepth;
+        preorder(A.left,currDepth + 1);
+        preorder(A.right,currDepth + 1);
+    }
+
+        
