@@ -41,7 +41,7 @@ This is second directory because github reached limit of no of files for first r
 425. Infix to Postfix(sp - gfg) => this is very simple problem with some thought process and edge cases
 426. Shortest Distance to a Character => linear time and linear space by using two extraa arrays for precomputation
 427. Nodes Count(sp) => simple problem
-428. 
+428. Nodes Sum(sp) => total nodes sum
 
 
 
