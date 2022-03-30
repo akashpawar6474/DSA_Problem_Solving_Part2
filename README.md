@@ -43,6 +43,8 @@ This is second directory because github reached limit of no of files for first r
 427. Nodes Count(sp) => simple problem
 428. Nodes Sum(sp) => total nodes sum
 429. Tree Height(sp) => height of tree (leaf node height is 0)
+430. Nodes Max(sp) => finding max ele in binary tree
+431. 
 
 
 
