@@ -46,7 +46,8 @@ This is second directory because github reached limit of no of files for first r
 430. Nodes Max(sp) => finding max ele in binary tree
 431. Difference between sums of odd level and even level nodes of a Binary Tree(sp - gfg) => simple level order problem
 432. Same Tree => very simple problem
-433. 
+433. Depth of each node(sp) => did in java using preorder
+434. 
 
 
 
