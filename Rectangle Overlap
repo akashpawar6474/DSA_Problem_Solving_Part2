@@ -1,0 +1,66 @@
+class Solution:
+    def isRectangleOverlap(self, rec1: List[int], rec2: List[int]) -> bool:
+        """
+        we have to think in backwards directions
+        and think of In how many ways rectangles doesnt overlap
+        case 1
+                    x2y2                x4,y4
+                R1                  R2
+            x1,y1               x3,y3
+            
+            If x3 >= x2 then they dont overlap
+            
+        case 2
+                    x4y4                x2y2
+                R2                  R1
+            x3,y3               x1y1
+            
+            if x1 >= x4 then they dont overlap
+            
+        case 3
+                        x4y4
+                    R2
+                x3y3
+                
+                        x2y2
+                    R1
+                x1y1
+            if y3 >= y2 then they dont overlap
+            
+        case 4
+                        x2y2
+                    R1
+                x1y1
+            
+                        x4y4
+                    R2
+                x3y3
+            
+            if y1 >= y4 they they dont overlap
+        """
+        case1 = rec2[0] >= rec1[2]
+        case2 = rec1[0] >= rec2[2]
+        case3 = rec2[1] >= rec1[3]
+        case4 = rec1[1] >= rec2[3]
+        if case1 or case2 or case3 or case4:
+            return False
+        return True
+    
+    def firstTry(self,rec1,rec2):
+        """
+        All overlapping scenarios are
+        like we have 4 possibilities
+        TR OR BL of first rectangle can come inside TL and BR of rectangle 2
+        and vice versa if None of them is happening then return true
+        """
+        if rec2[0] <= rec1[0] < rec2[2] and rec2[1] <= rec1[1] <= rec2[3]:
+            return True
+        elif rec2[0] <= rec1[2] <= rec2[2] and rec2[1] <= rec1[3] <= rec2[3]:
+            return True
+        """
+        elif rec1[0] < rec2[0] < rec1[2] and rec1[1] <= rec2[1] < rec1[3]:
+            return True
+        elif rec1[0] < rec2[2] < rec1[2] and rec1[1] < rec2[3] < rec1[3]:
+            return True
+        """
+        return False
