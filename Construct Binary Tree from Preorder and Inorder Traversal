@@ -1,0 +1,24 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        def recursion(inorderMap,preorderQueue,start,end):
+            if start > end:
+                return
+            root = TreeNode(preorderQueue.popleft())
+            idx = inorderMap[root.val]
+            root.left = recursion(inorderMap,preorderQueue,start,idx - 1)
+            root.right = recursion(inorderMap,preorderQueue,idx + 1,end)
+            return root
+
+        from collections import deque
+        inorderMap = {  inorder[idx] : idx for idx in range(len(inorder))}
+        preorderQueue = deque(preorder)
+        start = 0
+        end = len(preorderQueue) - 1
+        return recursion(inorderMap,preorderQueue,start,end)
+
