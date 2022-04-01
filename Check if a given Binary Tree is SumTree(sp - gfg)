@@ -1,0 +1,36 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    def __init__(self):
+        self.isValid = 1
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, A):
+        """
+        Idea is to to do the postorde traversal
+        we need two base cases if root is None return 0 and 
+        if root is leaf then return the value
+
+        we will use global variable here
+        """
+        def isLeaf(root):
+            return root is not None and root.left is None and root.right is None
+
+        def postorder(root):
+            if root is None:
+                return 0
+            if isLeaf(root):
+                return root.val
+            leftSubtreeSum = postorder(root.left)
+            rightSubtreeSum = postorder(root.right)
+            if leftSubtreeSum + rightSubtreeSum != root.val:
+                self.isValid = 0
+            return root.val + leftSubtreeSum + rightSubtreeSum
+        
+        postorder(A)
+        return self.isValid
