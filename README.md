@@ -52,7 +52,7 @@ This is second directory because github reached limit of no of files for first r
 436.  Binary Tree Level Order Traversal II => using list or deque and level order traversal
 437. Construct Binary Tree from Preorder and Inorder Traversal => very good problem
 438. Construct Binary Tree from Inorder and Postorder Traversal => very good problem just reverse of above problem
-439. 
+439. Check if a given Binary Tree is SumTree(sp - gfg) => kahin pe tir kahin pe nishana need traversal to get sum of tree if any root.val != childern sum then set false
 
 
 
