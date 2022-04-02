@@ -54,7 +54,8 @@ This is second directory because github reached limit of no of files for first r
 438. Construct Binary Tree from Inorder and Postorder Traversal => very good problem just reverse of above problem
 439. Check if a given Binary Tree is SumTree(sp - gfg) => kahin pe tir kahin pe nishana need traversal to get sum of tree if any root.val != childern sum then set false
 440. Binary Tree Zigzag Level Order Traversal => very imp level order and deque problem
-441. 
+441. Lowest Common Ancestor in a Binary Tree(sp - gfg) => USIng values we have to find the path of both nodes then find lca
+442. 
 
 
 
