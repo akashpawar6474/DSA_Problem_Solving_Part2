@@ -1,0 +1,38 @@
+	# @param A : root node of tree
+	# @param B : integer
+	# @param C : integer
+	# @return an integer
+	def lca(self, A, B, C):
+        """
+		idea is to find the paths then find LCA
+		"""
+		def getPath(root,target,st):
+			if root is None:
+				return None
+			if root.val == target:
+				st.append(root.val)
+				return root
+			inLeft = getPath(root.left,target,st)
+			inRight = getPath(root.right,target,st)
+			if inLeft or inRight:
+				st.append(root.val)
+				return root
+			return None
+
+		def findLCA(pathToB,pathToC):
+			bPtr = len(pathToB) - 1
+			cPtr = len(pathToC) - 1
+			while bPtr > -1 and cPtr > -1 and pathToB[bPtr] == pathToC[cPtr]:
+				bPtr -= 1
+				cPtr -= 1
+			return pathToB[bPtr + 1]
+ 		
+
+		pathToB = []
+		getPath(A,B,pathToB)
+		pathToC = []
+		getPath(A,C,pathToC)
+		if len(pathToB) == 0 or len(pathToC) == 0:
+			return -1
+		return findLCA(pathToB,pathToC)		
+			
