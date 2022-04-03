@@ -1,0 +1,28 @@
+class Solution:
+    def transpose(self, matrix: List[List[int]]) -> List[List[int]]:
+        """
+        1 2 3   => 1 4
+        4 5 6       2 5
+                    3 6
+                    
+        square can be transposed in place
+        but for rectangle we need extraa space to fill the array manually
+        tc = O(n * m)
+        sc = O(n * m) considering output array
+        """
+        def transposeSquare(matrix):
+            n = len(matrix)
+            for i in range(n):
+                for j in range(i + 1):
+                    matrix[i][j],matrix[j][i] = matrix[j][i],matrix[i][j]
+            return matrix
+        
+        if len(matrix) == len(matrix[0]):
+            return transposeSquare(matrix)
+        else:
+            newMatrix = [[0 for y in range(len(matrix))] for x in range(len(matrix[0]))]
+            for i in range(len(matrix)):
+                for j in range(len(matrix[0])):
+                    newMatrix[j][i] = matrix[i][j]
+            return newMatrix
+                
