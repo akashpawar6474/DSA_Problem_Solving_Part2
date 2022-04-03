@@ -1,0 +1,48 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+import math
+class Solution:
+    # @param A : root node of tree
+    # @param B : list of integers
+    # @return a list of list of integers
+    def solve(self, A, B):
+        def findFloor(root,target):
+            if root is None:
+                return -1
+            curr = root
+            floor = -1
+            while curr:
+                if curr.val == target:
+                    return curr.val
+                elif curr.val < target:
+                    floor = curr.val
+                    curr = curr.right
+                else:
+                    curr = curr.left
+            return floor
+
+        def findCeil(root,target):
+            if root is None:
+                return -1
+            curr = root
+            ceil = -1
+            while curr:
+                if curr.val == target:
+                    return curr.val
+                elif curr.val < target:
+                    curr = curr.right
+                else:
+                    ceil = curr.val
+                    curr = curr.left
+            return ceil
+
+        ans = []
+        for target in B:
+            floor = findFloor(A,target)
+            ceil = findCeil(A,target)
+            ans.append([floor,ceil])
+        return ans
