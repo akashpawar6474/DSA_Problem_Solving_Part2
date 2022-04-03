@@ -57,7 +57,8 @@ This is second directory because github reached limit of no of files for first r
 441. Lowest Common Ancestor in a Binary Tree(sp - gfg) => USIng values we have to find the path of both nodes then find lca
 442. Delete Node in a BST => this is very important problem
 443. Validate Binary Search Tree => very simple and important problem
-444. 
+444. Convert Sorted Array to Binary Search Tree => find the mid make it root then recur for left and right
+445. 
 
 
 
