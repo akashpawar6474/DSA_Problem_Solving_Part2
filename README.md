@@ -59,7 +59,8 @@ This is second directory because github reached limit of no of files for first r
 443. Validate Binary Search Tree => very simple and important problem
 444. Convert Sorted Array to Binary Search Tree => find the mid make it root then recur for left and right
 445. Floor and Ceil in BST(sp - gfg) => finding floor and ceil in bst is very easy
-446. 
+446. BST nodes in a range(sp - gfg) => first locate node in range then recur for left and right subtree
+447. 
 
 
 
