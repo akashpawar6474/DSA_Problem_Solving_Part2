@@ -1,0 +1,25 @@
+    def solve(self, A, B, C):
+        """
+        tc = O(h + k) h = height of tree, k nodes in that given range
+        """
+        def useBSTProp(root,start,end):
+            if root is None:
+                return 0
+            if start <= root.val <= end:
+                return 1 + useBSTProp(root.left,start,end) + useBSTProp(root.right,start,end)
+            elif root.val < start:
+                return useBSTProp(root.right,start,end)
+            else:
+                return useBSTProp(root.left,start,end)
+            
+        def inorder(root,start,end):
+            if root is None:
+                return 0
+            inLeft = inorder(root.left,start,end)
+            if start <= root.val <= end:
+                inLeft += 1
+            inRight = inorder(root.right,start,end)
+            return inLeft + inRight
+        
+        return useBSTProp(A,B,C)
+
