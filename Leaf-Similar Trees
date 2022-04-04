@@ -7,6 +7,47 @@
 class Solution:
     def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
         """
+        This is very beautiful problem
+        assume we have requirement where we want leaft node
+        one by one and after getting each node we have to process its data
+        then we will move to the next leaf node
+        
+        In that case we will push root node to the stack and 
+        take a loop untill stack is not empty
+            and call getleaf function
+                pop the top node from the stack
+                if has left child push to the stack
+                if has right chil dpush to the stack
+                if it is leaf then return the value
+        now process the value and call the function again
+        
+        tc = O(n + m)
+        sc = O(nh + mh) heights
+        LEAF ITERATOR
+        """
+        def getLeaf(st):
+            while True:
+                top = st.pop()
+                if top.right:
+                    st.append(top.right)
+                if top.left:
+                    st.append(top.left)
+                if top.left is None and top.right is None:
+                    return top.val
+        
+        st1 = []
+        st1.append(root1)
+        st2 = []
+        st2.append(root2)
+        
+        while st1 and st2:
+            if getLeaf(st1) != getLeaf(st2):
+                return False
+        return not st1 and not st2
+                
+            
+    def firstTry(self,root1,root2):
+        """
         we will do traversal and will push all leafs into queue
         and in second traversal if we found leaf and front node is same then pop it
         else mark it as false
