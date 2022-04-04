@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+        """
+        we will do traversal and will push all leafs into queue
+        and in second traversal if we found leaf and front node is same then pop it
+        else mark it as false
+        
+        tc = O(n + m)
+        sc = O(max(last level nodes of n or m))
+        """
+        def preorder(root,q):
+            if root is None:
+                return
+            if root.left is None and root.right is None:
+                q.append(root.val)
+            preorder(root.left,q)
+            preorder(root.right,q)
+        
+        def isValid(root,q):
+            if root is None:
+                return True
+            if root.left is None and root.right is None:
+                if q and root.val == q[0]:
+                    q.popleft()
+                else:
+                    return False
+            return isValid(root.left,q) and isValid(root.right,q)
+        
+        from collections import deque
+        q = deque()
+        preorder(root1,q)
+        isValid = isValid(root2,q)
+        return False if q else isValid
