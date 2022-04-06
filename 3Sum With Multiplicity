@@ -1,0 +1,75 @@
+class Solution:
+    def threeSumMulti(self, arr: List[int], target: int) -> int:
+        """
+        Idea is to sort the array first
+        then use the same approach as 3 sum with slight difference
+        
+        then fix one pointer
+        and use two pointers in remaining array
+        
+        then there are two cases
+        if values at two nodes making the target
+            they are differnt
+                count the occurrances
+                and multiply them
+                move start and end in respective directions
+            they are same
+                then count the occurance and count occuranceC2
+                we have figure out how many combinations can happen with that no of 
+                occurances with 2 as capacity
+                
+        for every time calculation ncr we need fact so precompute those factorials
+        tc= O(n ^ 2)
+        sc = O(1)
+        """
+        def preComputeFact():
+            fact = [0] * 3001
+            fact[1] = 1
+            for i in range(2,3001):
+                fact[i] = i * fact[i - 1]
+            return fact
+        
+        def getNCR(n,r,fact):
+            return (fact[n] // (fact[r] * fact[n - r])) if n != 2 else 1
+        
+        def getDupletsNoWithTarget(arr,start,end,target,fact,mod):
+            duplets = 0
+            while start < end:
+                currTotal = arr[start] + arr[end]
+                if currTotal < target:
+                    start += 1
+                elif currTotal > target:
+                    end -= 1
+                else:
+                    if arr[start] == arr[end]:
+                        occurancesOfSameNo = end - start + 1
+                        combinations = getNCR(occurancesOfSameNo,2,fact) % mod
+                        duplets = (duplets + combinations) % mod
+                        start = end + 1
+                        end = start - 1
+                    else:
+                        occOfStart = 1
+                        while arr[start] == arr[start + 1]:
+                            start += 1
+                            occOfStart += 1
+                        occOfEnd = 1
+                        while arr[end] == arr[end - 1]:
+                            end -= 1
+                            occOfEnd += 1
+                        currDuplets = occOfStart * occOfEnd
+                        duplets = (duplets + currDuplets) % mod
+                        start += 1
+                        end -= 1
+            return duplets
+        
+        
+        fact = preComputeFact()
+        arr.sort()
+        mod = (10 ** 9) + 7
+        triplets = 0
+        n = len(arr)
+        for i in range(n - 2):
+            newTarget = target - arr[i]
+            triplets = (triplets + getDupletsNoWithTarget(arr,i + 1,n - 1,newTarget,fact,mod)) % mod
+        return triplets
+                
