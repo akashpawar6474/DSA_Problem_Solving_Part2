@@ -1,0 +1,46 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @param B : integer
+    # @param C : integer
+    # @return an integer
+    def solve(self, A, B, C):
+        """
+        first locate the lowest comman ancestor
+        then find smallest node in left subtree and largetst node in right subtree
+
+        B is smallest 
+        C is largest
+
+                        32
+                    25      46
+                17   27   40    49
+            9
+        """
+        def getEdgeCount(curr,target):
+            count = 0
+            while curr and curr.val != target:
+                if curr.val > target:
+                    curr = curr.left
+                else:
+                    curr = curr.right
+                count += 1
+            return count
+
+        if B > C:
+            B,C = C,B 
+        curr = A 
+        while curr.val < B or curr.val > C:
+            if curr.val < B:
+                curr = curr.right
+            else:
+                curr = curr.left
+        edgesUntillB = getEdgeCount(curr,B)
+        edgesUntillC = getEdgeCount(curr,C)
+        return edgesUntillB + edgesUntillC
