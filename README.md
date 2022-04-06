@@ -63,7 +63,8 @@ This is second directory because github reached limit of no of files for first r
 447. Transpose Matrix => very easy implementation based problem
 448. Leaf-Similar Trees => using queue and preorder traversal
 449. 3Sum With Multiplicity => coupple of things are combined
-450. 
+450. Kth Smallest Element In BST => very simple problem using inorder
+451. 
 
 
 
