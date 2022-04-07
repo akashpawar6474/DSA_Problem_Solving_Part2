@@ -65,7 +65,7 @@ This is second directory because github reached limit of no of files for first r
 449. 3Sum With Multiplicity => coupple of things are combined
 450. Kth Smallest Element in a BST => very simple problem using inorder
 451. Shortest distance between two nodes in BST(sp - gfg) => first locate the ancestor then calculate edges
-452. 
+452. Last Stone Weight => this is very easy maxHeap problem
 
 
 
