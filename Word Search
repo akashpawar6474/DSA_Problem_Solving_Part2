@@ -1,0 +1,67 @@
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        """
+        [["A","B","C","E"],
+         ["S","F","C","S"],
+         ["A","D","E","E"]]
+         
+        word = ABCCED
+                    NEI
+                 nei A nei
+                    nei
+        
+        base case if our word
+            if curr Idx == len of word
+                return True
+                
+        graze over all the cells
+            if cellValue == first Idx char
+                visited = set
+                add curr coordinates to the set
+                for each nei
+                    dfs(grid,word,curr Idx = 0,nei co - ordinates,set)
+        
+        dfs(grid,word,currIdx,x,y,set)
+            if currIdx == len(word)
+                return True
+            if grid[x][y] != word[currIdx]
+                return False
+            nei = []
+            visited.add(x,y)
+            graze over nei
+                if cell is inbound and curr co ordinates not into set
+                    dfs(grid,word,currIdx,newx,newy,set)
+                
+        """
+        def getNei(x,y):
+            return [(x + 1,y),(x - 1,y),(x,y + 1),(x,y - 1)]
+            
+        def isWordExists(board,word,currIdx,rowNo,colNo,visited):
+            if currIdx == len(word) - 1:
+                return True
+            if (rowNo,colNo) in visited:
+                return False
+            visited.add((rowNo,colNo))
+            nei = getNei(rowNo,colNo)
+            for newx,newy in nei:
+                if 0 <= newx < len(board) and 0 <= newy < len(board[0]) and (newx,newy) not in visited:
+                    if board[newx][newy] == word[currIdx + 1]:
+                        if isWordExists(board,word,currIdx + 1,newx,newy,visited) == True:
+                            return True
+                        else:
+                            visited.remove((newx,newy))
+                  
+        
+        n = len(board)
+        m = len(board[0])
+        
+        for rowNo in range(n):
+            for colNo in range(m):
+                currCellChar = board[rowNo][colNo]
+                if currCellChar == word[0]:
+                    visited = set()
+                    if isWordExists(board,word,0,rowNo,colNo,visited) == True:
+                        return True
+                    
+        return False
+        
