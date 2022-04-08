@@ -1,0 +1,49 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def solve(self, A):
+        def getLeftBoundary(root):
+            leftBoundary = []
+            curr = root
+            while curr:
+                leftBoundary.append(curr.val)
+                if curr.left:
+                    curr = curr.left
+                else:
+                    curr = curr.right
+            return leftBoundary
+
+        def getRightBoundary(root):
+            rightBoundary = []
+            curr = root.right
+            while curr:
+                rightBoundary.append(curr.val)
+                if curr.right:
+                    curr = curr.right
+                else:
+                    curr = curr.left
+            return rightBoundary
+
+        def getLeafNodes(root,leafs):
+            if root is None:
+                return
+            getLeafNodes(root.left,leafs)
+            if root.left is None and root.right is None:
+                leafs.append(root.val)
+            getLeafNodes(root.right,leafs)
+
+        leftBoundary = getLeftBoundary(A)
+        leftBoundary.pop()
+        rightBoundary = getRightBoundary(A)
+        rightBoundary.reverse()
+        rightBoundary.pop(0)
+        leafs = []
+        getLeafNodes(A,leafs)
+        return leftBoundary + leafs + rightBoundary
