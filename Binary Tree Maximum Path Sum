@@ -1,0 +1,50 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+import math
+class Solution:
+    def __init__(self):
+        self.maxSum = -math.inf
+	# @param A : root node of tree
+	# @return an integer
+	def maxPathSum(self, A):
+        """
+        we will slightly modify getHeight function
+        and instead of returning count of node
+        we will return max sum path from left subtree
+        and max sum path in right subtree
+
+        if any one of them is -ve then make is 0
+        as we dont want to go -ve
+
+        In worst case also if our curr node has -ve value
+        by adding more -ve sum it become larger -ve and 
+        we want maximum so only root value is feasible here
+
+        take sum of both paths from subtree add curr root node value
+        and keep track of maximum
+
+        and at last we have to return max path sum 
+        reaching untill curr node
+        by taking max path sum among left and right subtree and adding root value to it
+        """
+        def getMaxPathSumUntillRootToLeaf(root):
+            if root is None:
+                return 0
+
+            leftSubtreePathSum = getMaxPathSumUntillRootToLeaf(root.left)
+            rightSubtreePathSum = getMaxPathSumUntillRootToLeaf(root.right)
+
+            leftSubtreePathSum = max(leftSubtreePathSum,0)
+            rightSubtreePathSum = max(rightSubtreePathSum,0)
+
+            currSum = root.val + leftSubtreePathSum + rightSubtreePathSum
+            self.maxSum = max(currSum,self.maxSum)
+
+            return max(leftSubtreePathSum,rightSubtreePathSum) + root.val
+        
+        getMaxPathSumUntillRootToLeaf(A)
+        return self.maxSum
