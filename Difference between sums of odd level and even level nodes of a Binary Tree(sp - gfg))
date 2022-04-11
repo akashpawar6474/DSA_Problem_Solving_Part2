@@ -1,0 +1,27 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, A):
+        from collections import deque
+        evenLevelSum = 0
+        oddLevelSum = 0
+        q = deque()
+        q.append((A,1))
+        while q:
+            node,level = q.popleft()
+            if level & 1 == 0:
+                evenLevelSum += node.val
+            else:
+                oddLevelSum += node.val
+            if node.left:
+                q.append((node.left,level + 1))
+            if node.right:
+                q.append((node.right,level + 1))
+        return oddLevelSum - evenLevelSum        
