@@ -1,0 +1,77 @@
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        """
+                # Given an amount n. s=[s1, s2, s3] all positive
+        # Target is how many ways I can reach n using the elements in s.
+        # n=4 s={1,2}  ans = 4
+
+        ways => 1,1,1,1
+                1,1,2
+                2,2 => 4 ways
+
+                                        fn(4,0)
+                  / 2                                  \1
+                 fn(3,0)                              fn(4,1)
+                / 2                 \0                    |1   \0
+              fn(2,0)              fn(3,1)             fn(2,1)  fn(2,2)
+              /1         \1         / 0    \0            | 1  \ 0
+          fn(1,0)        fn(2,1)   fn(1,1)  fn(3,2)    fn(0,1)  fn(2,2)
+            / 1   0\          |1
+         fn(0,0)  fn(1,1)   fn(0,1)
+
+
+        fun(amount,currIdx,den) return no of ways
+
+        base case
+          if currIdx == len(den) or amount < den[currIdx] => return 0
+          if amount == 0  return 1
+
+        logic
+          currDenomination  = den[currIdx]
+          if currDenomination <= amount
+          w1 =  fn(amount - currDenomination, currIdx, den)
+          w1 = fn(amount, currIdx, den)
+
+          return w1 + w2
+
+        tc = O(nlogn + amt * n)
+        sc = O(amt * n)
+
+        ------------------------------
+        matrix = amt * n
+
+          amt = 4  den =  1,2
+
+              0 1  cols idx of den array
+          0   0 0 
+          1   1 0
+          2   0 1
+          3   0 0
+          4   0 0 <= this value
+
+        1. fill amt for each den idx we will fill it as 1
+
+        2. ht[amt][currIdx] = ht[amt - den[currIdx]][currIdx] + ht[amt][currIdx - 1]
+                              by choosing currIdx                by skipping idx
+
+
+        """
+        def getNoOfWays(amt, currIdx, den, ht):
+            if amt == 0:
+                return 1
+            if currIdx == len(den) or amt < den[currIdx]:
+                return 0
+            if (amt,currIdx) in ht:
+                return ht[(amt,currIdx)]
+            currValue = den[currIdx]
+            byChoosing = 0
+            bySkipping = 0
+            if currValue <= amt:
+                byChoosing += getNoOfWays(amt - currValue, currIdx, den, ht)
+            bySkipping += getNoOfWays(amt, currIdx + 1, den, ht)
+            ht[(amt,currIdx)] = byChoosing + bySkipping
+            return ht[(amt,currIdx)]
+
+        coins.sort()
+        ht = {}
+        return getNoOfWays(amount, 0, coins, ht)
