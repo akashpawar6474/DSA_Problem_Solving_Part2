@@ -1,0 +1,58 @@
+class Solution:
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        
+        we will use placeholders to solve this problem
+        if current cell is live then it should be 1
+        and if it is getting change to dead then we will mark it as 10
+        
+        incase we are retriving same cell again then for 10 we can mark it as living cell as of now
+        and if curr cell is dead cell then it should be 0
+        if it is getting change to live then we will mark it as 100
+        
+        at last we will change 10 to 0 means live to dead
+        and 100 to 1 means dead to live
+        
+        tc = O(2n) => n = no of cells
+        sc = O(1)
+        """
+        def isCellInBoundary(x,y,board):
+            return 0 <= x < len(board) and 0 <= y < len(board[0])
+        
+        def isLivingCell(x,y,board):
+            return board[x][y] == 1 or board[x][y] == 10
+        
+        def getNeighbours(x,y):
+            return [(x + 1,y),(x - 1,y),(x,y + 1),(x,y - 1),(x + 1,y + 1),(x - 1,y + 1),(x - 1,y - 1),(x + 1,y - 1)]
+        
+        
+        def getLivingNeiCount(x,y,board):
+            living = 0
+            nei = getNeighbours(x,y)
+            for newx,newy in nei:
+                if isCellInBoundary(newx,newy,board):
+                    if isLivingCell(newx,newy,board):
+                        living += 1
+            return living
+        
+        rows = len(board)
+        cols = len(board[0])
+        
+        #STEP 1 => put the placeholders
+        for row in range(rows):
+            for col in range(cols):
+                livingNei = getLivingNeiCount(row,col,board)
+                if board[row][col] == 1 and (livingNei < 2 or livingNei > 3):
+                    board[row][col] = 10
+                elif board[row][col] == 0 and (livingNei == 3):
+                    board[row][col] = 100
+                    
+        #STEP 2 => Replace placeholders 10 to 0 and 100 to 1
+        for row in range(rows):
+            for col in range(cols):
+                if board[row][col] == 10:
+                    board[row][col] = 0
+                elif board[row][col] == 100:
+                    board[row][col] = 1
+                
