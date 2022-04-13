@@ -1,0 +1,29 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, A):
+        """
+        whole idea of this problem is to do the
+postorder
+        and for each node store the sum in store
+        if sum // 2 is preset in set then return True 
+        means we can partition it somewhere
+        """
+        def postorder(root,sumSet):
+            if root is None:
+                return 0
+            leftSubtreeSum = postorder(root.left,sumSet)
+            rightSubtreeSum = postorder(root.right,sumSet)
+            sumSet.add(root.val + leftSubtreeSum + rightSubtreeSum)
+            return root.val + leftSubtreeSum + rightSubtreeSum
+
+        s = set()
+        totalSum = postorder(A,s)
+        return 1 if totalSum // 2 in s else 0    
