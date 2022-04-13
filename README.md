@@ -75,7 +75,8 @@ This is second directory because github reached limit of no of files for first r
 459. Serialize and Deserialize Binary Tree => this is very good level order traversal problem
 460. Game of Life => this is very simple placeholder problem
 461. Coin Change 2 => this is very good dp problem
-462. 
+462. Equal Tree Partition => this is classic of kahin pe nigahein kahin pe nishana using postorder to calculate sum then check if half is present into set or not
+
 
 
 
