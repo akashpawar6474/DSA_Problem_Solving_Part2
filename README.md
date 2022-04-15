@@ -76,6 +76,8 @@ This is second directory because github reached limit of no of files for first r
 460. Game of Life => this is very simple placeholder problem
 461. Coin Change 2 => this is very good dp problem
 462. Equal Tree Partition => this is classic of kahin pe nigahein kahin pe nishana using postorder to calculate sum then check if half is present into set or not
+463. Trim a Binary Search Tree => we can use bst props and skip the subtrees
+464. 
 
 
 
