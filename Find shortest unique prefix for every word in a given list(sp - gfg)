@@ -1,0 +1,41 @@
+class TrieNode:
+    def __init__(self):
+        self.ht = {}
+        self.pfCount = 0
+
+class Solution:
+	# @param A : list of strings
+	# @return a list of strings
+	def prefix(self, A):
+        """
+        Idea is to create the trie for each word
+
+        then for each word then find out the character which has freq equal to 1
+        and return that prefix
+        """
+        def addWordInTrie(root,word):
+            curr = root
+            for ch in word:
+                if ch not in curr.ht:
+                    curr.ht[ch] = TrieNode()
+                curr = curr.ht[ch]
+                curr.pfCount += 1
+        
+        def getShortestUniquePrefix(root,word):
+            curr = root
+            sup = []
+            for ch in word:
+                curr = curr.ht[ch]
+                sup.append(ch)
+                if curr.pfCount == 1:
+                    return "".join(sup)
+            return ""
+
+        root = TrieNode()
+        for word in A:
+            addWordInTrie(root,word)
+
+        ans = []
+        for word in A:
+            ans.append(getShortestUniquePrefix(root,word))
+        return ans
