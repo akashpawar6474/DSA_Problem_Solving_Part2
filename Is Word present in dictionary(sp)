@@ -1,0 +1,39 @@
+class TrieNode:
+    def __init__(self):
+        self.ht = {}
+        self.isWordEnd = False
+
+
+class Solution:
+    # @param A : list of strings
+    # @param B : list of strings
+    # @return a list of integers
+    def solve(self, A, B):
+        """
+        Idea is to create trie first of all
+        """
+        def addWordToTrie(root,word):
+            curr = root
+            for ch in word:
+                if ch not in curr.ht:
+                    curr.ht[ch] = TrieNode()
+                curr = curr.ht[ch]
+            curr.isWordEnd = True
+
+        def searchInTrie(root,word):
+            curr = root
+            for ch in word:
+                if ch not in curr.ht:
+                    return 0
+                curr = curr.ht[ch]
+            return 1 if curr.isWordEnd else 0
+
+        root = TrieNode()
+        for word in A:
+            addWordToTrie(root,word)
+        
+        ans = []
+        for word in B:
+            isPresent = searchInTrie(root,word)
+            ans.append(isPresent)
+        return ans
