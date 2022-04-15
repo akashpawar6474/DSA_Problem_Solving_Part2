@@ -78,7 +78,7 @@ This is second directory because github reached limit of no of files for first r
 462. Equal Tree Partition => this is classic of kahin pe nigahein kahin pe nishana using postorder to calculate sum then check if half is present into set or not
 463. Trim a Binary Search Tree => we can use bst props and skip the subtrees
 464. Is Word present in dictionary(sp) => this is classsic trie problem
-465. 
+465. Find shortest unique prefix for every word in a given list(sp - gfg) => this can be easily solved using trie
 
 
 
