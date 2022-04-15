@@ -1,0 +1,59 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def trimBST(self, root: Optional[TreeNode], low: int, high: int) -> Optional[TreeNode]:
+        """
+                3
+            0       4
+                2       
+            1
+            
+        Idea is first locate the root node
+        from root node process left and right subtree
+        
+        trim(root.left) => will return root of trimeed subtree
+        base case => if root is None    return None
+        if root.val is in bound
+            process left and right and attach
+        else
+            if root.val is below range
+                then process right subtre and return
+            else
+                process left subtree and return
+                
+        tc = O(h) h = height of tree if tree is skewed then it is O(n)
+        sc = O(h) 
+        """
+        def locate(root,low,high):
+            curr = root
+            while curr:
+                if curr.val < low:
+                    curr = curr.right
+                elif curr.val > high:
+                    curr = curr.left
+                else:
+                    return curr
+            return None
+        
+        def trim(root,low,high):
+            if root is None:
+                return None
+            if root.val < low:
+                return trim(root.right,low,high)
+            elif root.val > high:
+                return trim(root.left,low,high)
+            else:
+                root.left = trim(root.left,low,high)
+                root.right = trim(root.right,low,high)
+                return root
+        
+        root = locate(root,low,high)
+        if root is None:
+            return root
+        root.left = trim(root.left,low,high)
+        root.right = trim(root.right,low,high)
+        return root
