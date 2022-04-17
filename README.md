@@ -85,7 +85,7 @@ This is second directory because github reached limit of no of files for first r
 469. Connect n ropes with minimum cost => this is simple minheap problem
 470. Find K Closest Points to the Origin => this is very easy maxHeap problem
 471. Kth Smallest Element in a Sorted Matrix => solved using min heap
-472. 
+472. Max Continuous Series of 1s => this is very good sliding window problem
 
 
 
