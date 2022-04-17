@@ -1,0 +1,18 @@
+import heapq
+class Solution:
+	# @param A : integer
+	# @param B : list of integers
+	# @return an integer
+	def nchoc(self, A, B):
+		mod = 10 ** 9 + 7
+		maxHeap = []
+		for no in B:
+			heapq.heappush(maxHeap,-no)
+		
+		ans = 0
+		for time in range(A):
+			currMax = -heapq.heappop(maxHeap)
+			ans = (ans +  currMax) % mod
+			newMax = currMax // 2
+			heapq.heappush(maxHeap,-newMax)
+		return ans % mod
