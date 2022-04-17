@@ -1,0 +1,57 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        
+    def increasingBST(self, root: TreeNode) -> TreeNode:
+        """
+        Another way is to have head and tail pointer
+        first process left subtree
+        if head is None
+            assign root ito it
+        else
+            add root node to tail.next
+        move tail ahead
+        mark left subtree ref as None
+        process right subtree
+        tc = O(n)
+        sc = O(1)
+        """
+        if root is None:
+            return None
+        self.increasingBST(root.left)
+        if self.head is None:
+            self.head = root
+        else:
+            self.tail.right = root
+        self.tail = root
+        root.left = None
+        self.increasingBST(root.right)
+        return self.head
+        
+    def firstTry(self,root):
+        """
+        we can use same pattern of converting binary tree to linked list
+        by only one node
+        
+        1.process right subtree
+        2.add head to right of root
+        3.assign head to root
+        4.cache left subtree ref and mark it as null
+        5.then process left subtree
+        """
+        if root is None:
+            return None
+        self.increasingBST(root.right)
+        root.right = self.head
+        self.head = root
+        leftSubtree = root.left
+        root.left = None
+        self.increasingBST(leftSubtree)
+        return self.head
