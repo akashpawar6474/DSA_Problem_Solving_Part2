@@ -1,0 +1,20 @@
+import heapq
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        """
+        use minheap here
+        """
+        minheap = []
+        ans = 0
+        for no in A:
+            heapq.heappush(minheap,no)
+        
+        while len(minheap) > 1:
+            first = heapq.heappop(minheap)
+            second = heapq.heappop(minheap)
+            currSum = first + second
+            heapq.heappush(minheap,currSum)
+            ans += currSum
+        return ans
