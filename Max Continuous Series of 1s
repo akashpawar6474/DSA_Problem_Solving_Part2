@@ -1,0 +1,28 @@
+class Solution:
+	# @param A : list of integers
+	# @param B : integer
+	# @return a list of integers
+	def maxone(self, A, B):
+		windowStart = 0
+		zeroCount = 0
+		arrLen = len(A)
+		maxWindowLen = 0
+		maxOnesWS = 0
+		maxOnesWE = 0
+		for windowEnd in range(arrLen):
+			if A[windowEnd] == 0:
+				zeroCount += 1
+			while zeroCount > B:
+				valAtWindowStart = A[windowStart]
+				windowStart += 1
+				if valAtWindowStart == 0:
+					zeroCount -= 1
+			if windowEnd - windowStart + 1 > maxWindowLen:
+				maxWindowLen = windowEnd - windowStart + 1
+				maxOnesWS = windowStart
+				maxOnesWE = windowEnd
+		
+		ans = []
+		for idx in range(maxOnesWS,maxOnesWE + 1):
+			ans.append(idx)
+		return ans
