@@ -1,0 +1,27 @@
+import heapq
+class Solution:
+    # @param A : list of list of integers
+    # @param B : integer
+    # @return a list of list of integers
+    def solve(self, A, B):
+        """
+        maxheap
+        then push first B elements into maxheap
+        
+        for each next ele if it is less than top 
+        then pop and push else go ahead
+        """
+        def getDist(x,y):
+            return math.sqrt((x ** 2) + (y ** 2))
+
+        maxheap = []
+        for x,y in A:
+            dist = getDist(x,y)
+            if len(maxheap) < B:
+                heapq.heappush(maxheap,(-dist,[x,y]))
+            elif dist < (-maxheap[0][0]):
+                heapq.heappop(maxheap)
+                heapq.heappush(maxheap, (-dist,[x,y]))
+        ans = [co_ord for dist,co_ord in maxheap]
+        return ans
+                
