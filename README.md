@@ -84,7 +84,8 @@ This is second directory because github reached limit of no of files for first r
 468. Magician and Chocolates => this is very good problem of maxheap
 469. Connect n ropes with minimum cost => this is simple minheap problem
 470. Find K Closest Points to the Origin => this is very easy maxHeap problem
-471. 
+471. Kth Smallest Element in a Sorted Matrix => solved using min heap
+472. 
 
 
 
