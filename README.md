@@ -82,7 +82,8 @@ This is second directory because github reached limit of no of files for first r
 466. Contacts(sp - hackerrank) => this is also classic trie problem along with pf count
 467. Increasing Order Search Tree => very simple tree problem
 468. Magician and Chocolates => this is very good problem of maxheap
-469. 
+469. Connect n ropes with minimum cost => this is simple minheap problem
+470. 
 
 
 
