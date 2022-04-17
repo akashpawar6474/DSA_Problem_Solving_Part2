@@ -80,7 +80,8 @@ This is second directory because github reached limit of no of files for first r
 464. Is Word present in dictionary(sp) => this is classsic trie problem
 465. Find shortest unique prefix for every word in a given list(sp - gfg) => this can be easily solved using trie
 466. Contacts(sp - hackerrank) => this is also classic trie problem along with pf count
-467. 
+467. Increasing Order Search Tree => very simple tree problem
+468. 
 
 
 
