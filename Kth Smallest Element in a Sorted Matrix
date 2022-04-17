@@ -1,0 +1,21 @@
+import heapq
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        """
+        we will use minheap here
+
+        """
+        minHeap = []
+        rows = len(matrix)
+        for row in range(rows):
+            heapq.heappush(minHeap,(matrix[row][0],0,matrix[row]))
+        
+        count = 0
+        while minHeap:
+            ele,idx,row = heapq.heappop(minHeap)
+            count += 1
+            if count == k:
+                return ele
+            if idx + 1 < len(row):
+                heapq.heappush(minHeap,(row[idx + 1],idx + 1,row))
+        return -1
