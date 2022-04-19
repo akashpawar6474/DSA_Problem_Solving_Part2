@@ -86,6 +86,7 @@ This is second directory because github reached limit of no of files for first r
 470. Find K Closest Points to the Origin => this is very easy maxHeap problem
 471. Kth Smallest Element in a Sorted Matrix => solved using min heap
 472. Max Continuous Series of 1s => this is very good sliding window problem
+473. Recover Binary Search Tree => this problem is related to finding discrepancies among the inorder
 
 
 
