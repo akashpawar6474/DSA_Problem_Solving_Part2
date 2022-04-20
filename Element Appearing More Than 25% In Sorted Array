@@ -1,0 +1,25 @@
+class Solution:
+    def findSpecialInteger(self, arr: List[int]) -> int:
+        """
+        first task is to find 25 % of an array?
+        
+        then using two pointer count occrances in sorted array and
+        return if any of them is more than 25%
+        
+        tc = O(n)
+        sc = O(1)
+        """
+        arrLen = len(arr)
+        oneFourthOfArray = int(arrLen * 0.25)
+        windowStart = 0
+        windowEnd = 0
+        while windowEnd < arrLen:
+            while windowEnd < arrLen and arr[windowEnd] == arr[windowStart]:
+                windowEnd += 1
+            frequency = windowEnd - windowStart
+            if frequency > oneFourthOfArray:
+                return arr[windowStart]
+            windowStart = windowEnd
+        return -1
+        
+        
