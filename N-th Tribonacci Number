@@ -1,0 +1,24 @@
+class Solution:
+    def tribonacci(self, n: int) -> int:
+        dp = [0] * (n + 1)
+        if n == 0:
+            return 0
+        if n == 1 or n == 2:
+            return 1
+        dp[1] = dp[2] = 1
+        for no in range(3,n + 1):
+            dp[no] = dp[no - 1] + dp[no - 2] + dp[no - 3]
+        return dp[n]
+    
+    def topDownApproach(self,n):
+        def topDown(n,ht):
+            if n == 0:
+                return 0
+            if n == 1 or n == 2:
+                return 1
+            if n in ht:
+                return ht[n]
+            return topDown(n - 1,ht) + topDown(n - 2,ht) + topDown(n - 3,ht)
+        ht = {}
+        return topDown(n,ht)
+        
