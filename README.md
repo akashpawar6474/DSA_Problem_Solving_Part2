@@ -89,7 +89,8 @@ This is second directory because github reached limit of no of files for first r
 473. Recover Binary Search Tree => this problem is related to finding discrepancies among the inorder
 474. Distribute Candies to People => this is simulation based problem
 475. Element Appearing More Than 25% In Sorted Array => simple two pointers problem
-476. 
+476. Number of Equivalent Domino Pairs => simple hashtable problem to count pairs
+477. 
 
 
 
