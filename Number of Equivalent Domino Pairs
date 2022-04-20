@@ -1,0 +1,23 @@
+class Solution:
+    def numEquivDominoPairs(self, dominoes: List[List[int]]) -> int:
+        """
+        we will use hash table here
+        to store dominoes as key and count as value
+        
+        and then we will count the pairs
+        tc = O(n)
+        sc = O(n)
+        """
+        ht = {}
+        ans = 0
+        for x,y in dominoes:
+            if (x,y) in ht:
+                ans += ht[(x,y)]
+                ht[(x,y)] += 1
+            elif (y,x) in ht:
+                ans += ht[(y,x)]
+                ht[(y,x)] += 1
+            else:
+                ht[(x,y)] = 1
+        return ans
+            
