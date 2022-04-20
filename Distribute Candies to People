@@ -1,0 +1,19 @@
+class Solution:
+    def distributeCandies(self, candies: int, num_people: int) -> List[int]:
+        """
+        Idea is to do the simulation untill candies are greater than 0
+        """
+        ans = [0] * num_people
+        currPtr = 0
+        currCandiesCount = 1
+        while candies > 0:
+            if currCandiesCount > candies:
+                ans[currPtr] += candies
+                candies = 0
+            else:
+                ans[currPtr] += currCandiesCount
+                candies -= currCandiesCount
+            currCandiesCount += 1
+            currPtr = (currPtr + 1) % num_people
+        return ans
+                
