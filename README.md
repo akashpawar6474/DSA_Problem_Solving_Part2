@@ -90,7 +90,8 @@ This is second directory because github reached limit of no of files for first r
 474. Distribute Candies to People => this is simulation based problem
 475. Element Appearing More Than 25% In Sorted Array => simple two pointers problem
 476. Number of Equivalent Domino Pairs => simple hashtable problem to count pairs
-477. 
+477. N-th Tribonacci Number => this is simple dp problem
+478. 
 
 
 
