@@ -1,0 +1,55 @@
+class Solution:
+    def arrayRankTransform(self, arr: List[int]) -> List[int]:
+        """
+        another way is to sort the same intermediate arr
+        [(10,1),(20,2),(30,3),(40,0)]
+        
+        then using two pointer
+        store the rank
+        
+        if currval != nextVal
+            then only increment the rank
+            
+        tc = O(nlogn)
+        sc = O(n)
+        """
+        arrLen = len(arr)
+        if len(arr) == 0:
+            return []
+        ans = [0] * arrLen
+        
+        #STEP 1 => create intermediate array and sort it
+        intermediateArr = []
+        for idx in range(arrLen):
+            entry = (arr[idx],idx)
+            intermediateArr.append(entry)
+        intermediateArr.sort(key = lambda x : x[0])
+        
+        #STEP2 => add rank according to order
+        rank = 1
+        for idx in range(arrLen - 1):
+            currVal,currIdx = intermediateArr[idx]
+            nextVal,nextIdx = intermediateArr[idx + 1]
+            ans[currIdx] = rank
+            if currVal != nextVal:
+                rank += 1
+        ans[intermediateArr[len(intermediateArr) - 1][1]] = rank
+        return ans
+
+    def firstTry(self,arr):
+        """
+        Idea is create new array of tuples of value and idx
+        then sort them by value
+        then just store the indices + 1 in ans array
+        
+        this logic wont work if we have the duplicates.
+        """
+        arrLen = len(arr)
+        ans = [0] * arrLen
+        intermediateArr = []
+        for idx in range(arrLen):
+            entry = (arr[idx],idx)
+            intermediateArr.append(entry)
+        intermediateArr.sort(lambda x : x[0])
+        for val,idx in intermediateArr:
+            ans[idx]
