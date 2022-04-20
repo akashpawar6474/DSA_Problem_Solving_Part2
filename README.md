@@ -91,7 +91,8 @@ This is second directory because github reached limit of no of files for first r
 475. Element Appearing More Than 25% In Sorted Array => simple two pointers problem
 476. Number of Equivalent Domino Pairs => simple hashtable problem to count pairs
 477. N-th Tribonacci Number => this is simple dp problem
-478. 
+478. Rank Transform of an Array => sorting and simulation will solve this problem
+479. 
 
 
 
