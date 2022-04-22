@@ -93,6 +93,7 @@ This is second directory because github reached limit of no of files for first r
 477. N-th Tribonacci Number => this is simple dp problem
 478. Rank Transform of an Array => sorting and simulation will solve this problem
 479. Candy => this is very good greedy problem 
+480. Activity Selection Problem(sp - gfg) => this is sorting greedy problem
 
 
 
