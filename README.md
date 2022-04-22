@@ -92,7 +92,7 @@ This is second directory because github reached limit of no of files for first r
 476. Number of Equivalent Domino Pairs => simple hashtable problem to count pairs
 477. N-th Tribonacci Number => this is simple dp problem
 478. Rank Transform of an Array => sorting and simulation will solve this problem
-479. 
+479. Candy => this is very good greedy problem 
 
 
 
