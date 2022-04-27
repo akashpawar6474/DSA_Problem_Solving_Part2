@@ -94,6 +94,8 @@ This is second directory because github reached limit of no of files for first r
 478. Rank Transform of an Array => sorting and simulation will solve this problem
 479. Candy => this is very good greedy problem 
 480. Activity Selection Problem(sp - gfg) => this is sorting greedy problem
+481. Smallest String With Swaps => this is connected component,dfs and sorting problem
+482. 
 
 
 
