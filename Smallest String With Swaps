@@ -1,0 +1,129 @@
+class Solution:
+    def smallestStringWithSwaps(self, s: str, pairs: List[List[int]]) -> str:
+        """
+        first thing how to compare which string is lexicographically smaller?
+        first compare the len
+        if that is same
+        then compare char
+            if any char is not equal
+                if char of first string is small
+                    then return first
+                else
+                    return second
+        
+        but here it is asking us to swap pairs infinitely
+        how to know that when to stop?
+        
+        first thing how to know this is graph problem?
+        -we have string and array of pairs
+        -we can swap char on indices in those pairs any no of times
+            -means it can be 0 or infinite
+        -we have to return lexicographically smallest string?
+        
+        s = "dcab"
+        pairs [0,3][1,2]
+        
+                bcad
+                bacd
+                
+        if we say pairs are the edges
+        
+        d,0 -- b,3
+        c,1 -- 1,2
+        
+        means neighbour of 0 is 3
+        but how to know if we need to swap the pairs?
+        we will go ahead and swap the pair 
+        so is there any need of graph
+        we can use simple character array
+        where we will keep track of curr and previous lexicographically smallest sting
+        
+        how graph comes into the picture??
+        
+        now we will go through hints
+        
+        idx 0 1 2 3
+        str d c a b
+        
+        0 -- 3
+        |
+        2 -- 1
+        
+        sort the connected component to get lexicographically min string
+        do dfs and sort the nodes
+        abcd
+        
+        okay
+        
+        idx 0 1 2 3
+        str d c a b
+        
+        0 -- 3
+        
+        1 -- 2
+        
+        traverse first connected component => db => sort the component bd at its correct indices
+        traverse second connected component => ca => sort it 
+        
+        Now question is how to model the graph
+        should we store tuples of char and idx in node
+        we will have node as idx and char
+        
+        no of nodes is length of an array
+        
+        if we get visited component 0,3
+        then get characters d,b
+        
+        sort those characters
+        sort those nodes
+        and store at its indices
+        
+        tc = O(E + N) E = edges N = nodes
+        sc = O(E + N)
+        
+        in worst case we are O(E) time to create the graph and O(N) time to dfs 
+        """
+        def prepareGraph(graph,pairs):
+            for x,y in pairs:
+                graph[x].append(y)
+                graph[y].append(x)
+                
+        def dfs(graph,visited,nodesInComponent,currNode):
+            if currNode in visited:
+                return
+            visited.add(currNode)
+            nodesInComponent.append(currNode)
+            for nei in graph[currNode]:
+                dfs(graph,visited,nodesInComponent,nei)
+                
+        def getCharsInComponent(nodesInComponent,chArr):
+            chars = []
+            for idx in nodesInComponent:
+                chars.append(chArr[idx])
+            return chars
+                
+        def processConnectedComponent(nodesInComponent,chArr):
+            chars = getCharsInComponent(nodesInComponent,chArr)
+            chars.sort()
+            nodesInComponent.sort()
+            print(chars,nodesInComponent)
+            idxInChars = 0
+            for idx in nodesInComponent:
+                chArr[idx] = chars[idxInChars]
+                idxInChars += 1
+            
+        
+        noOfNodes = len(s)
+        chArr = list(s)
+        graph = [[] for x in range(noOfNodes)]
+        prepareGraph(graph,pairs)
+        
+        visited = set()
+        for node in range(noOfNodes):
+            if node not in visited:
+                nodesInComponent = []
+                dfs(graph,visited,nodesInComponent,node)
+                processConnectedComponent(nodesInComponent,chArr)
+                
+        return ''.join(chArr)
+                
