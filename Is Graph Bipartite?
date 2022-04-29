@@ -1,0 +1,62 @@
+class Solution:
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+        """
+        we will do it using iterative way
+        we will go level by level if any parent node has same color then return false
+        
+        tc = O(n + e)
+        sc = O(n)
+        """
+        def bfs(node,graph,color):
+            from collections import deque
+            q = deque()
+            q.append(node)
+            color[node] = 1
+            while q:
+                currNode = q.popleft()
+                for nei in graph[currNode]:
+                    if color[nei] == -1:
+                        color[nei] = 1 - color[currNode]
+                        q.append(nei)
+                    elif color[nei] == color[currNode]:
+                        return False
+            return True
+        
+        color = [-1 for x in range(len(graph))]
+        for node in range(len(graph)):
+            if color[node] == -1:
+                if not bfs(node,graph,color):
+                    return False
+        return True
+    def recursive(self,graph):
+        """
+        how to set the color?
+        we can have color array
+        and nei color is already there
+            
+        do we need to do dfs here?
+        we have adjcency list
+        """ 
+        def dfs(currNode,color,visited,graph):
+            if currNode in visited:
+                return
+            visited.add(currNode)
+            for nei in graph[currNode]:
+                if color[nei] == -1:
+                    color[nei] = 1 - color[currNode]
+                    dfs(nei,color,visited,graph)
+                elif color[currNode] == color[nei]:
+                    return False
+            return True
+        
+        nodes = len(graph)
+        color = [-1 for x in range(nodes)]
+        color[0] = 1
+        visited = set()
+        for node in range(nodes):
+            if node not in visited:
+                if dfs(node,color,visited,graph) == False:
+                    print("here")
+                    return False
+        return True
+                    
