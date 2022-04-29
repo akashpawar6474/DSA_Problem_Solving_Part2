@@ -1,0 +1,52 @@
+class Solution:
+    def distanceBetweenBusStops(self, distance: List[int], start: int, destination: int) -> int:
+        """
+        first figure out total bus stops
+        
+        if abs diff bw start and end < half stops
+            then go in clockwise
+        elif abs diff bw start and end > half stops
+            then go anticlockwise
+        else
+            try both directions and return minimum
+            
+        No this will not work
+        if distance is not in increasing order
+        
+        so try both the directions anyways we have to traverse array in linear time
+        
+        
+        to count in clockwise direction
+        use loop from start to end - 1 and take sum
+        
+        to get count in anticlockwise direction
+        use loop from end to array end
+        use loop from 0 to start - 1
+        """
+        def getClockwiseDistance(distance,start,dest,isStartBeforeDest):
+            dist = 0
+            if isStartBeforeDest:
+                for idx in range(start,dest):
+                    dist += distance[idx]
+            else:
+                for idx in range(start,len(distance)):
+                    dist += distance[idx]
+                for idx in range(0,dest):
+                    dist += distance[idx]
+            return dist
+        
+        def getAntiClockwiseDistance(distance,start,end,isStartBeforeDest):
+            dist = 0
+            if isStartBeforeDest:
+                for idx in range(end,len(distance)):
+                    dist += distance[idx]
+                for idx in range(0,start):
+                    dist += distance[idx]
+            else:
+                for idx in range(start - 1,end - 1,-1):
+                    dist += distance[idx]
+            return dist
+        
+        if start <= destination:
+            return min(getClockwiseDistance(distance,start,destination,True),getAntiClockwiseDistance(distance,start,destination,True))
+        return min(getClockwiseDistance(distance,start,destination,False),getAntiClockwiseDistance(distance,start,destination,False))
