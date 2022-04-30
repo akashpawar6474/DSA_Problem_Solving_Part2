@@ -1,0 +1,45 @@
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        """
+        create a integers
+        then multiply them
+        and convert it to string
+        """
+        def getStrNumMap():
+            ht = {}
+            ht["0"] = 0
+            ht["1"] = 1
+            ht["2"] = 2
+            ht["3"] = 3
+            ht["4"] = 4
+            ht["5"] = 5
+            ht["6"] = 6
+            ht["7"] = 7
+            ht["8"] = 8
+            ht["9"] = 9
+            return ht
+        
+        def getInteger(num1,ht):
+            num = 0
+            for ch in num1:
+                num = num * 10 + ht[ch]
+            return num
+        
+        def getStr(no):
+            from collections import deque
+            q = deque()
+            if not no:
+                return "0"
+            while no:
+                lastDigit = no % 10
+                no = no // 10
+                q.appendleft(str(lastDigit))
+            ansList = list(q)
+            return ''.join(ansList)
+        
+        chIntMap = getStrNumMap()
+        firstNo = getInteger(num1,chIntMap)
+        secondNo = getInteger(num2,chIntMap)
+        ans = firstNo * secondNo
+        return getStr(ans)
+        
