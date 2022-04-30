@@ -97,6 +97,7 @@ This is second directory because github reached limit of no of files for first r
 481. Smallest String With Swaps => this is connected component,dfs and sorting problem
 482. Is Graph Bipartite? => this is simple bfs problem
 483. Distance Between Bus Stops => clockwise and anticlockwise logic for anticlockwise cover last ele then first elements..
+484. Reverse Integer => main thing is to check if no is in range of 32 bit ..
 
 
 
