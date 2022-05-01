@@ -1,0 +1,35 @@
+class Solution:
+    def findRepeatedDnaSequences(self, s: str) -> List[str]:
+        """
+        
+        tc = O(n * 10)
+        sc = O(n - 10 + 1)
+        """
+        def prepareKey(windowStart,windowEnd,s):
+            key = ""
+            for idx in range(windowStart,windowEnd + 1):
+                key += s[idx]
+            return key
+        
+        windowStart = 0
+        sLen = len(s)
+        ht = {}
+        for windowEnd in range(sLen):
+            currWindowLen = windowEnd - windowStart + 1
+            if currWindowLen == 10:
+                key = prepareKey(windowStart,windowEnd,s)
+                if key not in ht:
+                    ht[key] = 0
+                ht[key] += 1
+            if currWindowLen == 10:
+                windowStart += 1
+        
+        ans = []
+        for key,val in ht.items():
+            if val > 1:
+                ans.append(key)
+        return ans
+                
+        
+        
+            
