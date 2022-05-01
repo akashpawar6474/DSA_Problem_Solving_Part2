@@ -100,6 +100,7 @@ This is second directory because github reached limit of no of files for first r
 484. Reverse Integer => main thing is to check if no is in range of 32 bit ..
 485. Multiply Strings => use same function to convert string to int then multiply it and make it string
 486. Backspace String Compare => think backwards..
+487. Repeated DNA Sequences => this is simple sliding window and hashmap problem
 
 
 
