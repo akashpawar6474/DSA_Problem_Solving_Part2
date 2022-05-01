@@ -1,0 +1,55 @@
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        """
+        can we come from back
+        sizes cn be different
+        put current ptr at last
+            
+        we can do that with extraa space of stack
+        and at last compare both stacks
+        
+        but how to do it in constant time
+        consider we have two pointers at last
+            In second example how to proceed
+            what we can do if both are have backspace then call process backspace function 
+            get new currIdx
+            
+            if not same
+                then return false
+
+            else 
+                reduce both ptr by 1
+        
+        take a loop untill both ptr > -1
+        tc = O(max(n,m))
+        sc = O(1)
+        """
+        def processBackspace(st,currPtr):
+            count = 0
+            while currPtr > -1 and st[currPtr] == '#':
+                while currPtr > -1 and st[currPtr] == '#':
+                    count += 1
+                    currPtr -= 1
+                while count > 0 and st[currPtr] != '#':
+                    count -= 1
+                    currPtr -= 1
+            return currPtr
+        
+        stPtr1 = len(s) - 1
+        stPtr2 = len(t) - 1
+        
+        while stPtr1 > -1 or stPtr2 > -1:
+            if stPtr1 > -1 and s[stPtr1] == '#':
+                stPtr1 = processBackspace(s,stPtr1)
+            if stPtr2 > -1 and t[stPtr2] == '#':
+                stPtr2 = processBackspace(t,stPtr2)
+            if (stPtr1 > -1 and stPtr2 > -1 and s[stPtr1] != t[stPtr2]) or (stPtr1 < 0 and stPtr2 > -1) or (stPtr1 > -1 and stPtr2 < 0):
+                return False
+            else:
+                stPtr1 -= 1
+                stPtr2 -= 1
+        
+        return stPtr1 < 0 and stPtr2 < 0
+                
+                
+                
