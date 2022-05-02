@@ -101,6 +101,7 @@ This is second directory because github reached limit of no of files for first r
 485. Multiply Strings => use same function to convert string to int then multiply it and make it string
 486. Backspace String Compare => think backwards..
 487. Repeated DNA Sequences => this is simple sliding window and hashmap problem
+488. Sort Array By Parity => this can be solved using dutch national flag algo..
 
 
 
