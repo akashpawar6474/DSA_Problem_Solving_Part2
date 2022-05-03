@@ -1,0 +1,113 @@
+class Solution:
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+        """
+        find next smaller element and previous greater element
+        
+        tc = O(n)
+        sc = O(n)
+        """
+        def getNSE(nums):
+            n = len(nums)
+            nseArr = [-1] * n
+            stack = []
+            for idx in range(n):
+                if len(stack) == 0 or nums[stack[-1]] < nums[idx]:
+                    stack.append(idx)
+                while stack and nums[stack[-1]] > nums[idx]:
+                    top = stack.pop()
+                    nseArr[top] = idx
+            return nseArr
+        
+        
+        def getPGE(nums):
+            n = len(nums)
+            pgeArr = [-1] * n
+            stack = []
+            for idx in range(n - 1,-1,-1):
+                if len(stack) == 0 or nums[stack[-1]] > nums[idx]:
+                    stack.append(idx)
+                while stack and nums[stack[-1]] < nums[idx]:
+                    top = stack.pop()
+                    pgeArr[top] = idx
+            return pgeArr
+    
+        n = len(nums)
+        nseArr = getNSE(nums)
+        pgeArr = getPGE(nums)
+        begin = -1
+        for idx in range(n):
+            if nseArr[idx] != -1:
+                begin = idx
+                break
+                
+        end = -1
+        for idx in range(n - 1,-1,-1):
+            if pgeArr[idx] != -1:
+                end = idx
+                break
+        return 0 if begin == -1 else end - begin + 1
+                
+    def firsttry(self,nums):
+        """
+        for complete sorted array
+        graph will looks like
+                -
+            -
+        -
+        
+        we need to find distractions at front and end
+                                    -
+                                -
+                        -   
+                            -
+                -   
+            -       -
+        -
+        0   1   2   3   4   5   6   7
+        
+        so basically we need to figure out idx 2 and 5
+        
+        this logic will fail for below graph
+        [1,2,4,5,3]
+        
+                    -
+                -
+                        -
+            -
+        -
+        
+        0   1   2   3   4
+        In such cases how to figure out which part to sort
+        
+        is it like for each element finding next smaller element
+        and from previous find prev greater element
+        
+        and return diff of those
+        """
+        numLen = len(nums)
+        if numLen <= 1:
+            return 0
+        
+        begin = -1
+        for idx in range(numLen - 1):
+            if nums[idx] > nums[idx + 1]:
+                begin = idx
+                break
+        if begin == -1:
+            return 0
+        else:
+            while begin > 0 and nums[begin] == nums[begin - 1]:
+                begin -= 1
+        
+        end = -1
+        for idx in range(numLen - 1,0,-1):
+            if nums[idx] < nums[idx - 1]:
+                end = idx
+                break
+        
+        if end != -1:
+            while end < numLen - 1 and nums[end] == nums[end + 1]:
+                end += 1
+        
+        print(begin,end)
+        return end - begin + 1
