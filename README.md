@@ -102,6 +102,8 @@ This is second directory because github reached limit of no of files for first r
 486. Backspace String Compare => think backwards..
 487. Repeated DNA Sequences => this is simple sliding window and hashmap problem
 488. Sort Array By Parity => this can be solved using dutch national flag algo..
+489. Shortest Unsorted Continuous Subarray => this can be solved using NSE and PGE..
+490. 
 
 
 
