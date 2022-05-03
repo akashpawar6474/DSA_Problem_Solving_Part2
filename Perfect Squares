@@ -1,0 +1,36 @@
+class Solution:
+    def numSquares(self, n: int) -> int:
+        """
+        another way is to solve using bottom up
+        dp[i] indicates that no of min squares
+        
+        tc = O(n * sqrt(n))
+        sc = O(n)
+        """
+        dp = [0] * (n + 1)
+        for no in range(1,n + 1):
+            minSquares = no
+            currSquare = 1
+            while currSquare * currSquare <= no:
+                minSquares = min(minSquares,dp[no - (currSquare * currSquare)] + 1)
+                currSquare += 1
+            dp[no] = minSquares
+        return dp[no]
+    
+    def recursive(self,n):
+        def topDown(no,dp):
+            if no == 0:
+                return 0
+            if no == 1:
+                return 1
+            if no in dp:
+                return dp[no]
+            minSquares = no
+            square = 1
+            while square * square <= no:
+                byReducingCurrSquare = topDown(no - (square * square),dp) + 1
+                minSquares = min(minSquares,byReducingCurrSquare)
+                square += 1
+            dp[no] = minSquares
+            return dp[no]
+        return topDown(n,{})
