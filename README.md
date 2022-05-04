@@ -104,6 +104,7 @@ This is second directory because github reached limit of no of files for first r
 488. Sort Array By Parity => this can be solved using dutch national flag algo..
 489. Shortest Unsorted Continuous Subarray => this can be solved using NSE and PGE..
 490. Perfect Squares => this is very good dp problem..
+491. Max Number of K-Sum Pairs => this is just counting of two sum pairs..
 
 
 
