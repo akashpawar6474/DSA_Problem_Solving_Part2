@@ -14,3 +14,74 @@ class Solution:
                 ans.append(ch)
                 freq -= 1
         return "".join(ans)
+------------------------------------------------------------- 6 may 2022
+class Solution:
+    def removeDuplicates(self, s: str, k: int) -> str:
+        """
+        rather than using extraa hashmap
+        we can store tuple of char and freq into the table
+        if curr char is diffrent than top
+            then store new entry with freq 1
+        else 
+            update top freq
+            if freq == k
+                pop the top element
+                
+        tc = O(n)
+        sc = O(n)
+        """
+        from collections import deque
+        q = deque()
+        charIdx = 0
+        freqIdx = 1
+        for ch in s:
+            if len(q) == 0 or q[-1][charIdx] != ch:
+                q.append([ch,1])
+            else:
+                topChar,freq = q.pop()
+                freq += 1
+                if freq < k:
+                    q.append([topChar,freq])
+                    
+        chArr = []
+        while q:
+            topChar,freq = q.popleft()
+            while freq:
+                chArr.append(topChar)
+                freq -= 1
+            
+        return ''.join(chArr)
+    
+    
+    def firsttry(self,s,k):
+        """
+        this can be solved using stack and hashmap
+        for every char 
+            if it is present in hashmap
+                then we will inc the freq
+            else
+                we will add the entry
+        if freq is equal to k
+            then pop the element
+        """
+        stack = []
+        ht = {}
+        for ch in s:
+            if ch not in ht:
+                ht[ch] = 0
+                stack.append(ch)
+            ht[ch] += 1
+            if ht[ch] == k:
+                del ht[ch]
+                stack.pop()
+                
+        chArr = []
+        while stack:
+            top = stack.pop()
+            freq = ht[top]
+            for i in range(freq):
+                chArr.append(top)
+        
+        chArr.reverse()
+        return ''.join(chArr)
+                
