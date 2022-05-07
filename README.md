@@ -105,6 +105,8 @@ This is second directory because github reached limit of no of files for first r
 489. Shortest Unsorted Continuous Subarray => this can be solved using NSE and PGE..
 490. Perfect Squares => this is very good dp problem..
 491. Max Number of K-Sum Pairs => this is just counting of two sum pairs..
+492. 132 Pattern => this is very tough problem to compup with linear solution..
+
 
 
 
