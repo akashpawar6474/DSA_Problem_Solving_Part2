@@ -1,0 +1,35 @@
+class Solution:
+    def find132pattern(self, nums: List[int]) -> bool:
+        """
+        this is typical stack problem
+        """
+        stack = []
+        secondMin = -math.inf
+        for idx in range(len(nums) - 1,-1,-1):
+            if nums[idx] < secondMin:
+                return True
+            else:
+                while stack and nums[idx] > stack[-1]:
+                    secondMin = stack.pop()
+            stack.append(nums[idx])
+        return False
+    
+    def firstTry(self,nums):
+        """
+        this can be solved using stack
+        """
+        stack = []
+        n = len(nums)
+        count = 0
+        for idx in range(n - 1,-1,-1):
+            count = 0
+            if len(stack) == 0 or stack[-1] < nums[idx]:
+                stack.append(nums[idx])
+            else:
+                while len(stack) != 0 and stack[-1] > nums[idx]:
+                    count += 1
+                    stack.pop()
+                    if count == 2:
+                        return True
+                stack.append(nums[idx])
+        return False
