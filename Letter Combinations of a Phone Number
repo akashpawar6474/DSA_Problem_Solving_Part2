@@ -1,0 +1,41 @@
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        """
+        idea is to create hashmap first of all
+        then when char array len is equal to digits
+        then copy that array
+        
+        tc = O(4 ^ n) as our n is at max 4
+        sc = O(4 ^ n)
+        """
+        def prepareMap():
+            ht = {}
+            ht['2'] = ['a','b','c']
+            ht['3'] = ['d','e','f']
+            ht['4'] = ['g','h','i']
+            ht['5'] = ['j','k','l']
+            ht['6'] = ['m','n','o']
+            ht['7'] = ['p','q','r','s']
+            ht['8'] = ['t','u','v']
+            ht['9'] = ['w','x','y','z']
+            return ht
+        
+        def backtrack(digits,currIdx,ht,chArr,ans):
+            if len(chArr) == len(digits):
+                ans.append(''.join(chArr))
+                return
+            currDigit = digits[currIdx]
+            charsAtCurrDigit = ht[currDigit]
+            for ch in charsAtCurrDigit:
+                chArr.append(ch)
+                backtrack(digits,currIdx + 1,ht,chArr,ans)
+                chArr.pop()
+            
+        if digits == "":
+            return []
+        ht = prepareMap()
+        chArr = []
+        ans = []
+        currIdx = 0
+        backtrack(digits,currIdx,ht,chArr,ans)
+        return ans
