@@ -75,3 +75,37 @@ class Solution:
         coins.sort()
         ht = {}
         return getNoOfWays(amount, 0, coins, ht)
+        
+        ----------------------------------------------------------- 10 may 2022
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        """
+                    fn(0,5)
+                /
+            fn(1,4)
+            /
+        fn()
+        
+        so we can pick same coin infinite no of times
+        
+        tc = O(2 ^ (n * amount))
+        """
+        def topDown(coins,currIdx,amount,dp):
+            if amount == 0:
+                return 1
+            if currIdx == len(coins):
+                return 0
+            if (currIdx,amount) in dp:
+                return dp[(currIdx,amount)]
+            currCoin = coins[currIdx]
+            ways = 0
+            if currCoin <= amount:
+                ways += topDown(coins,currIdx,amount - currCoin,dp)
+            ways += topDown(coins,currIdx + 1,amount,dp)
+            dp[(currIdx,amount)] = ways
+            return ways
+        
+        currIdx = 0
+        dp = {}
+        return topDown(coins,currIdx,amount,dp)
+            
