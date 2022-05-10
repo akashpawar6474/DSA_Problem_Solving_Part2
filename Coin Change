@@ -1,0 +1,27 @@
+import math
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        """
+        base case if we got amount equal to 0
+        just return 0
+        """
+        def topDown(coins,amount,currIdx,dp):
+            if amount == 0:
+                return 0
+            if currIdx == len(coins):
+                return math.inf
+            if (currIdx,amount) in dp:
+                return dp[(currIdx,amount)]
+            currCoin = coins[currIdx]
+            byChoosing = math.inf
+            if currCoin <= amount:
+                byChoosing = topDown(coins,amount - currCoin,currIdx,dp) + 1
+            bySkipping = topDown(coins,amount,currIdx + 1,dp)
+            dp[(currIdx,amount)] = min(byChoosing,bySkipping)
+            return dp[(currIdx,amount)]
+        
+        currIdx = 0
+        dp = {}
+        ans = topDown(coins,amount,currIdx,dp) 
+        return ans if ans != math.inf else -1
+                
