@@ -109,6 +109,7 @@ This is second directory because github reached limit of no of files for first r
 493. Flatten Nested List Iterator => this is simple recursive problem..
 494. Letter Combinations of a Phone Number => this is classic backtracking problem..
 495. Combination Sum III => this is simple backtracking problem..
+496. Coin Change => this is also easy unbounded knapsack problem
 497. 
 
 
