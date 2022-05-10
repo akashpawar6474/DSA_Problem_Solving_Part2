@@ -1,0 +1,28 @@
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        """
+        first take 1 to 9 digits
+        then one base case is if k > n
+            return empty array
+        tc = O(2 ^ (9 * totalSum)) where 9 is length of digits
+        sc = O(2 ^ (9 * totalSum))
+        """
+        def backtrack(digits,currIdx,currList,k,total,ans):
+            if len(currList) == k and total == 0:
+                ans.append(currList.copy())
+                return
+            if currIdx == len(digits) or len(currList) > k or total < 0:
+                return
+            currDigit = digits[currIdx]
+            if currDigit <= total:
+                currList.append(currDigit)
+                backtrack(digits,currIdx + 1,currList,k,total - currDigit,ans)
+                currList.pop()
+            backtrack(digits,currIdx + 1,currList,k,total,ans)
+        
+        digits = [1,2,3,4,5,6,7,8,9]
+        currIdx = 0
+        currList = []
+        ans = []
+        backtrack(digits,currIdx,currList,k,n,ans)
+        return ans
