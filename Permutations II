@@ -1,0 +1,74 @@
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        """
+        this can be solved using converting array to freq map
+        
+        then consider each key as starting point of permutations
+        using that we can make sure no same ele will be on same position
+        """
+        def prepareMap(nums):
+            ht = {}
+            for no in nums:
+                if no not in ht:
+                    ht[no] = 0
+                ht[no] += 1
+            return ht
+        
+        def backtrack(ht,currIdx,currList,numsSize,ans):
+            if currIdx == numsSize:
+                ans.append(currList.copy())
+                return
+            for key in ht.keys():
+                freq = ht[key]
+                if freq == 0:
+                    continue
+                currList.append(key)
+                ht[key] -= 1
+                
+                backtrack(ht,currIdx + 1,currList,numsSize,ans)
+                
+                lastEle = currList.pop()
+                ht[key] += 1
+        
+                
+        
+        ht = prepareMap(nums)
+        currList = []
+        currIdx = 0
+        ans = []
+        backtrack(ht,currIdx,currList,len(nums),ans)
+        return ans
+        
+    def firsttry(self,nums):
+        """
+        Idea is very simple
+        when ever currIdx != idx in loop
+            and has same integer then skip
+            else recur
+        """
+        def backtrack(nums,currIdx,currList,ans,s):
+            if currIdx == len(nums):
+                currPermutation = ''.join([str(x) for x in currList])
+                if currPermutation not in s:
+                    s.add(currPermutation)
+                    ans.append(currList.copy())
+                return
+            for idx in range(len(currList) + 1):
+                """
+                print(idx,currIdx)
+                if idx != currIdx and idx < len(currList) and currList[idx] == nums[currIdx]:
+                    continue
+                print(currList)
+                """
+                newList = currList.copy()
+                newList.insert(idx,nums[currIdx])
+                #print(newList)
+                backtrack(nums,currIdx + 1,newList,ans,s)
+        
+        currList = []
+        currIdx = 0
+        nums.sort()
+        ans = []
+        s = set()
+        backtrack(nums,currIdx,currList,ans,s)
+        return ans
