@@ -110,7 +110,8 @@ This is second directory because github reached limit of no of files for first r
 494. Letter Combinations of a Phone Number => this is classic backtracking problem..
 495. Combination Sum III => this is simple backtracking problem..
 496. Coin Change => this is also easy unbounded knapsack problem
-497. 
+497. Permutations II => first of all convert the array into map then try to store the each unique value at unique position in permutation
+498. 
 
 
 
