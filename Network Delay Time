@@ -1,0 +1,49 @@
+import math
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        """
+        can we solve this problem using dijkstra algo
+        
+        we will create the graph first
+        then from the source we will compute shortest time for each node to reach the signal
+        then we will return maximum among them
+        if none of them is math.inf
+        """
+        def prepareGraph(times,n):
+            graph = [[] for x in range(n + 1)]
+            for u,v,w in times:
+                graph[u].append((v,w))
+            return graph
+        
+        def findMax(distance,k):
+            maximum = -math.inf
+            for nodeVal in range(len(distance)):
+                dist = distance[nodeVal]
+                if nodeVal > 0 and dist == math.inf: #If any node is missed to visit then return false(-1)
+                    return -1
+                if nodeVal != k and dist != math.inf:
+                    maximum = max(maximum,dist)
+            return maximum
+        
+        import heapq
+        if k > n:
+            return -1
+        minHeap = []
+        
+        #STEP - 1
+        graph = prepareGraph(times,n)
+        distance = [math.inf] * (n + 1)
+        distance[k] = 0
+        heapq.heappush(minHeap,(0,k))
+        
+        #STEP - 2
+        while minHeap:
+            currWei,node = heapq.heappop(minHeap)
+            for nei,wei in graph[node]:
+                if currWei + wei < distance[nei]:
+                    distance[nei] = currWei + wei
+                    heapq.heappush(minHeap,(distance[nei],nei))
+        
+        #STEP - 3
+        ans = findMax(distance,k)
+        return ans if ans != -math.inf else -1
