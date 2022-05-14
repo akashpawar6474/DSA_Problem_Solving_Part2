@@ -1,0 +1,69 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        """
+        This is terrific problem
+        
+        Idea is to do reverse postorder traversal
+        and pass parent node and boolean variable of is close parent 
+        
+        assume this is tree
+                                1
+                        2               3
+                4           5       6       7
+            8       9
+            
+        so for any left child
+            we will pass current root node as parent (this is closest parent)
+        
+        and for any right child
+            we will pass next of root node as parent (this is not closest parent)
+            
+        Q.how this variable will be used?
+        
+        => In first case if 
+            4 has parent 2 which is closest
+                so just have a check if it has right child 
+                    if yes then return
+                move parent ahead by 1 to 3 
+        
+            In second case 
+            5 has parent 3 which is not closest
+            so directly go into loop 
+            
+        tc = O(n)
+        sc = O(n)
+        """
+        def getNextSibling(uncle,isCloseParent):
+            if isCloseParent:
+                if uncle.right:
+                    return uncle.right
+                uncle = uncle.next
+            while uncle:
+                if uncle.left:
+                    return uncle.left
+                if uncle.right:
+                    return uncle.right
+                uncle = uncle.next
+            return None
+            
+        
+        def revPreOrder(root,parent,isCloseParent):
+            if root is None:
+                return
+            if parent is not None:
+                root.next = getNextSibling(parent,isCloseParent)
+            revPreOrder(root.right,root.next if root is not None else None,False)
+            revPreOrder(root.left,root,True)  
+        
+        revPreOrder(root, None,False)
+        return root
