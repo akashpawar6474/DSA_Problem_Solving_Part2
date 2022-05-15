@@ -1,0 +1,32 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
+        """
+        we can solve this by level order traversal
+        at each level compute the sum of nodes
+        at last return that sum
+        
+        tc = O(n)
+        sc = O(m) max nodes in level
+        """
+        from collections import deque
+        q = deque()
+        q.append(root)
+        levelSum = 0
+        while q:
+            levelSum = 0
+            size = len(q)
+            for idx in range(size):
+                front = q.popleft()
+                levelSum += front.val
+                if front.left:
+                    q.append(front.left)
+                if front.right:
+                    q.append(front.right)
+        return levelSum
+    
