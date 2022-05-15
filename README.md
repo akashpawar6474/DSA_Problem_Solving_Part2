@@ -113,6 +113,7 @@ This is second directory because github reached limit of no of files for first r
 497. Permutations II => first of all convert the array into map then try to store the each unique value at unique position in permutation
 498. Populating Next Right Pointers in Each Node II => this is terrible problem of tree..
 499. Network Delay Time => this is classic dijkstra problem..
+500. Deepest Leaves Sum => very simple level order problem
 
 
 
