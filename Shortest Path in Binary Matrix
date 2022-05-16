@@ -1,0 +1,39 @@
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        """
+        can we solve this using BFS?
+        
+        if visited node is equal to target
+            then we will return the level
+            
+        lets try simple bfs
+        
+        tc = O(n * m) In worst case we will visit all nodes once
+        sc = O(n + m)
+        """
+        def getNei(x,y):
+            return [(x + 1,y),(x - 1,y),(x,y + 1),(x,y - 1),(x + 1,y + 1),(x - 1,y - 1),(x - 1,y + 1),(x + 1,y - 1)]
+        
+        def isValidCell(x,y,grid,visited):
+            return 0 <= x < len(grid) and 0 <= y < len(grid[0]) and (x,y) not in visited and grid[x][y] == 0
+        
+        from collections import deque
+        if grid[0][0] == 1:
+            return -1
+        q = deque()
+        q.append((0,0,1))
+        targetX = len(grid) - 1
+        targetY = len(grid[0]) - 1
+        visited = set()
+        while q:
+            currNodeX,currNodeY,distance = q.popleft()
+            if currNodeX == targetX and currNodeY == targetY:
+                return distance
+            if (currNodeX,currNodeY) in visited:
+                continue
+            visited.add((currNodeX,currNodeY))
+            nei = getNei(currNodeX,currNodeY)
+            for newx,newy in nei:
+                if isValidCell(newx,newy,grid,visited):
+                    q.append((newx,newy,distance + 1))
+        return -1
