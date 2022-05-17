@@ -1,0 +1,27 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def __init__(self):
+        self.ans = None
+        
+    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
+        """
+        This logic works with duplicates also
+        tc = O(n)
+        sc = O(n)
+        """
+        def preOrder(original,cloned,target):
+            if original is None:
+                return
+            if original == target:
+                self.ans = cloned
+            preOrder(original.left,cloned.left,target)
+            preOrder(original.right,cloned.right,target)
+            
+        preOrder(original,cloned,target)
+        return self.ans
