@@ -1,0 +1,30 @@
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        """
+        This is very simple problem
+        if cell is out of bound or has a obstacle then return math.inf
+        
+        tc = O(n * m)
+        sc = O(n * m)
+        """
+        def isValidCell(x,y,grid):
+            return 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] != 1
+        
+        def topDown(x,y,grid,ht):
+            if not isValidCell(x,y,grid):
+                return 0
+            if x == len(grid) - 1 and y == len(grid[0]) - 1:
+                return 1
+            if (x,y) in ht:
+                return ht[(x,y)]
+            waysFromRight = topDown(x,y + 1,grid,ht)
+            waysFromBottom = topDown(x + 1,y,grid,ht)
+            ht[(x,y)] = waysFromRight + waysFromBottom
+            return ht[(x,y)]
+        
+        rows = len(obstacleGrid)
+        cols = len(obstacleGrid[0])
+        if obstacleGrid[rows - 1][cols - 1] == 1:
+            return 0
+        ht = {}
+        return topDown(0,0,obstacleGrid,ht)
