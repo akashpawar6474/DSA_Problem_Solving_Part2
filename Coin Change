@@ -25,3 +25,72 @@ class Solution:
         ans = topDown(coins,amount,currIdx,dp) 
         return ans if ans != math.inf else -1
                 
+------------------------------------------------------------------------------- 21 May 2022
+import math
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        """
+        another way is to choose coin
+        and recur
+        
+        at each position we have two options
+        if curr coin is less than equal to amount
+            then reduce and recur
+        else
+            skip it
+        take min among them
+        
+        base case
+        if amount == 0 return 1
+        if currPtr has reached end return math.inf
+        
+                            fn(0,11)
+                            /
+                        fn(0,10)
+                        /
+                        /
+                    fn(0,1)
+                    /
+                fn(0,0)
+                
+        tc = O(n * amount) n = len of coins
+        In worst case we will have to solve onley n * amount subproblems
+        
+        sc = O(n * amount) for hashtable
+        
+        """
+        def topDown(coins,currPtr,amount,ht):
+            if amount == 0:
+                return 0
+            if currPtr == len(coins):
+                return math.inf
+            if (currPtr,amount) in ht:
+                return ht[(currPtr,amount)]
+            byChoosing = math.inf
+            if coins[currPtr] <= amount:
+                byChoosing = topDown(coins,currPtr,amount - coins[currPtr],ht) + 1
+            bySkipping = topDown(coins,currPtr + 1,amount,ht)
+            ht[(currPtr,amount)] = min(byChoosing,bySkipping)
+            return min(byChoosing,bySkipping)
+        
+        currPtr = 0
+        ht = {}
+        if amount == 0:
+            return 0
+        ans = topDown(coins,currPtr,amount,ht)
+        return ans if ans != math.inf else -1
+    def greedyTry(self,coins):
+        """
+        Idea is to sort the coins array 
+        then come from back 
+        and reduce the amount
+        """
+        coins.sort()
+        currPtr = len(coins) - 1
+        ans = 0
+        while amount and currPtr > -1:
+            ans += (amount // coins[currPtr])
+            amount = amount % coins[currPtr]
+            currPtr -= 1
+        return ans if amount == 0 else -1
+            
