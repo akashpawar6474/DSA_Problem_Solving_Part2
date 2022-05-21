@@ -26,8 +26,7 @@ class Solution:
         return ans if ans != math.inf else -1
                 
 ------------------------------------------------------------------------------- 21 May 2022
-import math
-class Solution:
+
     def coinChange(self, coins: List[int], amount: int) -> int:
         """
         another way is to choose coin
@@ -84,6 +83,8 @@ class Solution:
         Idea is to sort the coins array 
         then come from back 
         and reduce the amount
+        
+        ex = [1,4,6] amount = 9
         """
         coins.sort()
         currPtr = len(coins) - 1
