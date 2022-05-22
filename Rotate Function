@@ -1,0 +1,157 @@
+class Solution:
+    def maxRotateFunction(self, nums: List[int]) -> int:
+        """
+        whenever we have such kind of problem
+        where rotation and some increasing/decreasing coefficient is there
+        then to get value of next rotation from the previous one
+        do some equation mathematics
+        
+        dont know how to convert this problem to solve with subproblems
+        or recursion
+        
+        but here is some math and equations basics
+        
+        first of all get the sum
+        arr = [4,3,2,6]
+        sum = 15
+        
+        f(0) => 0 * a + 1 * b + 2 * c + 3 * d
+        f(1) => 1 * a + 2 * b + 3 * c + 0 * d
+        
+        if we subtract f(0) from f(1)
+        then we will get
+        
+        f(1)  a + 2b + 3c + 0
+        f(0)  0 + b + 2c + 3d
+        -   -   -   -   -
+        -------------------------
+              a + b + c - 3d
+              
+        and we can substitute -3d to d - 4d  here 4 is length of an array
+        
+        so it becomes a + b + c + d - 4d
+        f(1) - f(0) = sum(arr) - N * arr[PI]
+        f(1) = f(0) + sum(arr) - (n * arr[pI])
+        
+        pI will range from n - 1 to 1st idx which will be last rotation
+        
+        so basically we will find out the sum first
+        then calculate f(0) first
+        
+        then we will move pi in range of n - 1 to 1st idx
+        and will calculate further for proceeding rotations
+        
+        tc = O(n + n + n)
+        sc = O(1)
+        """
+        def getFirstRotationVal(nums):
+            coefficient = 0
+            total = 0
+            for idx in range(len(nums)):
+                currVal = coefficient * nums[idx]
+                coefficient += 1
+                total += currVal
+            return total
+        
+        arrSum = sum(nums)
+        prevRotationVal = getFirstRotationVal(nums)
+        maxVal = -math.inf
+        maxVal = max(maxVal, prevRotationVal)
+        n = len(nums)
+        partitionIdx = n - 1
+        
+        for idx in range(partitionIdx,0,-1):
+            nextRotationVal = prevRotationVal + arrSum - (n * nums[idx])
+            maxVal = max(maxVal,nextRotationVal)
+            prevRotationVal = nextRotationVal
+        return maxVal
+    
+    def optimizedBruteForce(self,nums):
+        """
+        [4,3,2,6]
+        
+        partitionIdx = n - 1 => 3
+        first go from partitionIdx + 1 to end
+        then go from 0 to partitionIdx
+        first go 4 to 4 so nothing will happen
+        then move from 0 to 3
+        
+        partition idx 2
+        then first go from 3 to 4(excluded) and coefficent will be 1 after that
+        then go from 0 to 2
+        
+        partition idx will be 1
+        then first go from 2 to 4(excluded) and coefficient will be 2 after thn
+        then go from 0 to 1
+        
+        partition idx will be 0
+        then first go from 1 to 4(excluded) and coefficient will be 3 after that
+        then go from 0 to 0
+        
+        is there any optimal substructure ?
+        can we solve this problem using recursion
+        
+        """
+        def calRotationVal(nums,partitionIdx):
+            coefficient = 0
+            total = 0
+            n = len(nums)
+            for idx in range(partitionIdx,n):
+                currVal = coefficient * nums[idx]
+                coefficient += 1
+                total += currVal
+                
+            for idx in range(0,partitionIdx):
+                currVal = coefficient * nums[idx]
+                coefficient += 1
+                total += currVal
+            
+            return total
+        
+        n = len(nums)
+        partitionIdx = n
+        maxVal = -math.inf
+        for idx in range(partitionIdx,-1,-1):
+            maxVal = max(maxVal, calRotationVal(nums, idx))
+            
+        return maxVal
+    
+    def firstTry(nums):
+        """
+        [4,3,2,6] => [4,3,2,6,4,3,2,6]
+        
+        [4,3,2,6] => 
+        
+        [6,4,3,2]
+        
+        if we double the array
+        
+        basically after doubling the array our loop will go from 
+            i in range(n,0)
+                j in range(i + n)
+                
+        we need to figure out how we can convert 25 to 16 
+        while removing last 6 and adding prev 6
+        
+        we will try brute force but 
+        this will take O(n ^ 2) time and it will fail
+        """
+        def calculateVal(nums,start,end):
+            coefficient = 0
+            total = 0
+            for idx in range(start,end):
+                currVal = coefficient * nums[idx]
+                total += currVal
+                coefficient += 1
+            return total
+        
+        n = len(nums)
+        for idx in range(n):
+            nums.append(nums[idx])
+        maxVal = 0
+    
+        
+        for i in range(n,0,-1):
+            j = i + n
+            maxVal = max(maxVal, calculateVal(nums,i,j))
+        return maxVal
