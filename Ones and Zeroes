@@ -1,0 +1,50 @@
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        """
+        first of all we will precompute no of zeroes and ones in each string
+        
+        Idea is at each place we have two choices
+            if curr string no of zeroes and ones are less than m and n
+                then choose this
+            try by skipping this also
+        at last take the max subset among them
+        
+        base case
+            if currIdx reached end
+                then return 0
+                
+        tc = O(arrLen ^ 2)
+        sc = O(arrLen * m ^ n)
+        """
+        def precomputeOnesAndZeroes(strs):
+            ones = [0] * len(strs)
+            zeroes = [0] * len(strs)
+            
+            for idx in range(len(strs)):
+                one = 0
+                zero = 0
+                for ch in strs[idx]:
+                    if ch == '1':
+                        one += 1
+                    else:
+                        zero += 1
+                ones[idx] = one
+                zeroes[idx] = zero
+            return ones,zeroes
+        
+        def topDown(strs,ones,zeroes,currIdx,maxZeroes,maxOnes,ht):
+            if currIdx == len(strs):
+                return 0
+            if (currIdx,maxZeroes,maxOnes) in ht:
+                return ht[(currIdx,maxZeroes,maxOnes)]
+            byChoosing = 0
+            if ones[currIdx] <= maxOnes and zeroes[currIdx] <= maxZeroes:
+                byChoosing = topDown(strs,ones,zeroes,currIdx + 1,maxZeroes - zeroes[currIdx],maxOnes - ones[currIdx],ht) + 1
+            bySkipping = topDown(strs,ones,zeroes,currIdx + 1,maxZeroes,maxOnes,ht)
+            ht[(currIdx,maxZeroes,maxOnes)] = max(byChoosing,bySkipping)
+            return max(byChoosing,bySkipping)
+                
+        
+        ones,zeroes = precomputeOnesAndZeroes(strs)
+        ht = {}
+        return topDown(strs,ones,zeroes,0,m,n,ht)
