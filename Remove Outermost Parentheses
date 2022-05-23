@@ -1,0 +1,103 @@
+class Solution:
+    def removeOuterParentheses(self, s: str) -> str:
+        """
+        Idea is to pass the identifier with the parenthesis
+        in string
+        if it is opening bracket
+            if stack is empty
+                insert idx and skip as tuple
+            else
+                insert idx and keep as tuple
+        else
+            if stack top is skip
+                then pop the top and insert idx in skip array
+                and insert current idx also
+            else
+                simply pop the top
+                
+        tc = O(2n) => O(n)
+        sc = O(n)
+        """
+        stack = []
+        skipIndices = set()
+        n = len(s)
+        for idx in range(n):
+            currChar = s[idx]
+            if currChar == '(':
+                if len(stack) == 0:
+                    stack.append((idx,"SKIP"))
+                else:
+                    stack.append((idx,"KEEP"))
+            else:
+                charIdx,status = stack.pop()
+                if status == "SKIP":
+                    skipIndices.add(charIdx)
+                    skipIndices.add(idx)
+        
+        ans = []
+        for idx in range(n):
+            if idx not in skipIndices:
+                ans.append(s[idx])
+        return "".join(ans)
+                    
+    def secondTry(self,s):
+        """
+        we will try the same login using while loop
+        """
+        stack = []
+        ans = []
+        n = len(s)
+        currIdx = 0
+        while currIdx < n:
+            if s[currIdx] == '(':
+                stack.append(s[currIdx])
+                currIdx += 1
+            else:
+                openingBraces = 0
+                while len(stack) > 1 and stack[-1] == '(':
+                    ans.append(stack.pop())
+                    openingBraces += 1
+                currIdx += openingBraces
+                while openingBraces > 0:
+                    ans.append(')')
+                    openingBraces -= 1
+                if s[currIdx] == ')':
+                    print(currIdx)
+                    stack.pop()
+                    currIdx += 1
+                    
+        return "".join(ans)
+                    
+    def usingFor(self,s):
+        """
+        Idea is to use the stack
+
+        elif it is opening parenthesis  => 1st condition
+            push it into the stack
+        else
+            if stack length is 1
+                then pop the element
+            else
+                pop the element
+                and add it to the ans array
+                add closing parenthesis also
+                
+        and it is said that s is valid string
+        
+        ((())) => will work
+        (()()) => will work
+        
+        "(()(()))" => will break
+        """
+        stack = []
+        ans = []
+        for ch in s:
+            if ch == '(':
+                stack.append(ch)
+            else:
+                if len(stack) != 1:
+                    ans.append(stack[-1])
+                    ans.append(ch)
+                stack.pop()
+        return "".join(ans)
+                    
