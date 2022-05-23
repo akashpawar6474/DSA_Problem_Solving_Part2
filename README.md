@@ -118,6 +118,7 @@ This is second directory because github reached limit of no of files for first r
 502. Find a Corresponding Node of a Binary Tree in a Clone of That Tree => very simple tree traversal problem..
 503. Unique Paths II => this is simple dp problem with additional base condition.
 504. Rotate Function => this is pure math based problem with some what sliding window approach where we depend on prev window result..
+505. Ones and Zeroes => simple knapsack pattern problem..
 
 
 
