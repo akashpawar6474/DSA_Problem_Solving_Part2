@@ -120,6 +120,7 @@ This is second directory because github reached limit of no of files for first r
 504. Rotate Function => this is pure math based problem with some what sliding window approach where we depend on prev window result..
 505. Ones and Zeroes => simple knapsack pattern problem..
 506. Remove Outermost Parentheses => easy but tricky problem.. 
+507. Maximum Product of Word Lengths => this is very good problem of converting string to integer interms of bits..
 
 
 
