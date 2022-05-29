@@ -1,0 +1,84 @@
+class Solution:
+    def maxProduct(self, words: List[str]) -> int:
+        """
+        can we represent string in integer format
+                                       z y x w v u ..... c b a 
+        abcw => can we represent it as 0 0 0 1 0 0       1 1 1
+        
+        means if there is a set 0th bit
+        if there is z set 25th bit
+        
+        and if we take and of two strings and none of the comman bit is set for them then
+        it will return 0 then track the answer
+        
+        how to set bit?
+        assume we have 0 which is having all 0 at each bits
+        then we want to set the 2nd bit
+        then take OR with (1 << 2(bit position to set))
+        
+        tc = O(n + n ^ 2) => O(n ^ 2)
+        sc = O(n)
+        """
+        def setBit(intPortrayal,bitPositionToSet,currIdx):
+            intPortrayal[currIdx] = intPortrayal[currIdx] | (1 << bitPositionToSet)
+        
+        def portrayAsInt(currWord,intPortrayal,currIdx):
+            for ch in currWord:
+                bitPositionToSet = ord(ch) - ord('a')
+                currWordPortrayal = setBit(intPortrayal,bitPositionToSet,currIdx)
+
+            
+        def portrayAllStingsAsInteger(words,n):
+            intPortrayal = [0] * n
+            for idx in range(n):
+                currWord = words[idx]
+                portrayAsInt(currWord,intPortrayal,idx)
+            return intPortrayal
+                
+        n = len(words)
+        intPortrayal = portrayAllStingsAsInteger(words,n)
+        ans = 0
+        for idx in range(n):
+            for nextIdx in range(idx + 1,n):
+                if intPortrayal[idx] & intPortrayal[nextIdx] == 0:
+                    currLen = len(words[idx]) * len(words[nextIdx])
+                    ans = max(ans,currLen)
+        return ans
+            
+        
+    def bruteForce(self,words):
+        """
+        idea is to sort the array by lengths
+        then come from back and returnt the first valid pair
+        
+        Nope that wont work
+        even if we get the first valid pair
+        we can get next pair who can have max value
+        
+        so in all cases we need to visit array twice
+        
+        first of all convert all words to set
+        
+        uniqueChar[i] will represent all unique char in ith string
+        """
+        def getUniqueCharArr(words):
+            uniqueCharArr = [None for x in range(len(words))]
+            for idx in range(len(words)):
+                uniqueCharArr[idx] = set(words[idx])
+            return uniqueCharArr
+        
+        def isValidPair(currWordSet,nextWord):
+            for ch in nextWord:
+                if ch in currWordSet:
+                    return False
+            return True
+        
+        uniqueCharArr = getUniqueCharArr(words)
+        ans = 0
+        for idx in range(len(words) - 1):
+            currWordSet = uniqueCharArr[idx]
+            for nextIdx in range(idx + 1,len(words)):
+                nextWord = words[nextIdx]
+                if isValidPair(currWordSet,nextWord):
+                    ans = max(ans,len(words[idx]) * len(words[nextIdx]))
+        return ans
