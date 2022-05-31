@@ -1,0 +1,21 @@
+import kotlin.math.*
+class Solution {
+    fun hasAllCodes(s: String, k: Int): Boolean {
+        //Initializations
+        var windowStart : Int = 0
+        val n : Int = s.length
+        val codes = mutableSetOf<String>()
+        
+        //Sliding Window
+        for (windowEnd in 0..n - 1){
+            var currWindowSize : Int = windowEnd - windowStart + 1
+            if (currWindowSize > k) { windowStart += 1 }
+            currWindowSize = windowEnd - windowStart + 1
+            if (currWindowSize == k){
+                var currWindowString = s.slice(windowStart..windowEnd)
+                codes.add(currWindowString)
+            }
+        }
+        return codes.size == 2.toDouble().pow(k).toInt()
+    }
+}
