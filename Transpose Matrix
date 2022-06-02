@@ -26,3 +26,47 @@ class Solution:
                     newMatrix[j][i] = matrix[i][j]
             return newMatrix
                 
+-----------------------------------------------------------------------------------------------------
+class Solution {
+    fun transpose(matrix: Array<IntArray>): Array<IntArray> {
+        """
+        2   4  1                                    2  10  18
+        10  5  11 = replace diagonal elements=>     4  5   7
+        18  7  6                                    1  11  6 
+        
+        also is function 
+        then lambda parameter in also is called when original function is called means 
+        both will get called simultaneously
+        
+        tc = O(n * m)
+        sc = O(n * m)
+        """
+        val rows : Int = matrix.size
+        val cols : Int = matrix[0].size
+        if (rows == cols){
+            for (rowno in 0..rows - 1){
+                for (colno in 0..rowno - 1){
+                    matrix[rowno][colno] = matrix[colno][rowno].also {matrix[colno][rowno] = matrix[rowno][colno]}
+                }
+            }
+            return matrix
+        }
+        else{
+            val ans = Array(cols) { IntArray(rows) }
+            var ansRowNo : Int = 0
+            var ansColNo : Int = 0
+            for (colno in 0..cols - 1){
+                for (rowno in 0..rows - 1){
+                    if (ansColNo == rows){
+                        ansColNo = 0
+                        ansRowNo++
+                    }
+                    ans[ansRowNo][ansColNo] = matrix[rowno][colno]
+                    ansColNo++
+                }
+            }
+            return ans
+        }
+
+    }
+}
