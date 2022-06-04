@@ -1,0 +1,80 @@
+
+    def checkValidString(self, s: str) -> bool:
+        """
+        If current character is opening bracket
+            then insert into stack
+        if it is closing bracket
+            then if stack is empty
+                then return false
+            else
+                pop the element from the stack
+        if it is * then there are 3 possibilities
+            first of take copy of current stack
+            In first case we will consider it a empty string
+                and will go to next idx
+            in second case we will add opening bracket and will recur
+            in third case we will check
+                if stack is empty
+                    return false
+                else pop from the stack and recur
+                
+                            0,[]
+                             |
+                            1,['(']
+                    /           |                  \
+                 2,['(']      2,['(','(']         2,[]
+                   |             |                  |
+                 3,[]         3,['(']             return false
+                  |             |
+                 False        4,[]
+                                |
+                            return True
+                            
+        tc = O(n ^ 3)
+        sc = O() not able to compute as of now Please suggest if have any idea
+        """
+        def topDown(s,currIdx,stack,ht):
+            if currIdx == len(s) and len(stack) == 0:
+                return True
+            if currIdx >= len(s):
+                return False
+            
+            stackContent = ''.join(stack)
+            if (currIdx,stackContent) in ht:
+                return ht[(currIdx,stackContent)]
+            
+            if s[currIdx] == '(':
+                stack.append(s[currIdx])
+                ht[(currIdx,stackContent)] = topDown(s,currIdx + 1,stack,ht)
+                return ht[(currIdx,stackContent)]
+            elif s[currIdx] == ')':
+                if len(stack) == 0:
+                    ht[(currIdx,stackContent)] = False
+                else:
+                    stack.pop()
+                    ht[(currIdx,stackContent)] = topDown(s,currIdx + 1,stack,ht)
+                return ht[(currIdx,stackContent)]
+            else:
+                stackForOpeningBracket = stack.copy()
+                stackForClosingBracket = stack.copy()
+                
+                emptyStringPossibility = topDown(s,currIdx + 1,stack,ht)
+                
+                stackForOpeningBracket.append('(')
+                openingBracketPossibility = topDown(s,currIdx + 1,stackForOpeningBracket,ht)
+                
+                closingBracketPossibility = True
+                if len(stackForClosingBracket) == 0:
+                    closingBracketPossibility = False
+                else:
+                    stackForClosingBracket.pop()
+                    closingBracketPossibility = topDown(s,currIdx + 1,stackForClosingBracket,ht)
+                
+                ht[(currIdx,stackContent)] = emptyStringPossibility or openingBracketPossibility or closingBracketPossibility
+                return ht[(currIdx,stackContent)]
+            
+            
+        ht = {}
+        return topDown(s,0,[],ht)
+
+                
