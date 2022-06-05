@@ -124,6 +124,8 @@ This is second directory because github reached limit of no of files for first r
 508. Check If a String Contains All Binary Codes of Size K => simple add all unique k length strings to set..
 510. Valid Parenthesis String => very good dp and stack problem
 511. Minimum Add to Make Parentheses Valid => remove the balanced part of the string.
+512. Next Greater Node In Linked List => very simple monotonic stack problem..
+513. 
 
 
 
