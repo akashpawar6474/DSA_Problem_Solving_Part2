@@ -1,0 +1,44 @@
+In Python
+def minAddToMakeValid(self, s: str) -> int:
+    """
+    this can easily solved by the count
+    tc = O(n)
+    sc = O(1)
+    """
+    openingBracketCount = 0
+    invalidClosingBracket = 0
+    for ch in s:
+        if ch == ')':
+            if openingBracketCount == 0:
+                invalidClosingBracket += 1
+            else:
+                openingBracketCount -= 1
+        else:
+            openingBracketCount += 1
+    return openingBracketCount + invalidClosingBracket
+            
+
+In Kotlin
+fun minAddToMakeValid(s: String): Int {
+    """
+    tc = O(n)
+    sc = O(1)
+    """
+    var openingBracketCount : Int = 0
+    var invalidClosingBrackets : Int = 0
+    val n : Int = s.length
+    for (idx in 0..n - 1){
+        if (s[idx] == ')') {
+            if (openingBracketCount == 0) {
+                invalidClosingBrackets += 1
+            }
+            else {
+                openingBracketCount -= 1
+            }
+        }
+        else {
+            openingBracketCount += 1
+        }
+    }
+    return openingBracketCount + invalidClosingBrackets
+}
