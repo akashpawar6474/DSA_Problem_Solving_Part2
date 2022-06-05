@@ -1,0 +1,42 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def nextLargerNodes(self, head: Optional[ListNode]) -> List[int]:
+        """
+        we will use stack where we will store
+        node value and idx
+        
+        first of all count the length of the linked list
+        initialize the ans list
+        tc = O(2n)
+        sc = O(n)
+        """
+        def getListCount(head):
+            curr = head
+            count = 0
+            while curr:
+                count += 1
+                curr = curr.next
+            return count
+    
+        count = getListCount(head)
+        ans = [0 for x in range(count)]
+        stack = []
+        curr = head
+        idx = 0
+        while curr:
+            if len(stack) == 0 or stack[-1][0] > curr.val:
+                stack.append((curr.val,idx))
+                idx += 1
+            else:
+                while len(stack) != 0 and stack[-1][0] < curr.val:
+                    val,nodeIdx = stack.pop()
+                    ans[nodeIdx] = curr.val
+                stack.append((curr.val,idx))
+                idx += 1
+            curr = curr.next
+        return ans
+        
