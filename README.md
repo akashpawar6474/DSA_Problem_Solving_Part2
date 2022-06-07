@@ -125,7 +125,7 @@ This is second directory because github reached limit of no of files for first r
 510. Valid Parenthesis String => very good dp and stack problem
 511. Minimum Add to Make Parentheses Valid => remove the balanced part of the string.
 512. Next Greater Node In Linked List => very simple monotonic stack problem..
-513. 
+513. Smallest Subsequence of Distinct Characters => using monotonic stack and map together completely observation based problem
 
 
 
