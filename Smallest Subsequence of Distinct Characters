@@ -1,0 +1,109 @@
+class Solution:
+    def smallestSubsequence(self, s: str) -> str:
+        """
+        this is very great problem
+        
+        and observation based also
+        we will maintain char in stack 
+            if possible in increasing order
+        
+        at each character we will have two possibilities
+            if top of stack char greater than curr char and is present in future
+                then pop it
+            and store current element into stack
+            
+        c b a c d c b c
+        ci
+        stack [c]
+        stack [b] pop c as it is present in the future
+        stack [a] pop b as it is present in the future
+        stack [a,c] push as top is less than curr char
+        stack [a,c,d] same here
+        stack [a,c,d,c] we wont pop d as it is not present in future 
+        stack [a,c,d,b] pop c as it is present in future
+        
+        if we have check on stack length then that wont work
+        """
+        def getLastIndices(s):
+            ht = {}
+            for idx in range(len(s)):
+                ht[s[idx]] = idx
+            return ht
+        
+        stack = []
+        lastIndices = getLastIndices(s)
+        seen = set()
+        n = len(s)
+        for idx in range(n):
+            currChar = s[idx]
+            if currChar in seen:
+                continue
+            while len(stack) > 0 and ord(currChar) < ord(stack[-1]) and idx < lastIndices[stack[-1]]:
+                seen.remove(stack.pop())
+            stack.append(currChar)
+            seen.add(currChar)
+        return ''.join(stack)
+            
+    def firstTry(self,s):
+        """
+        first of all we can generate all subsequence which contains all distinct 
+        char exactly once
+        
+        btw again we need to compare them and sort them lexicographically
+        and we have to return the smallest
+        
+        when it is mentioned subsequence then sorting of string goes out of picture
+        how stack comes into picture?
+        what is use case of stack here?
+        
+        due to distinct keyword should we consider set or map?
+        but for why?
+        
+        we can know the count of distinct char by converting string to set
+        c b a c d c b c
+                  ci
+        map c = 1, b = 0, a = 0, d = 0
+        stack [(c,0),(b,0),(a,0)]
+        pop a and b and store in another stack
+        then pop c
+        then store b and a in first stack
+        
+        stack [(b,0),(a,0),(c,1),(d,0)]
+        pop untill top is less than current element
+        and not equal to current element
+        
+        so as c is less than d so we wont pop it
+        now again b comes here what should we do
+        
+        should we pop untill we encounter same element
+        
+        yeah what we will do we will store characters into the stack
+        when we are on current character
+            which already has freq > 0
+            (then we can be sure that that char is present into stack)
+            so pop untill we get that character
+            and put all those characters into utility stack
+        then again put all those char in utility into original stack
+        and then push current character
+        
+        if char is not present in map
+            then add it to the stack
+            and add key val pair as char and 1 as freq
+        
+        """
+        stack = []
+        utilityStack = []
+        ht = {}
+        for ch in s:
+            print(ch,stack)
+            if ch not in ht:
+                ht[ch] = 1
+                stack.append(ch)
+            else:
+                while stack[-1] != ch:
+                    utilityStack.append(stack.pop())
+                stack.pop()
+                while len(utilityStack) > 0:
+                    stack.append(utilityStack.pop())
+                stack.append(ch)
+        return ''.join(stack)
