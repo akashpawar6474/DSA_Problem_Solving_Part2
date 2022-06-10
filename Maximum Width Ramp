@@ -1,0 +1,182 @@
+class Solution:
+    def maxWidthRamp(self, nums: List[int]) -> int:
+        """
+        now assume we have 
+        [1,2,3]
+        so max width of ramp will be 2
+        
+        so for each ele we should pop top if it is less than it
+        
+        now in first example if we pop 0 for 8 then how we will use that for future
+        
+        for each idx if we start we will get differnt subsequence of increasing characters
+        
+        normal principal of monotonic stack wont work
+        like comparing and popping
+        we will need something different
+        
+        we will use array as stack to store elements in descending order
+        then for each element
+        we have two options
+            if top of stack is greter than curr ele
+                then push current element
+            else
+                find the greatest no which is smallest or equal to current element
+                and keep track of ramp with maxramp
+        return maxramp
+        
+        [6,4,1] target 5 => 
+        start end mid
+        0      2   1
+        0      0   0
+        1      0   now return start
+        
+        [6,4] target = 5
+        start end mid
+        0      1   0
+        1      1   1
+        1      0   return start
+        
+        
+        [6,0] target = 2
+        start end mid
+        0     1   0
+        
+        
+        [0,1] target 2
+        start end mid
+        0      1   0
+        
+        [0,2] target 2
+        [3,1]
+        start end mid
+        0      1  0
+        1      1  1
+        1      0  
+        
+        tc = O(nlogn)
+        sc = O(n)
+        """
+        def binarySearch(arr,target):
+            start = 0
+            end = len(arr) - 1
+            ans = -1
+            while start <= end:
+                mid = (start + end) // 2
+                if nums[arr[mid]] > target:
+                    start = mid + 1
+                elif nums[arr[mid]] < target:
+                    end = mid - 1
+                else:
+                    return arr[mid]
+            return arr[start]
+        
+        arrAsStack = []
+        n = len(nums)
+        maxWidth = 0
+        for idx in range(n):
+            if len(arrAsStack) == 0 or nums[arrAsStack[-1]] > nums[idx]:
+                arrAsStack.append(idx)
+            else:
+                """
+                so we have decreasing array
+                then we need to find out greatest ele smaller than equal to curre element
+                """
+                idxOfFirstSmallestElement = binarySearch(arrAsStack,nums[idx])
+                currRampWidth = idx - idxOfFirstSmallestElement
+                maxWidth = max(maxWidth, currRampWidth)
+        return maxWidth
+    
+    def thirdtry(self,nums):
+        """
+        at each step we will need
+        NOT the previous smallest element
+        WE will need first element which is smaller or equal to current element
+        
+        [2,5,34,65,65,23,9,3,0]
+        
+        so we will use some different kind of technique
+        like looking in history
+        and picking the ropes untill there is dead end
+        
+        
+        for each element rather than moving back one by one elemnt
+        we can jump 
+        
+        if we have only [2,5]
+        I believe this wont work
+        
+        suppose in above example we have prev ele greater than currele
+        if we start moving back then in worst case
+        where array is sorted in descending order then we will end up O(n ^ 2)
+        
+        let me be clear 
+        we dont want smallest ele in whole array from 0 to i
+        we want first smallest or eq ele from 0 to i
+        """
+        def prepareFirstSmallestEqEleArr(nums):
+            n = len(nums)
+            firstSmallestEqEleIdxArr = [-1] * n
+            for idx in range(1,n):
+                prevIdx = idx - 1
+                while firstSmallestEqEleIdxArr[prevIdx] != -1:
+                    prevIdx = firstSmallestEqEleIdxArr[prevIdx]
+    def secondtry(self,nums):
+        """
+        at each ele we should be aware about
+        smallest idx than currIdx which is having value 
+        less than eq to current element
+        
+        we cant use heap also
+        if we remove than then how we will take it for further elements
+        
+        tc = O(n ^ 2)
+        sc = O(1)
+        """
+        n = len(nums)
+        maxWidth = 0
+        for i in range(n):
+            for j in range(i):
+                if nums[j] <= nums[i]:
+                    maxWidth = max(maxWidth, i - j)
+        return maxWidth
+    
+    def firstTry(self,nums):
+        """
+        what we can do is
+        we will have maxWidth equal to 0 earlier
+        then for curr ele
+            if stack is not empty and top is less than eq curr ele
+                then update the value
+            else
+                push it into the stack
+                
+        Nope this approach wont work
+        if we combine elements with indices then we will sort by values
+        [6,0,8,2,1,5]
+        [0,1,2,3,4,5]
+        
+        [0,1,2,5,6,8]
+        [1,4,3,5,0,2]
+        
+        then using two loops we can find the max width
+        
+        tc = O(nlogn + n ^ 2)
+        """
+        def prepareEleAndIdxArr(nums):
+            eleIdxArr = []
+            n = len(nums)
+            for idx in range(n):
+                eleIdxArr.append((nums[idx],idx))
+            return eleIdxArr
+        
+        eleIdxArr = prepareEleAndIdxArr(nums)
+        eleIdxArr.sort(key = lambda x : x[0])
+        
+        n = len(nums)
+        maxWidth = 0
+        for currIdx in range(n):
+            for nextIdx in range(currIdx + 1,n):
+                if eleIdxArr[currIdx][1] < eleIdxArr[nextIdx][1]:
+                    maxWidth = max(maxWidth, eleIdxArr[nextIdx][1] - eleIdxArr[currIdx][1])
+        return maxWidth
