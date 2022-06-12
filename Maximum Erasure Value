@@ -1,0 +1,26 @@
+class Solution:
+    def maximumUniqueSubarray(self, nums: List[int]) -> int:
+        """
+        first of all we need to find out the sum of an unique elements
+        then find the min subarray which consists of all unique elements
+        
+        so find the subarray with unique elements
+        tc = O(n)
+        sc = O(n)
+        """
+        windowStart = 0
+        maxSum = 0
+        currSum = 0
+        n = len(nums)
+        s = set()
+        for windowEnd in range(n):
+            eleAtWindowEnd = nums[windowEnd]
+            currSum += eleAtWindowEnd
+            if eleAtWindowEnd in s:
+                while windowStart < windowEnd and eleAtWindowEnd in s:
+                    currSum -= nums[windowStart]
+                    s.remove(nums[windowStart])
+                    windowStart += 1
+            s.add(eleAtWindowEnd)
+            maxSum = max(currSum, maxSum)
+        return maxSum
