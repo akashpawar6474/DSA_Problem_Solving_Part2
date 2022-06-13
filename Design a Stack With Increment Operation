@@ -1,0 +1,51 @@
+class CustomStack:
+    """
+    every operation will be constant time
+    
+    when we want to add some value for range 1st ele to x
+    then put that value with key as x in map
+    
+    every operation is constant time now
+    
+    """
+    def __init__(self, maxSize: int):
+        self.stack = []
+        self.capacity = maxSize
+        self.increments = {}
+
+    def push(self, x: int) -> None:
+        if self.capacity > len(self.stack):
+            self.stack.append(x)
+            
+    def pop(self) -> int:
+        if len(self.stack) == 0:
+            return -1
+        idxToPop = len(self.stack) - 1
+        amountToAddInLastEle = 0
+        if idxToPop in self.increments:
+            amountToAddInLastEle = self.increments[idxToPop]
+            del self.increments[idxToPop]
+            if idxToPop - 1 not in self.increments:
+                self.increments[idxToPop - 1] = 0
+            self.increments[idxToPop - 1] += amountToAddInLastEle
+        ans = self.stack.pop() + amountToAddInLastEle
+        return ans
+        
+
+    def increment(self, k: int, val: int) -> None:
+        if k <= len(self.stack):
+            if k - 1 not in self.increments:
+                self.increments[k - 1] = 0
+            self.increments[k - 1] += val
+        if k > len(self.stack):
+            if len(self.stack) - 1 not in self.increments:
+                self.increments[len(self.stack) - 1] = 0
+            self.increments[len(self.stack) - 1] += val
+        
+
+
+# Your CustomStack object will be instantiated and called as such:
+# obj = CustomStack(maxSize)
+# obj.push(x)
+# param_2 = obj.pop()
+# obj.increment(k,val)
