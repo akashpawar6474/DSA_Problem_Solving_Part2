@@ -1,0 +1,25 @@
+class Solution:
+    def reverseParentheses(self, s: str) -> str:
+        """
+        if it is opening bracket or char we will push it into the stack
+        if it is closing bracket then we will pop elements
+        and will push into the queue untill there is opening bracket
+        
+        then pop the opening bracket
+        and push all the elements from the queue to the stack
+        """
+        from collections import deque
+        q = deque()
+        stack = []
+        
+        for ch in s:
+            if ch != ')':
+                stack.append(ch)
+            else:
+                while stack[-1] != '(':
+                    q.append(stack.pop())
+                stack.pop()
+                while q:
+                    front = q.popleft()
+                    stack.append(front)
+        return ''.join(stack)
