@@ -129,6 +129,8 @@ This is second directory because github reached limit of no of files for first r
 514. Maximum Width Ramp => this is stack and binary search problem to find out first smallest idx for each element in an array
 515. Minimum Operations to Reduce X to Zero => thinking in reverse direction finding maximum subarray with given sum then reducing it from length'
 516. Maximum Erasure Value => same as maximum unique substring problem..
+517. Design a Stack With Increment Operation => this is very new problem to add value to range in constant time
+518. 
 
 
 
