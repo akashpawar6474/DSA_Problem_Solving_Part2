@@ -130,7 +130,7 @@ This is second directory because github reached limit of no of files for first r
 515. Minimum Operations to Reduce X to Zero => thinking in reverse direction finding maximum subarray with given sum then reducing it from length'
 516. Maximum Erasure Value => same as maximum unique substring problem..
 517. Design a Stack With Increment Operation => this is very new problem to add value to range in constant time
-518. 
+518. Reverse Substrings Between Each Pair of Parentheses => simple but dont know the time complexity .. ?
 
 
 
