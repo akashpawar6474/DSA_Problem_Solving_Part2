@@ -1,0 +1,137 @@
+class Solution:
+    def scheduleCourse(self, courses: List[List[int]]) -> int:
+        """
+        we have n courses now question is to determine
+        how many course we can take among the all courses
+        
+        [100,200],[200,1300],[1000,1250],[2000,3200]
+        
+        should we take the course which have
+        smallest duration
+        then this will pick the second course after first course which is not
+        acceptable
+        
+        should we take courses based on their end times
+        is it that simple by sorting by endtimes just have the check
+        
+        is it like finding maximum threshold
+        then take then courses with minimum durations
+        and have a check if durations is less than threshold
+        
+        with this logic first example will fail
+        so should we pick the smallest deadline first then 
+        [5,5],[4,6],[2,6] will fail
+        
+        we cant take the smallest duration or deadlines
+        then what should we take 
+        should we take differneces
+        
+        If we take min differnece first then above [5,5] example will fail
+        If we take the max differnce first then 
+        
+        is it like that should we pop the element
+        keep track of current maximum deadline
+        while popped first check if duration is lesser than deadline
+            if current spent time + current duration <= max(current max deadline,current deadline):
+                add current duration to current spent time
+                update current max deadline
+        else skip it
+        
+        [[7,11],[1,11],[1,3],[2,6],[5,6],[7,7],[4,8],[2,20],[1,17],[8,11]]
+        [[1,11],[1,3],[2,6],[4,8],[2,20],[1,17],[5,6]]
+        
+        Q.Why to sort by deadline?
+        Suppose we have courses
+        [[2,5],[2,18],[1,8],[1,3]]
+        
+        If we dont sort then it will pick first 3 courses
+        and while we are at the last course then our total
+        timeSpent is equal to 5 and deadline of last course is 3
+        so we cant include it
+        Hence we will try to finish the courses with small deadlines
+        
+        Another idea which can help us think greedily is that
+        if we can keep track of max duration course on the run
+        then if at any course we are missing the deadline then 
+        we will just check if max duration course selected untill now
+        is bigger than current duration so pop it then select the current course
+        may be in future we can accumulate another course also
+        """
+        def usingMaxHeap(courses):
+            import heapq
+            courses.sort(key = lambda x : x[1])
+            maxHeap = []
+            timeSpentUntillNow = 0
+            for duration,deadline in courses:
+                if duration + timeSpentUntillNow <= deadline:
+                    heapq.heappush(maxHeap, -duration)
+                    timeSpentUntillNow += duration
+                elif maxHeap and -maxHeap[0] > duration:
+                    timeSpentUntillNow += heapq.heappop(maxHeap)    #we will subtract max duration
+                    timeSpentUntillNow += duration
+                    heapq.heappush(maxHeap, -duration)
+            return len(maxHeap)
+            
+        return usingMaxHeap(courses)
+        def topDown(courses,timeSpent,index,ht,duration,deadline):
+            if index == len(courses):
+                return 0
+            if (timeSpent,index) in ht:
+                return ht[(timeSpent,index)]
+            
+            takeCurrentCourse = 0
+            if timeSpent + courses[index][duration] <= courses[index][deadline]:
+                takeCurrentCourse = 1 + topDown(courses,timeSpent + courses[index][duration],index + 1,ht,duration,deadline)
+            
+            skipCurrentCourse = topDown(courses,timeSpent,index + 1,ht,duration,deadline)
+            
+            ht[(timeSpent,index)] = max(takeCurrentCourse,skipCurrentCourse)
+            return ht[(timeSpent,index)]
+        
+        courses.sort(key = lambda x : x[1])
+        return topDown(courses,0,0,{},0,1)
+        
+        def addCoursesToMinHeap(courses,minHeap):
+            import heapq
+            for duration,deadline in courses:
+                heapq.heappush(minHeap,(duration,deadline))
+                
+        def secondTry(courses):
+            import heapq
+            minHeap = []
+            addCoursesToMinHeap(courses,minHeap)
+            timeSpent = 0
+            maxDeadline = 0
+            count = 0
+            while minHeap:
+                duration,deadline = heapq.heappop(minHeap)
+                print(duration,"----",deadline)
+                if duration > deadline:
+                    continue
+                print(timeSpent,duration,maxDeadline,deadline)    
+                if timeSpent + duration <= max(maxDeadline,deadline):
+                    timeSpent += duration
+                    maxDeadline = max(maxDeadline,deadline)
+                    count += 1
+            return count
+        
+        return secondTry(courses)
+                    
+        
+        def firstTry(self,courses):
+            courses.sort(key = lambda x : x[1])
+            canTake = 0
+            duration = 0
+            deadline = 1
+            timeSpent = 0
+            threshold = 0
+            n = len(courses)
+            for idx in range(n):
+                currCourse = courses[idx]
+                if currCourse[duration] > currCourse[deadline] or timeSpent + currCourse[duration] > currCourse[deadline]:
+                    continue
+                canTake += 1
+                timeSpent += currCourse[duration]
+            return canTake
+
+
