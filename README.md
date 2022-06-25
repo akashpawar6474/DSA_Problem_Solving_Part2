@@ -132,7 +132,8 @@ This is second directory because github reached limit of no of files for first r
 517. Design a Stack With Increment Operation => this is very new problem to add value to range in constant time
 518. Reverse Substrings Between Each Pair of Parentheses => simple but dont know the time complexity .. ?
 519. Design Browser History => very simple two stacks problem..
-520. 
+520. Course Schedule III => very good max heap problem
+521. 
 
 
 
