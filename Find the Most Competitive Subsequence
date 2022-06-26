@@ -1,0 +1,98 @@
+class Solution:
+    def mostCompetitive(self, nums: List[int], k: int) -> List[int]:
+        """
+        Idea is to keep increasing monotonic stack
+        for each element
+            if stack is not empty and top of the stack is greater than curr
+                then pop the top
+        
+        Now question is untill where to pop?
+        Assume that k = 4
+        and we will have array [7,5,6,1]
+        so in this case we cant pop 7
+        so how to determine that
+        
+        [7,5,6,1]
+        In this case where k = 2
+        we will push the 7 then for 5 we will pop 7 and push 5
+        then for 6 we will push as top is less than current element
+        if stack size is already k then just pop 1 element
+        
+        how to remeber untill when we can pop
+        k - stack size + 1 <= this is max elements we can pop
+        
+        or should it be like this
+        stack size - k + 1 => nope 
+        
+        how can we determine 
+         0 1 2 3    k = 2
+        [7,5,6,1]
+        if we are at 3rd index
+        and in stack we have two elements
+        we should pop only 1 element at max how to know that?
+        
+        check how many elements we have in future
+        how to calculate that?
+        n - i => will give future elements along with current element count
+        if count is gt eq k then we can pop all the elements from the stack
+        else
+        else pop untill stack size is gt k else dont pop
+        if stack size is gteq to k
+        means [3,5,4] and k = 2
+        then we should able to pop 2 elements
+        if k == 3
+        then 3 > 2 means we only pop only one element
+        
+        else if stack size is less
+        then how to count elements to pop
+        stack size + futureElements - k => will be no of elements we can pop
+        
+        [1,1,1,1,1,1,1,1,0,0]
+        5
+        
+        [1,1,1,1,1,0,0]
+        5
+        
+        stack = []
+        n = len(nums)
+        for idx in range(n):
+            elementsInFuture = n - idx
+            if elementsInFuture >= k:
+                while len(stack) > 0 and stack[-1] > nums[idx]:
+                    stack.pop()
+                stack.append(nums[idx])
+            else:
+                if len(stack) > k:
+                    noOfElementsToPop = len(stack) + elementsInFuture - k
+                    #while len(stack) > k - 1 and stack[-1] > nums[idx] and noOfElementsToPop:
+                    while len(stack) and stack[-1] > nums[idx] and noOfElementsToPop:
+                        stack.pop()
+                        noOfElementsToPop -= 1
+                    stack.append(nums[idx])
+                else:
+                    noOfElementsToPop = len(stack) + elementsInFuture - k
+                    while len(stack) and noOfElementsToPop and stack[-1] > nums[idx]:
+                        stack.pop()
+                        noOfElementsToPop -= 1
+                    stack.append(nums[idx])
+        
+        while len(stack) > k:
+            stack.pop()
+        return stack
+        """
+        stack = []
+        n = len(nums)
+        for idx in range(n):
+            elementsInFuture = n - idx
+            if elementsInFuture >= k:
+                while len(stack) > 0 and stack[-1] > nums[idx]:
+                    stack.pop()
+            else:
+                noOfElementsToPop = len(stack) + elementsInFuture - k
+                while len(stack) and stack[-1] > nums[idx] and noOfElementsToPop:
+                    stack.pop()
+                    noOfElementsToPop -= 1
+            stack.append(nums[idx])        
+        while len(stack) > k:
+            stack.pop()
+        return stack
