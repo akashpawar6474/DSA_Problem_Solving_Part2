@@ -134,7 +134,7 @@ This is second directory because github reached limit of no of files for first r
 519. Design Browser History => very simple two stacks problem..
 520. Course Schedule III => very good max heap problem
 521. Find the Most Competitive Subsequence => this is really hard problem to come up with stack
-522. 
+522. Maximum Score From Removing Substrings => this is very simple problem..
 
 
 
