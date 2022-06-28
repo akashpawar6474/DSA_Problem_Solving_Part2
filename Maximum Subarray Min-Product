@@ -1,0 +1,113 @@
+import math
+class Solution:
+    def maxSumMinProduct(self, nums: List[int]) -> int:
+        """
+        How can we solve this problem?
+        
+        is sorting comes into the picture ?
+        Nope right otherwise order will be ignored
+        
+        It is not like that we need to take min element of an array
+        so basically for each subarray we will get sum and its minimum element
+        then its product is its weight and we need the max weight subarray
+        
+        can we come from back?
+        without generating subarray can we do that?
+        si there any observation which we can make?
+        
+        we need non empty subarray weight
+        
+        is there any prefix and suffix sum logic
+        [1,2,3,2]
+        [1,3,6,8]
+        [8,7,5,2]
+        
+        stack => not getting how stack comes into the picture
+        Monotonic stack => 
+        not getting anything
+        queue => not getting anything
+        Heap => Nope
+        tree, graph => do we need to convert this array to tree or graph
+        still we need to poll n ^ 2 subarrays
+        
+        what things will help us in subarray problem?
+        sliding window
+        bit manipulation
+        
+        if we sort by val and attached by indices
+        [(1,0),(2,1),(2,3),(3,2)]
+        
+        first ele can be min for whole array
+        second can be min for array range from 
+        
+        is this prev smaller and next smaller ele problem
+        and to we need prefix sum array to get sum of subarray
+        based on prev smaller and next smaller ele index
+        
+        tc = O(n + n + n + n) => O(4n) => O(n)
+        sc = O(n + n + n) => O(3n) => O(n)
+        """
+        def prevSmallerElement(nums):
+            n = len(nums)
+            stack = []
+            pse = [-1] * n
+            for idx in range(n - 1,-1,-1):
+                while stack and nums[stack[-1]] > nums[idx]:
+                    top = stack.pop()
+                    pse[top] = idx
+                stack.append(idx)
+            return pse
+        
+        def nextSmallerElement(nums):
+            stack = []
+            n = len(nums)
+            nse = [n] * n
+            for idx in range(n):
+                while stack and nums[stack[-1]] > nums[idx]:
+                    top = stack.pop()
+                    nse[top] = idx
+                stack.append(idx)
+            return nse
+        
+        def preparePrefixArr(nums):
+            n = len(nums)
+            prefixArr = [0] * n
+            prefixArr[0] = nums[0]
+            for idx in range(1,n):
+                prefixArr[idx] = prefixArr[idx - 1] + nums[idx]
+            return prefixArr
+                
+        
+        pse = prevSmallerElement(nums)
+        nse = nextSmallerElement(nums)
+        prefixArr = preparePrefixArr(nums)
+        maxSumMinProduct = -math.inf
+        mod = (10 ** 9) + 7
+        for idx in range(len(nums)):
+            currentMinElement = nums[idx]
+            leftBoundary = pse[idx]
+            rightBoundary = nse[idx]
+            subarraySumWhereCurrentEleIsMin = prefixArr[rightBoundary - 1] - (0 if leftBoundary == -1 else prefixArr[leftBoundary])
+            currentSubarrayWeight = currentMinElement * subarraySumWhereCurrentEleIsMin
+            maxSumMinProduct = max(maxSumMinProduct, currentSubarrayWeight)
+        
+        return maxSumMinProduct % mod
+    def bruteForce(self,nums):
+        """
+        brute force is for every subarray 
+        keep track of sum and minimum and then keep track of maximum
+        among them
+        """
+        windowSum = 0
+        minInWindow = math.inf
+        maxSumMinProd = -math.inf
+        n = len(nums)
+        for i in range(n):
+            windowSum = 0
+            minInWindow = math.inf
+            for j in range(i,n):
+                minInWindow = min(minInWindow, nums[j])
+                windowSum += nums[j]
+                currSumMinProd = minInWindow * windowSum
+                maxSumMinProd = max(maxSumMinProd, currSumMinProd)
+        return maxSumMinProd
