@@ -1,0 +1,25 @@
+class Solution:
+    def numUniqueEmails(self, emails: List[str]) -> int:
+        """
+        Idea is to add emails to the set
+        by modifying it
+        """
+        def processLocalName(localName):
+            refactoredLocalName = ""
+            for ch in localName:
+                if ch == '+':
+                    break
+                if ch == '.':
+                    continue
+                refactoredLocalName += str(ch)
+            return refactoredLocalName
+        
+                
+        uniqueEmails = set()
+        for email in emails:
+            localName,domainName = email.split('@')
+            localName = processLocalName(localName)
+            uniqueEmail = localName + "@" + domainName
+            uniqueEmails.add(uniqueEmail)
+            
+        return len(uniqueEmails)
