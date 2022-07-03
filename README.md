@@ -136,6 +136,8 @@ This is second directory because github reached limit of no of files for first r
 521. Find the Most Competitive Subsequence => this is really hard problem to come up with stack
 522. Maximum Score From Removing Substrings => this is very simple problem..
 523. Maximum Subarray Min-Product => this problem is combination of next and previous smaller element and prefix sum.
+524. Fruit Into Baskets => simple sliding window problem..
+
 
 
 
