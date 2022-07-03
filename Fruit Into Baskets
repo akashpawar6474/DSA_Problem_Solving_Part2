@@ -1,0 +1,36 @@
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        """
+        basically this problem can be solved using sliding window
+        we need to find out maximum window with 2 unique elements
+        
+        tc = O(n)
+        sc = O(n)
+        """
+        freqTable = {}
+        n = len(fruits)
+        windowStart = 0
+        maxWindow = 0
+        
+        for windowEnd in range(n):
+            
+            #STEP 1 => if currfruit is not in freq table then add
+            currFruit = fruits[windowEnd]
+            if currFruit not in freqTable:
+                freqTable[currFruit] = 0
+            freqTable[currFruit] += 1
+            
+            #STEP 2 => Shrink the window untill we have only two unique fruits
+            while len(freqTable) > 2:
+                fruitAtWindowStart = fruits[windowStart]
+                windowStart += 1
+                if fruitAtWindowStart in freqTable:
+                    freqTable[fruitAtWindowStart] -= 1
+                    if freqTable[fruitAtWindowStart] == 0:
+                        del freqTable[fruitAtWindowStart]
+            
+            #STEP 3 => keep track of maximum window
+            currWindow = windowEnd - windowStart + 1
+            maxWindow = max(maxWindow, currWindow)
+        
+        return maxWindow
