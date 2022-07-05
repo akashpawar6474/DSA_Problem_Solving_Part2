@@ -138,6 +138,8 @@ This is second directory because github reached limit of no of files for first r
 523. Maximum Subarray Min-Product => this problem is combination of next and previous smaller element and prefix sum.
 524. Fruit Into Baskets => simple sliding window problem..
 525. Unique Email Addresses => very simple set problem..
+526. License Key Formatting => this is very donkey work(implementation based NO LOGIC) problem
+
 
 
 
