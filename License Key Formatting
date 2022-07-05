@@ -1,0 +1,66 @@
+class Solution:
+    def licenseKeyFormatting(self, s: str, k: int) -> str:
+        """
+        count the dashes 
+        then reduce it from the length of string
+        so we can say that this is the number of alphanumeric characters
+        
+        then take mod it by k
+        if it is 0 then make first tuple of k length
+        if it is 1 then make first chunk of k - 1 length
+        if it is k - 1 then make first chunk of 1 length
+        """
+        def countDashes(s):
+            dashes = 0
+            for ch in s:
+                if ch == '-':
+                    dashes += 1
+            return dashes
+        
+        def getCountOfAlphaNumericChars(s,dashes):
+            return len(s) - dashes
+        
+        def getSizeOfFirstChunk(cntOfAlNumChars, k):
+            return k if cntOfAlNumChars % k == 0 else cntOfAlNumChars % k
+        
+        def prepareFirstChunk(sizeOfFirstChunk,s):
+            currIdx = 0
+            firstChunk = ""
+            while currIdx < len(s):
+                if s[currIdx] == '-':
+                    currIdx += 1
+                    continue
+                if len(firstChunk) == sizeOfFirstChunk:
+                    break
+                if not s[currIdx].isdigit():
+                    firstChunk += s[currIdx].upper()
+                else:
+                    firstChunk += s[currIdx]
+                currIdx += 1
+            return firstChunk,currIdx
+            
+        dashes = countDashes(s)
+        cntOfAlphaNumericChars = getCountOfAlphaNumericChars(s,dashes)
+        sizeOfFirstChunk = getSizeOfFirstChunk(cntOfAlphaNumericChars, k)
+        currIdx = 0
+        n = len(s)
+        chunks = []
+        firstChunk,currIdx = prepareFirstChunk(sizeOfFirstChunk, s)
+        chunks.append(firstChunk)
+        currChunk = ""
+        while currIdx < n:
+            if s[currIdx] == '-':
+                currIdx += 1
+                continue
+            if len(currChunk) == k:
+                chunks.append(currChunk)
+                currChunk = ""
+            if not s[currIdx].isdigit():
+                currChunk += s[currIdx].upper()
+            else:
+                currChunk += s[currIdx]
+            currIdx += 1
+        
+        if len(currChunk) == k:
+            chunks.append(currChunk)
+        return '-'.join(chunks)
