@@ -139,6 +139,8 @@ This is second directory because github reached limit of no of files for first r
 524. Fruit Into Baskets => simple sliding window problem..
 525. Unique Email Addresses => very simple set problem..
 526. License Key Formatting => this is very donkey work(implementation based NO LOGIC) problem
+527. Hand of Straights => prepare freq table and use minheap according to question
+
 
 
 
