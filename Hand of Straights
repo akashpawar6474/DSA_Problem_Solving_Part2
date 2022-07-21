@@ -1,0 +1,61 @@
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        """
+        idea is to prepare the freq table and track the minimum
+        then push all the entries in minHeap
+        
+        then take the loop untill minheap is not empty
+            then take the loop untill k is gt 0
+                pop the top element
+                if top element is not equal to prev + 1
+                    then return false
+                
+                reduce the freq of top element
+                and push it into the stack
+            then push all the entries from stack to minheap
+        """
+        import heapq
+        import math
+        def prepareFreqMapAndTrackMinimum(hand):
+            freq = {}
+            minEle = math.inf
+            for val in hand:
+                minEle = min(minEle, val)
+                if val not in freq:
+                    freq[val] = 0
+                freq[val] += 1
+            return freq,minEle
+        
+        def pushIntoMinHeap(freq):
+            minHeap = []
+            for key,val in freq.items():
+                heapq.heappush(minHeap, (key,val))
+            return minHeap
+        
+        n = len(hand)
+        if n % groupSize != 0:
+            return False
+        freq,minVal = prepareFreqMapAndTrackMinimum(hand)
+        minHeap = pushIntoMinHeap(freq)
+        stack = []
+        prev = minVal - 1
+        while minHeap:
+            count = groupSize
+            prev = minHeap[0][0] - 1
+            if len(minHeap) < count:
+                return False
+            while count > 0 and minHeap:
+                topNode,freq = heapq.heappop(minHeap)
+                if topNode != prev + 1:
+                    return False
+                prev = topNode
+                if freq - 1 > 0:
+                    stack.append((topNode, freq - 1))
+                count -= 1
+            while stack:
+                heapq.heappush(minHeap,stack.pop())
+                count -= 1
+                
+        return True
+        
+                
