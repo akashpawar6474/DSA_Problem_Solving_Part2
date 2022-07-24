@@ -1,0 +1,52 @@
+class RLEIterator:
+
+    def __init__(self, encoding: List[int]):
+        """
+        tc = O(1)
+        sc = O(1)
+        """
+        self.currPtr = 0
+        self.encodingArr = encoding
+
+    def next(self, n: int) -> int:
+        """
+        tc = O(N)
+        sc = O(1)
+        """
+        while n > 0 and self.currPtr < len(self.encodingArr):
+            if n <= self.encodingArr[self.currPtr]:
+                self.encodingArr[self.currPtr] -= n
+                n = 0
+                return self.encodingArr[self.currPtr + 1]
+            elif n > self.encodingArr[self.currPtr]:
+                n -= self.encodingArr[self.currPtr]
+                self.encodingArr[self.currPtr] = 0
+                self.currPtr += 2
+        return -1
+
+    def firstTry(self, encoding):
+        def decodeInput(encoding):
+            currPtr = 0
+            while currPtr < len(encoding):
+                freq = encoding[currPtr]
+                ele = encoding[currPtr + 1]
+                while freq > 0:
+                    self.decodedArr.append(ele)
+                    freq -= 1
+                currPtr += 2
+                
+        self.decodedArr = []
+        decodeInput(encoding)
+        print(self.decodedArr)
+        self.currPtr = 0
+                
+    def firstNext(self,n):
+        self.currPtr += n
+        if self.currPtr >= len(self.decodedArr):
+            return -1
+        return self.decodedArr[self.currPtr - 1]
+
+
+# Your RLEIterator object will be instantiated and called as such:
+# obj = RLEIterator(encoding)
+# param_1 = obj.next(n)
