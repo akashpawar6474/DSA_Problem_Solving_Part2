@@ -1,0 +1,108 @@
+import heapq
+class TopVotedCandidate:
+    
+    def __init__(self,persons,times):
+        """
+        Idea is to cache the winning candidate at
+        each timestamp
+        
+        in this case we will need running
+        prevWinningCandidateFreq
+        prevWinningCandidate
+        
+        if freq of current winning candidate is greater eq to prevWinningCandidateFreq
+            then update prevWinningCandidate and its freq
+        and store it
+        tc = O(N)
+        sc = O(N)
+        """
+        n = len(times)
+        self.winningCandidates = [-1] * n
+        self.timeStamps = times
+        prevWinningCandidateFreq = -1
+        prevWinningCandidate = -1
+        freq = {}
+        for idx in range(n):
+            candidate = persons[idx]
+            if candidate not in freq:
+                freq[candidate] = 0
+            freq[candidate] += 1
+            if freq[candidate] >= prevWinningCandidateFreq:
+                prevWinningCandidate = candidate
+                prevWinningCandidateFreq = freq[candidate]
+            self.winningCandidates[idx] = prevWinningCandidate
+            
+            
+    def q(self, t: int) -> int:
+        """
+        Now at each timestamp we have winning candidate
+        in this case
+        for each input time 
+        we will find out the idx of timestamp which is either
+        equal or less than current timestamp
+        
+        tc = O(logN)
+        sc = O(logN)
+        """
+        n = len(self.timeStamps)
+        start = 0
+        end = n - 1
+        probableAnsIdx = -1
+        while start <= end:
+            mid = (start + end) // 2
+            if self.timeStamps[mid] > t:
+                end = mid - 1
+            else:
+                probableAnsIdx = mid
+                start = mid + 1
+        return self.winningCandidates[probableAnsIdx]
+        
+        
+
+    def __init__FirstTry(self, persons: List[int], times: List[int]):
+        def prepare(persons,times):
+            n = len(times)
+            freq = {}
+            for idx in range(n):
+                if persons[idx] not in freq:
+                    freq[persons[idx]] = 0
+                freq[persons[idx]] += 1
+                heapq.heappush(self.primaryHeap,(-freq[persons[idx]],-times[idx],persons[idx]))
+                
+        self.primaryHeap = []
+        self.secondaryHeap = []
+        self.stack = []
+        prepare(persons,times)
+        print(self.maxHeap)
+        
+    def qFirstTry(self, t: int) -> int:
+        def isTopTimeInHeapGtEqInputTime(t,isPrimaryHeap):
+            if isPrimaryHeap:
+                return ((-1) * self.primaryHeap[0][1]) > t
+            else:
+                return ((-1) * self.secondaryHeap[0][1]) > t
+            
+        def getWinner(t,isPrimaryHeap,timeIdx):
+            mainHeap = self.primaryHeap if isPrimaryHeap else self.secondaryHeap
+            dumpingHeap = self.primaryHeap if not isPrimaryHeap else self.secondaryHeap
+            #while mainHeap
+            
+        freqIdx = 0
+        timeIdx = 1
+        candidateIdx = 2
+        cache = None
+        if self.primaryHeap[0][timeIdx] > self.secondaryHeap[0][timeIdx]:
+            cache = self.secondaryHeap[0]
+            
+        """
+        while isTopTimeInHeapGtEqInputTime(t,True):
+            heapq.heappush(self.secondaryHeap,heapq.heappop(self.primaryHeap))
+        ans = self.maxHeap[0]
+        while self.stack:
+            heapq.heappush(self.maxHeap,self.stack.pop())
+        return ans
+        """
+
+# Your TopVotedCandidate object will be instantiated and called as such:
+# obj = TopVotedCandidate(persons, times)
+# param_1 = obj.q(t)
