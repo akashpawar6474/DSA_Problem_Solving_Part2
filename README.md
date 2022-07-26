@@ -141,6 +141,7 @@ This is second directory because github reached limit of no of files for first r
 526. License Key Formatting => this is very donkey work(implementation based NO LOGIC) problem
 527. Hand of Straights => prepare freq table and use minheap according to question
 528. RLE Iterator => very simple problem with one observation only ..
+529. Online Election => this is combination of hashmap and binary search ..
 
 
 
