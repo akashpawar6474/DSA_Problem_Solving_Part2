@@ -1,0 +1,40 @@
+import heapq
+class Solution:
+    def findLongestWord(self, s: str, dictionary: List[str]) -> str:
+        """
+        question is how can we know that
+        if we delete some characters in source then it becomes equal to target
+        
+        abpcplea => apple
+        aappapple => apple
+        
+        this can be only solved using dp right?
+        N = no of words in dictioary
+        M = current word length
+        s = len of target string
+        tc = O(NlogN + logN * (M * S))
+        sc = O(N + (M * S))
+        """
+        def isSourceConvertibleToTarget(source,target,sourceIdx,targetIdx,dp):
+            if targetIdx == len(target):
+                return True
+            if sourceIdx == len(source):
+                return False
+            if (sourceIdx,targetIdx) in dp:
+                return dp[(sourceIdx,targetIdx)]
+            dp[(sourceIdx,targetIdx)] = False
+            if source[sourceIdx] == target[targetIdx]:
+                if isSourceConvertibleToTarget(source,target,sourceIdx + 1,targetIdx + 1,dp):
+                    dp[(sourceIdx,targetIdx)] = True
+            else:
+                dp[(sourceIdx,targetIdx)] |= isSourceConvertibleToTarget(source,target,sourceIdx + 1,targetIdx,dp)
+            return dp[(sourceIdx,targetIdx)]
+                
+        maxHeap = []
+        for st in dictionary:
+            heapq.heappush(maxHeap, (-len(st),st))
+        while maxHeap:
+            topLen,topSt = heapq.heappop(maxHeap)
+            if isSourceConvertibleToTarget(s,topSt,0,0,{}):
+                return topSt
+        return ""
